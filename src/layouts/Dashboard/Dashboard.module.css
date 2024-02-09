@@ -1,0 +1,8 @@
+.flexContainer {
+  display: flex;
+}
+.innerContainer {
+  width: 100%;
+  background-color: var(--color-grey-lightest-v2);
+  padding: 2rem 5rem;
+}

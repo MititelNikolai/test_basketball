@@ -1,0 +1,33 @@
+.sideBarContainer {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+  height: calc(100vh - 5rem);
+  width: 8.75rem;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.linkContainer {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2.875rem;
+}
+
+.icon {
+}
+.linkText {
+  font-family: var(--font-avenir-medium);
+  color: var(--color-grey-light);
+  font-size: 0.75rem;
+}

@@ -8,17 +8,17 @@ import {
 } from "../../core/redux/slices/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../core/redux/store";
 
 const Register: FC = () => {
-  const { loading, userInfo, success } = useSelector(
-    (state: any) => state.auth
+  const { loading, success, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
   );
   const navigate = useNavigate();
   useEffect(() => {
     if (success) navigate("/login");
-    console.log("Current token", userInfo.token);
-    if (userInfo.token) navigate("/dashboard");
-  }, [navigate, userInfo, success]);
+    if (isAuthenticated) navigate("/");
+  }, [navigate, isAuthenticated, success]);
   const dispatch = useDispatch();
   const handleSubmit = (data: IRegisterData) => {
     console.log(data);

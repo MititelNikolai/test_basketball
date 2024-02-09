@@ -48,7 +48,6 @@ export const userLogin = createAsyncThunk(
         { login, password },
         config
       );
-      console.log(data);
       localStorage.setItem("userToken", data.token);
       return data;
     } catch (error: any) {

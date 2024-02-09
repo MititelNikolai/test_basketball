@@ -5,15 +5,17 @@ import LoginForm from "./components/LoginForm";
 import { useDispatch, useSelector } from "react-redux";
 import { ILoginData, userLogin } from "../../core/redux/slices/authActions";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../core/redux/store";
 const Authorization: FC = () => {
-  const { loading, error, userInfo } = useSelector((state: any) => state.auth);
+  const { loading, error, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (userInfo.token) navigate("/dashboard");
-  }, [navigate, userInfo]);
+    if (isAuthenticated) navigate("/");
+  }, [navigate, isAuthenticated]);
   const handleSubmit = (data: ILoginData) => {
-    console.log(data);
     dispatch(userLogin(data) as any);
   };
   return (
