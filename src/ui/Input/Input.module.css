@@ -1,0 +1,50 @@
+.inputGroup {
+  position: relative;
+}
+.inputStyles {
+  width: 100%;
+  background-color: var(--color-grey-lightest-v2);
+  height: 2.5rem;
+  border-radius: 4px;
+  font-family: var(--font-avenir-medium);
+  color: var(--color-grey-dark);
+  padding: 0.5rem 0.75rem;
+}
+.inputStyles::placeholder {
+  color: var(--color-grey);
+}
+.inputStyles:not(:disabled):hover {
+  background-color: var(--color-grey-lightest-v1);
+}
+.inputStyles:focus {
+  box-shadow: 0px 0px 5px 0px rgba(217, 217, 217, 0.2);
+}
+.inputStyles:disabled {
+  color: var(--color-grey-lightest-v1);
+  cursor: not-allowed;
+}
+.errorStyle {
+  border: 1px solid var(--color-red-lightest);
+}
+
+.textStyles {
+  color: var(--color-grey);
+  font-family: var(--font-avenir-medium);
+  margin: 0.5rem 0;
+}
+
+.warningStyles {
+  font-family: var(--font-avenir-medium);
+  color: var(--color-red-lightest);
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background-color: transparent;
+}

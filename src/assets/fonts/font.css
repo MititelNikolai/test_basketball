@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Avenir Black";
+  src: local("Avenir Black"),
+    url("./AvenirBlack/Avenir-Black.woff2") format("woff2"),
+    url("./AvenirBlack/Avenir-Black.woff") format("woff"),
+    url("./AvenirBlack/Avenir-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir Book";
+  src: local("Avenir Book"),
+    url("./AvenirBook/Avenir-Book.woff2") format("woff2"),
+    url("./AvenirBook/Avenir-Book.woff") format("woff"),
+    url("./AvenirBook/Avenir-Book.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir Medium";
+  src: local("Avenir Medium"),
+    url("./AvenirMedium/Avenir-Medium.woff2") format("woff2"),
+    url("./AvenirMedium/Avenir-Medium.woff") format("woff"),
+    url("./AvenirMedium/Avenir-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}

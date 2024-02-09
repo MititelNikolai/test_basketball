@@ -1,0 +1,9 @@
+.labelTextStyle {
+  font-family: var(--font-avenir-medium);
+  font-size: 0.94rem;
+  color: var(--color-grey);
+}
+.labelLinkStyle {
+  color: var(--color-red);
+  text-decoration: underline;
+}

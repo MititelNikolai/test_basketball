@@ -1,13 +1,62 @@
-body {
+@import url(./assets/fonts/font.css);
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+html {
+  scroll-behavior: smooth;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 500;
+}
+:root {
+  --color-red: #e4163a;
+  --color-red-light: #ff5761;
+  --color-red-lightest: #ff768e;
+  --color-red-dark: #c60e2e;
+  --color-yellow: #d9ad3a;
+  --color-white: #ffffff;
+  --color-grey-lightest-v1: #d1d1d1;
+  --color-grey-lightest-v2: #f6f6f6;
+  --color-grey-light: #9c9c9c;
+  --color-grey-dark: #303030;
+  --color-grey: #707070;
+  --color-blue: #344472;
+  --color-blue-light: #f5fbff;
+  --font-avenir-medium: "Avenir Medium", sans-serif;
+  --font-avenir-book: "Avenir Book", sans-serif;
+  --font-avenir-black: "Avenir Black", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*Reset*/
+
+/*  search */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-clear-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/*  password */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none;
+}
+
+/* text */
+input[type="text"]::-webkit-search-cancel-button,
+input[type="text"]::-webkit-search-clear-button,
+input[type="text"]::-webkit-search-results-button,
+input[type="text"]::-webkit-search-results-decoration {
+  display: none;
 }

@@ -1,0 +1,22 @@
+.authLayoutContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+.authLayoutLeft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42%;
+}
+.authLayoutLeftForm {
+  width: 20rem;
+}
+.authLayoutRight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58%;
+  background-color: var(--color-blue-light);
+}

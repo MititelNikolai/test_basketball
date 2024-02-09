@@ -1,0 +1,20 @@
+.registerFormHeader {
+  font-family: var(--font-avenir-book);
+  font-size: 2.25rem;
+  color: var(--color-blue);
+  margin-bottom: 2rem;
+}
+
+.registerFormStyles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.registerFormStyles > button {
+  margin-top: 1rem;
+}
+
+.registerFormStyles > span {
+  text-align: center;
+}

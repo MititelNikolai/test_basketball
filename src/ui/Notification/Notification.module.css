@@ -1,0 +1,20 @@
+.notificationStyle {
+  display: flex;
+  position: fixed;
+  top: 2.5rem;
+  right: 2.5rem;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  width: 29.38rem;
+  height: 2.5rem;
+  background-color: var(--color-red-light);
+  font-family: var(--font-avenir-medium);
+  font-size: 1rem;
+  color: var(--color-white);
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+}
+.notificationStyle.visible {
+  opacity: 1;
+}

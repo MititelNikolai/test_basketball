@@ -1,0 +1,15 @@
+.loginFormHeader {
+  font-family: var(--font-avenir-book);
+  font-size: 2.25rem;
+  color: var(--color-blue);
+  margin-bottom: 2rem;
+}
+.loginFormStyles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.loginFormStyles > span {
+  text-align: center;
+}
