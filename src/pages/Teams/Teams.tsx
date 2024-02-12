@@ -1,7 +1,12 @@
 import { FC } from "react";
-
+import TeamsActions from "./TeamsActions";
+/* import styles from "./Teams.module.css"; */
 const Teams: FC = () => {
-  return <div>Teams</div>;
+  return (
+    <>
+      <TeamsActions />
+    </>
+  );
 };
 
 export default Teams;

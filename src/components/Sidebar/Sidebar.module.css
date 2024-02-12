@@ -24,8 +24,6 @@
   width: 2.875rem;
 }
 
-.icon {
-}
 .linkText {
   font-family: var(--font-avenir-medium);
   color: var(--color-grey-light);

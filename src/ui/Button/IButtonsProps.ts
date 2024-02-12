@@ -4,5 +4,6 @@ interface IButtonProps {
   type?: "submit" | "reset" | "button" | undefined;
   disabled?: boolean;
   variant: "primary" | "secondary";
+  textWithPlus?: boolean;
 }
 export default IButtonProps;

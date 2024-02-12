@@ -1,0 +1,28 @@
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.notFoundImg {
+  margin-bottom: 3rem;
+}
+.notFoundMessageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.notFoundTitle {
+  font-family: var(--font-avenir-black);
+  color: var(--color-red-lightest);
+  font-size: 2.25rem;
+}
+
+.notFoundSubtitle {
+  font-family: var(--font-avenir-book);
+  color: var(--color-grey);
+  font-size: 1.5rem;
+}

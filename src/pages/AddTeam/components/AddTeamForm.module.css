@@ -1,0 +1,17 @@
+.addTeamFormContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 3rem 0;
+}
+
+.fieldsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 22.875rem;
+}
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}

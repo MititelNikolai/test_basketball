@@ -7,9 +7,10 @@
 .loginFormStyles {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
-
+.loginFormStyles > span {
+  margin-top: 0.5rem;
+}
 .loginFormStyles > span {
   text-align: center;
 }

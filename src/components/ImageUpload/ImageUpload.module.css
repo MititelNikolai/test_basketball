@@ -1,0 +1,28 @@
+.uploadImageContainer {
+  padding-left: 4.8rem;
+  width: 34.32rem;
+}
+.uploadImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 21rem;
+  height: 16.31rem;
+  border: 1px solid var(--color-grey);
+  border-radius: 10px;
+  opacity: 0.5;
+  cursor: pointer;
+  overflow: hidden;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.uploadImageInput {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}

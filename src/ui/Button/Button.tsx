@@ -7,8 +7,9 @@ const Button: FC<IButtonProps> = ({
   disabled = false,
   type,
   variant,
+  textWithPlus,
 }) => {
-  const { primaryButtonStyles, secondaryButtonStyles } = styles;
+  const { primaryButtonStyles, secondaryButtonStyles, plusWrapper } = styles;
   return (
     <button
       type={type}
@@ -18,7 +19,14 @@ const Button: FC<IButtonProps> = ({
       }
       disabled={disabled}
     >
-      {text}
+      {textWithPlus ? (
+        <div className={plusWrapper}>
+          <p>{text}</p>
+          <p>+</p>
+        </div>
+      ) : (
+        text
+      )}
     </button>
   );
 };

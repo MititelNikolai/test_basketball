@@ -6,6 +6,7 @@
   font-size: 0.94rem;
   height: 2.5rem;
   border-radius: 4px;
+  cursor: pointer;
 }
 .primaryButtonStyles:not(:disabled):hover {
   background-color: var(--color-red-light);
@@ -43,4 +44,12 @@
   color: var(--color-grey-lightest-v1);
   cursor: not-allowed;
   border: 1px solid var(--color-grey-light);
+}
+
+.plusWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
 }

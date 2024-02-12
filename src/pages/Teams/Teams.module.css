@@ -1,0 +1,15 @@
+.actionsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.5rem;
+}
+
+.actionWrapper input {
+  width: 22.75rem;
+  height: 2.5rem;
+}
+.actionWrapper > button {
+  width: 6.5rem;
+}

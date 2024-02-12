@@ -3,6 +3,7 @@ interface ISvgIconProps {
   height?: number | string;
   viewBox?: string;
   color?: string;
+  opacity?: string;
 }
 
 export default ISvgIconProps;

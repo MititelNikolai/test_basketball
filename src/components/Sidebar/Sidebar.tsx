@@ -9,7 +9,6 @@ const Sidebar: FC = () => {
   const { sideBarContainer, linkContainer, linkWrapper, linkText } = styles;
   const dispatch = useDispatch();
   const location = useLocation();
-
   return (
     <nav className={sideBarContainer}>
       <div className={linkWrapper}>

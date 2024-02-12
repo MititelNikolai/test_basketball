@@ -11,6 +11,9 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
     children,
     placeholder,
     name,
+    handleClick,
+    background,
+    needMessage = true,
     ...props
   },
   ref
@@ -32,7 +35,11 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
         <input
           name={name}
           type={showPassword ? "text" : inputType}
-          className={`${inputStyles}`}
+          min={inputType === "number" ? 0 : undefined}
+          className={inputStyles}
+          style={
+            background === "white" ? { backgroundColor: "#fff" } : undefined
+          }
           placeholder={placeholder}
           ref={ref}
           {...props}
@@ -47,12 +54,13 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
             {showPassword ? <IconOpenEye /> : <IconCloseEye />}
           </button>
         ) : (
-          <button type='button' className={inputIcon}>
+          <button type='button' onClick={handleClick} className={inputIcon}>
             {children}
           </button>
         )}
       </div>
-      <p className={warningStyles}>{inputErrorMessage}</p>
+
+      {needMessage && <p className={warningStyles}>{inputErrorMessage}</p>}
     </div>
   );
 };
