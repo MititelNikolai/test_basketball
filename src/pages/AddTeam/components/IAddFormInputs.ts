@@ -3,7 +3,7 @@ export interface IAddFormInputs {
   foundationYear: string;
   division: string;
   conference: string;
-  file_img?: File;
+  file_img: File;
   imageUrl: string;
 }
 

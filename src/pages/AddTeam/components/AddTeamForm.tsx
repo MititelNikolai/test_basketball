@@ -5,7 +5,7 @@ import Button from "../../../ui/Button/Button";
 import ImageUpload from "../../../components/ImageUpload/ImageUpload";
 import { AddTeamFormProps, IAddFormInputs } from "./IAddFormInputs";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
-const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit }) => {
+const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit, loading }) => {
   const { fieldsContainer, addTeamFormContainer, buttonsContainer } = styles;
 
   const {
@@ -82,7 +82,11 @@ const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit }) => {
         />
         <div className={buttonsContainer}>
           <Button variant='secondary' text='Cancel' type='button' />
-          <Button variant='primary' text='Save' type='submit' />
+          <Button
+            variant='primary'
+            text={loading ? "Saving..." : "Save"}
+            type='submit'
+          />
         </div>
       </div>
     </form>

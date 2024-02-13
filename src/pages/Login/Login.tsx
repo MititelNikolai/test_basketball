@@ -3,7 +3,9 @@ import AuthorizationLayout from "../../layouts/authorization/AuthorizationLayout
 import SingIn from "../../assets/img/singIn.png";
 import LoginForm from "./components/LoginForm";
 import { useDispatch, useSelector } from "react-redux";
-import { ILoginData, userLogin } from "../../core/redux/slices/authActions";
+import { userLogin } from "../../core/redux/slices/auth/authActions";
+import { ILoginData } from "../../core/redux/slices/auth/auth.types";
+
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
 const Authorization: FC = () => {

@@ -2,7 +2,7 @@ import { FC } from "react";
 import logo from "../../assets/img/logo.png";
 import IconProfile from "../../ui/icons/IconProfile";
 import styles from "./Header.module.css";
-import { IUser } from "../../core/redux/slices/auth.types";
+import { IUser } from "../../core/redux/slices/auth/auth.types";
 import { NavLink, Navigate } from "react-router-dom";
 const Header: FC = () => {
   const { headerContainer, userContainer, userName, userAvatar } = styles;

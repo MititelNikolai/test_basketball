@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerUser, userLogin } from "./authActions";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 import { IAuthSlice, IUser } from "./auth.types";
 
 const storedUserData = localStorage.getItem("userData");

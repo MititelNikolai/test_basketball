@@ -10,3 +10,14 @@ export interface IAuthSlice {
   error: any | null;
   success: boolean;
 }
+
+export interface IRegisterData {
+  userName: string;
+  login: string;
+  password: string;
+}
+
+export interface ILoginData {
+  login: string;
+  password: string;
+}

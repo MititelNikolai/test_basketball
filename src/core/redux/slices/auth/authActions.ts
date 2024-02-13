@@ -1,15 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ILoginData, IRegisterData } from "./auth.types";
 
-export interface IRegisterData {
-  userName: string;
-  login: string;
-  password: string;
-}
-export interface ILoginData {
-  login: string;
-  password: string;
-}
 const backendUrl = "http://dev.trainee.dex-it.ru";
 
 export const registerUser = createAsyncThunk(
@@ -59,3 +51,4 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+export default registerUser;
