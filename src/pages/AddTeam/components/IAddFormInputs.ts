@@ -4,6 +4,13 @@ export interface IAddFormInputs {
   division: string;
   conference: string;
   file_img: File;
+}
+
+interface IAddTeamDataToServer {
+  name: string;
+  foundationYear: string;
+  division: string;
+  conference: string;
   imageUrl: string;
 }
 

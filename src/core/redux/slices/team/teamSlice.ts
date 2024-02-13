@@ -1,37 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAddTeamData } from "./team.types";
-import { addTeamImage } from "./teamActions";
+import { addTeam } from "./teamActions";
+import { InitialState } from "./team.types";
 
-const initialState = {
-  loading: <boolean>false,
-  teamData: <IAddTeamData>{
-    name: null,
-    foundationYear: null,
-    division: null,
-    conference: null,
-    imageUrl: null,
-  },
-  error: <any | null>null,
-  success: <boolean>false,
+const initialState: InitialState = {
+  loading: false,
+  error: null,
+  success: false,
 };
 
 const teamSlice = createSlice({
   name: "team",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSuccess: (state) => {
+      state.success = false;
+    },
+  },
   extraReducers(builder) {
-    builder.addCase(addTeamImage.pending, (state) => {
+    builder.addCase(addTeam.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(addTeamImage.fulfilled, (state) => {
+    builder.addCase(addTeam.fulfilled, (state) => {
       state.loading = false;
       state.success = true;
     });
-    builder.addCase(addTeamImage.rejected, (state, action) => {
+    builder.addCase(addTeam.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
   },
 });
+
+export const { resetSuccess } = teamSlice.actions;
 export default teamSlice.reducer;

@@ -20,11 +20,8 @@ const Register: FC = () => {
   }, [navigate, isAuthenticated, success]);
   const dispatch = useDispatch();
 
-  const handleSubmit = (data: IRegisterData) => {
-    console.log(data);
+  const handleSubmit = (data: IRegisterData) =>
     dispatch(registerUser(data) as any);
-  };
-
   return (
     <>
       <AuthorizationLayout image={SingUp}>

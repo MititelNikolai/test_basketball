@@ -1,7 +1,13 @@
+export interface InitialState {
+  loading: boolean;
+  error: any | null;
+  success: boolean;
+}
+
 export interface IAddTeamData {
-  name: string | null;
-  foundationYear: number | null;
-  division: string | null;
-  conference: string | null;
-  imageUrl?: string | null;
+  name: string;
+  foundationYear: number;
+  division: string;
+  conference: string;
+  imageUrl: string;
 }

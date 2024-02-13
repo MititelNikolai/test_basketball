@@ -1,5 +1,11 @@
+.teamsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .actionsContainer {
   display: flex;
+  width: 1140px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -12,4 +18,13 @@
 }
 .actionWrapper > button {
   width: 6.5rem;
+}
+.cardsContainer {
+  width: 1140px;
+  height: 784px;
+  padding-top: 2rem;
+  display: grid;
+  align-self: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }

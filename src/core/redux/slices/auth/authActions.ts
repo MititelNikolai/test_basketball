@@ -1,8 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ILoginData, IRegisterData } from "./auth.types";
-
-const backendUrl = "http://dev.trainee.dex-it.ru";
+import { backendUrl } from "../../apiData";
 
 export const registerUser = createAsyncThunk(
   "auth/register",

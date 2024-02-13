@@ -1,0 +1,42 @@
+.teamCardContainer {
+  display: flex;
+  flex-direction: column;
+  background: rgb(112, 112, 112);
+  background: linear-gradient(
+    -215deg,
+    rgba(112, 112, 112, 1) 0%,
+    rgba(57, 57, 57, 1) 100%
+  );
+  min-width: 22.75rem;
+  height: 23.75rem;
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 1;
+}
+.teamCardImg {
+  display: flex;
+  height: 17.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamCardInfo {
+  display: flex;
+  flex-direction: column;
+  height: 6.25rem;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-grey-dark);
+  font-family: var(--font-avenir-medium);
+}
+
+.teamName {
+  font-size: 1.125rem;
+  color: var(--color-white);
+  margin-bottom: 0.75rem;
+}
+
+.teamYear {
+  font-size: 0.875rem;
+  color: var(--color-grey-light);
+}

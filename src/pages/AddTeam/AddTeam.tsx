@@ -6,27 +6,25 @@ import AddTeamForm from "./components/AddTeamForm";
 import { IAddFormInputs } from "./components/IAddFormInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
-import { addTeamImage } from "../../core/redux/slices/team/teamActions";
+import { addTeam } from "../../core/redux/slices/team/teamActions";
+import { resetSuccess } from "../../core/redux/slices/team/teamSlice";
+
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
 
   const { loading, success } = useSelector((state: RootState) => state.team);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const handleSubmit = async (data: IAddFormInputs) => {
-    console.log(data);
-    const { file_img, ...preparedData } = data;
-
-    console.log({
-      ...preparedData,
-      foundationYear: parseInt(data.foundationYear),
-    });
-    dispatch(addTeamImage(data.file_img) as any);
-  };
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (success) navigate("/teams");
-  }, [navigate, success]);
+    if (success) {
+      dispatch(resetSuccess());
+      navigate("/teams");
+    }
+  }, [navigate, dispatch, success]);
+
+  const handleSubmit = (formData: IAddFormInputs) =>
+    dispatch(addTeam(formData) as any);
 
   return (
     <div className={addTeamContainer}>

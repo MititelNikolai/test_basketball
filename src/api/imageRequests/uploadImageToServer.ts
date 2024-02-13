@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadImageToServer = async (file: File) => {
+const uploadImageToServer = async (file: File, token: string | null) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
@@ -10,6 +10,7 @@ const uploadImageToServer = async (file: File) => {
       formData,
       {
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       }
