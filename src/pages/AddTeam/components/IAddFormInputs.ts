@@ -6,15 +6,15 @@ export interface IAddFormInputs {
   file_img: File;
 }
 
-interface IAddTeamDataToServer {
+export interface AddTeamFormProps {
+  loading?: boolean;
+  onSubmit: (data: IAddFormInputs) => void;
+}
+
+export interface IAddTeamDataToServer {
   name: string;
   foundationYear: string;
   division: string;
   conference: string;
   imageUrl: string;
-}
-
-export interface AddTeamFormProps {
-  loading?: boolean;
-  onSubmit: (data: IAddFormInputs) => void;
 }

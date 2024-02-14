@@ -9,6 +9,9 @@ import Players from "./pages/Players/Players";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import NotFound from "./pages/NotFound/NotFound";
 import AddTeam from "./pages/AddTeam/AddTeam";
+import SingleTeam from "./pages/SingleTeam/SingleTeam";
+import EditTeam from "./pages/EditTeam/EditTeam";
+import TeamsActionsLayout from "./layouts/Teams/TeamsActionsLayout";
 
 function App() {
   return (
@@ -17,8 +20,14 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/' element={<PrivateRouter component={Dashboard} />}>
-          <Route path='teams' element={<Teams />}></Route>
-          <Route path='/teams/add-team' element={<AddTeam />}></Route>
+          <Route path='teams' element={<Teams />}>
+            <Route element={<TeamsActionsLayout />}>
+              <Route path='add-team' element={<AddTeam />} />
+              <Route path=':teamId' element={<SingleTeam />} />
+              <Route path=':teamId/edit' element={<EditTeam />} />
+            </Route>
+          </Route>
+
           <Route path='players' element={<Players />}></Route>
           <Route path='edit-profile' element={<EditProfile />}></Route>
         </Route>

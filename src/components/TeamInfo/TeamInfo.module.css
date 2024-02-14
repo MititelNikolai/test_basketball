@@ -1,0 +1,49 @@
+.teamInfoContainer {
+  display: flex;
+  flex-direction: row;
+  background: rgb(112, 112, 112);
+  background: linear-gradient(
+    -215deg,
+    rgba(112, 112, 112, 1) 0%,
+    rgba(57, 57, 57, 1) 100%
+  );
+  height: 25.25rem;
+}
+.teamInfoImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 31.375rem;
+}
+.teamInfoDescriptionContainer {
+  padding: 4.06rem 0;
+  width: 25.625rem;
+}
+.teamInfoName {
+  font-family: var(--font-avenir-black);
+  font-size: 2.25rem;
+  color: var(--color-white);
+  margin-bottom: 2.5rem;
+}
+.descriptionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.375rem;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--color-white);
+}
+.descriptionKey {
+  font-family: var(--font-avenir-black);
+  font-size: 1.5rem;
+}
+
+.descriptionValue {
+  font-family: var(--font-avenir-medium);
+  font-size: 1.125rem;
+}
