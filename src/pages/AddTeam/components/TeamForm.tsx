@@ -3,18 +3,38 @@ import styles from "./AddTeamForm.module.css";
 import Input from "../../../ui/Input/Input";
 import Button from "../../../ui/Button/Button";
 import ImageUpload from "../../../components/ImageUpload/ImageUpload";
-import { AddTeamFormProps, IAddFormInputs } from "./IAddFormInputs";
+import {
+  AddTeamFormProps,
+  IAddFormInputs,
+  InitialDefaults,
+} from "./IAddFormInputs";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
-const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit, loading }) => {
+import { useSelector } from "react-redux";
+import { selectTeam } from "../../../core/redux/slices/team/teamSlice";
+
+const TeamForm: FC<AddTeamFormProps> = ({
+  onSubmit,
+  loading,
+  edit = false,
+}) => {
   const { fieldsContainer, addTeamFormContainer, buttonsContainer } = styles;
 
+  const team = useSelector(selectTeam);
+
+  const initialTeam: InitialDefaults = {
+    name: team && team.name,
+    division: team && team.division,
+    conference: team && team.conference,
+    foundationYear: team && String(team.foundationYear),
+    imageUrl: team && team.imageUrl,
+    file_img: undefined,
+  };
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IAddFormInputs>();
-
+  } = useForm<IAddFormInputs>({ defaultValues: initialTeam });
   const submitHandler: SubmitHandler<IAddFormInputs> = (
     data: IAddFormInputs
   ) => {
@@ -30,12 +50,23 @@ const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit, loading }) => {
       className={addTeamFormContainer}
       onSubmit={handleSubmit(submitHandler, submitError)}
     >
-      <ImageUpload
-        {...register("file_img", {
-          required: { value: true, message: "Image is required" },
-        })}
-        setValue={setValue}
-      />
+      {edit ? (
+        <ImageUpload
+          edit
+          imageUrl={initialTeam.imageUrl}
+          {...register("imageUrl", {
+            required: { value: true, message: "Image is required" },
+          })}
+          setValue={setValue}
+        />
+      ) : (
+        <ImageUpload
+          {...register("file_img", {
+            required: { value: true, message: "Image is required" },
+          })}
+          setValue={setValue}
+        />
+      )}
       <div className={fieldsContainer}>
         <Input
           inputType='text'
@@ -93,4 +124,4 @@ const AddTeamForm: FC<AddTeamFormProps> = ({ onSubmit, loading }) => {
   );
 };
 
-export default AddTeamForm;
+export default TeamForm;

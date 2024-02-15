@@ -26,7 +26,14 @@ export interface IAddTeamData {
   conference: string;
   imageUrl: string;
 }
-
+export interface IUpdateTeamData {
+  id: number;
+  name: string;
+  foundationYear: number;
+  division: string;
+  conference: string;
+  imageUrl: string;
+}
 export interface IGetTeamsParameters {
   name?: string;
   page?: number;

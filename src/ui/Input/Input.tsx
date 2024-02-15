@@ -14,6 +14,8 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
     handleClick,
     background,
     needMessage = true,
+    value,
+    setValue,
     ...props
   },
   ref
@@ -33,7 +35,9 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
       <p className={textStyles}>{label}</p>
       <div className={inputGroup}>
         <input
+          value={value}
           name={name}
+          onChange={(e) => setValue && setValue(e.target.value)}
           type={showPassword ? "text" : inputType}
           min={inputType === "number" ? 0 : undefined}
           className={inputStyles}

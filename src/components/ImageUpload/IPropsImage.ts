@@ -5,6 +5,8 @@ interface IPropsImage {
   onFileChange?: (file: File) => void;
   setValue: UseFormSetValue<IAddFormInputs>;
   forwardedRef?: React.RefObject<HTMLInputElement>;
+  edit?: boolean;
+  imageUrl?: string | undefined;
 }
 
 export default IPropsImage;

@@ -1,15 +1,25 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Input from "../../ui/Input/Input";
 import IconSearch from "../../ui/icons/IconSearch";
 import Button from "../../ui/Button/Button";
 import styles from "./Teams.module.css";
 import { NavLink } from "react-router-dom";
-const TeamsActions: FC = () => {
+
+interface ITeamActions {
+  filter: (search: string) => void;
+}
+
+const TeamsActions: FC<ITeamActions> = ({ filter }) => {
   const { actionsContainer, actionWrapper } = styles;
+  const [search, setSearch] = useState("");
+  console.log(search);
   return (
     <div className={actionsContainer}>
       <div className={actionWrapper}>
         <Input
+          handleClick={() => filter(search)}
+          setValue={setSearch}
+          value={search}
           inputType='text'
           placeholder='Search...'
           background='white'

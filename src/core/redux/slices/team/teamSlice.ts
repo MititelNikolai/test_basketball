@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addTeam, deleteTeam, getTeam, getTeams } from "./teamActions";
+import {
+  addTeam,
+  deleteTeam,
+  getTeam,
+  getTeams,
+  updateTeam,
+} from "./teamActions";
 import { InitialState } from "./team.types";
 import { RootState } from "../../store";
 
@@ -40,6 +46,19 @@ const teamSlice = createSlice({
       state.success = true;
     });
     builder.addCase(addTeam.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    //UpdateTeam
+    builder.addCase(updateTeam.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateTeam.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(updateTeam.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

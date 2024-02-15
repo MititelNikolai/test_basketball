@@ -2,13 +2,16 @@ import { forwardRef, useRef, useState } from "react";
 import styles from "./ImageUpload.module.css";
 import IconAddImage from "../../ui/icons/IconAddImage";
 import IPropsImage from "./IPropsImage";
+import { backendUrl } from "../../core/redux/apiData";
 
 const ImageUpload: React.ForwardRefRenderFunction<
   HTMLInputElement,
   IPropsImage
-> = ({ setValue }, ref) => {
+> = ({ setValue, edit, imageUrl }, ref) => {
   const { uploadImageContainer, uploadImage, uploadImageInput } = styles;
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null | undefined>(
+    edit ? `${backendUrl}${imageUrl}` : null
+  );
   let fileInputRef = useRef<HTMLInputElement>(null);
   const handleImageClick = () => {
     if (fileInputRef.current) {
@@ -40,10 +43,9 @@ const ImageUpload: React.ForwardRefRenderFunction<
         onClick={handleImageClick}
         style={{
           backgroundImage: previewImage ? `url(${previewImage})` : "",
-          backgroundColor: !previewImage ? "#9c9c9c" : "",
         }}
       >
-        {!previewImage && <IconAddImage height={74} width={75} />}
+        <IconAddImage height={74} width={75} />
       </div>
     </div>
   );

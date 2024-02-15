@@ -27,7 +27,29 @@ export const addTeam = createAsyncThunk(
     }
   }
 );
+export const updateTeam = createAsyncThunk(
+  "team/updateTeam",
+  async (formData: IAddTeamData, { rejectWithValue, getState }) => {
+    const { auth } = getState() as RootState;
+    const token = auth.userInfo.token;
+    try {
+      const response = await axios.put(
+        `${backendUrl}/api/Team/Update`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 export const getTeams = createAsyncThunk(
   "team/getTeams",
   async (

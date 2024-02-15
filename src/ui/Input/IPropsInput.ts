@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 interface IPropsInput {
   inputType: string;
@@ -8,9 +8,11 @@ interface IPropsInput {
   children?: ReactNode;
   placeholder?: string;
   disabled?: boolean;
-  handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClick?: () => void;
   background?: "white" | null;
   needMessage?: boolean;
+  setValue?: Dispatch<SetStateAction<string>>;
+  value?: string;
 }
 
 export default IPropsInput;
