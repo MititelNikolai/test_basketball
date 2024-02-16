@@ -32,10 +32,10 @@ const AddTeam: FC = () => {
   const handleSubmit = async (formData: IAddFormInputs) => {
     const { name, division, conference } = formData;
     const dataToServer: IAddTeamData = {
-      name,
+      name: name.trim(),
       foundationYear: parseInt(formData.foundationYear),
-      division,
-      conference,
+      division: division.trim(),
+      conference: conference.trim(),
       imageUrl:
         formData.file_img &&
         (await uploadImageToServer(formData.file_img, userInfo.token)),

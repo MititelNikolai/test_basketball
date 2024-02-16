@@ -3,6 +3,7 @@ import styles from "./AddTeamForm.module.css";
 import Input from "../../../ui/Input/Input";
 import Button from "../../../ui/Button/Button";
 import ImageUpload from "../../../components/ImageUpload/ImageUpload";
+import { useNavigate } from "react-router-dom";
 import {
   AddTeamFormProps,
   IAddFormInputs,
@@ -18,6 +19,7 @@ const TeamForm: FC<AddTeamFormProps> = ({
   edit = false,
 }) => {
   const { fieldsContainer, addTeamFormContainer, buttonsContainer } = styles;
+  const navigate = useNavigate();
 
   const team = useSelector(selectTeam);
 
@@ -112,7 +114,14 @@ const TeamForm: FC<AddTeamFormProps> = ({
           inputErrorMessage={errors.foundationYear?.message}
         />
         <div className={buttonsContainer}>
-          <Button variant='secondary' text='Cancel' type='button' />
+          <Button
+            variant='secondary'
+            text='Cancel'
+            type='button'
+            handleClick={() => {
+              navigate(-1);
+            }}
+          />
           <Button
             variant='primary'
             text={loading ? "Saving..." : "Save"}

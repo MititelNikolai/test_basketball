@@ -3,7 +3,6 @@ import styles from "./TeamCard.module.css";
 import { ITeamCardProps } from "./ITeamCardProps";
 import { backendUrl } from "../../core/redux/apiData";
 import { Link } from "react-router-dom";
-import { createSlug } from "../../utils/stringFunctions";
 const TeamCard: FC<ITeamCardProps> = ({
   id,
   name,

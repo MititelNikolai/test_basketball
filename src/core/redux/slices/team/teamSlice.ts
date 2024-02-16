@@ -69,7 +69,10 @@ const teamSlice = createSlice({
     });
     builder.addCase(getTeams.fulfilled, (state, action) => {
       state.loading = false;
-      state.teamDataFromServer.data = action.payload;
+      state.teamDataFromServer.data = action.payload.data;
+      state.teamDataFromServer.count = action.payload.count;
+      state.teamDataFromServer.page = action.payload.page;
+      state.teamDataFromServer.size = action.payload.size;
     });
     builder.addCase(getTeams.rejected, (state, action) => {
       state.loading = false;
@@ -105,6 +108,12 @@ const teamSlice = createSlice({
 });
 export const selectTeams = (state: RootState) =>
   state.team.teamDataFromServer.data;
+export const getNumberOfTeams = (state: RootState) =>
+  state.team.teamDataFromServer.count;
+export const getPageTeams = (state: RootState) =>
+  state.team.teamDataFromServer.page;
+export const getSizeTeams = (state: RootState) =>
+  state.team.teamDataFromServer.size;
 export const selectTeam = (state: RootState) => state.team.currentTeam;
 export const { resetSuccess, clearCurrentTeam, clearTeamItems } =
   teamSlice.actions;

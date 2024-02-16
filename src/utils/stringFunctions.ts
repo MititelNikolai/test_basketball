@@ -1,5 +1,5 @@
 export const dashIntoSpace = (inputString: string) => {
-  const stringWithSpaces = inputString.replace(/-/g, " ");
+  const stringWithSpaces = inputString.replace(/-/g, " ").trim();
 
   return stringWithSpaces
     .split(/\s+/)

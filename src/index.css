@@ -36,7 +36,9 @@ h5 {
   --font-avenir-book: "Avenir Book", sans-serif;
   --font-avenir-black: "Avenir Black", sans-serif;
 }
-
+::-webkit-scrollbar {
+  display: none;
+}
 /*Reset*/
 
 /*  search */

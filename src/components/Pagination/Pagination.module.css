@@ -1,0 +1,23 @@
+.paginationContainer {
+  display: flex;
+  flex-direction: row;
+  height: 2.5rem;
+}
+
+.pageCountNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 2.5rem;
+
+  font-family: var(--font-avenir-medium);
+  font-size: 0.875rem;
+  color: var(--color-grey);
+  border-radius: 0.25rem;
+}
+
+.pageCountNumberActive {
+  background-color: var(--color-red);
+  color: var(--color-white);
+}

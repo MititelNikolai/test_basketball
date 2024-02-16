@@ -66,7 +66,7 @@ export const getTeams = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
-      return data.data;
+      return data;
     } catch (error: any) {
       return rejectWithValue(`Failed to fetch teams: ${error.message}`);
     }
