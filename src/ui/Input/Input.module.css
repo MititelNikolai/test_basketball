@@ -4,7 +4,7 @@
 
 .inputStyles {
   width: 100%;
-  background-color: var(--color-grey-lightest-v2);
+  border: 0.5px solid var(--color-grey-lightest-v1);
   height: 2.5rem;
   border-radius: 4px;
   font-family: var(--font-avenir-medium);

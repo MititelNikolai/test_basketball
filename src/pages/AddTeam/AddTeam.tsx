@@ -3,7 +3,7 @@ import styles from "./AddTeam.module.css";
 import { useNavigate } from "react-router-dom";
 
 import TeamForm from "./components/TeamForm";
-import { IAddFormInputs } from "./components/IAddFormInputs";
+import { ITeamFormInputs } from "./components/ITeamFormInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { addTeam } from "../../core/redux/slices/team/teamActions";
@@ -29,7 +29,7 @@ const AddTeam: FC = () => {
     }
   }, [navigate, dispatch, success]);
 
-  const handleSubmit = async (formData: IAddFormInputs) => {
+  const handleSubmit = async (formData: ITeamFormInputs) => {
     const { name, division, conference } = formData;
     const dataToServer: IAddTeamData = {
       name: name.trim(),

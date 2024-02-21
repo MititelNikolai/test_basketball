@@ -1,4 +1,4 @@
-.teamsContainer {
+.playersContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,35 +13,20 @@
   height: 2.5rem;
   margin-bottom: 2rem;
 }
-
+.actionWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  gap: 1.5rem;
+}
 .actionWrapper input {
   width: 22.75rem;
-  height: 2.5rem;
+  /* border: 0.5px solid var(--color-grey-lightest); */
 }
 .actionWrapper > button {
   width: 6.5rem;
-}
-.cardsEmpty {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-white);
-  border-radius: 15px;
-  padding: 3rem 2.3rem;
-  gap: 1.5rem;
-  line-height: 1;
-}
-.cardsEmptyTitle {
-  font-family: var(--font-avenir-black);
-  font-size: 2.25rem;
-  color: var(--color-red-lightest);
-  margin-top: 1.5rem;
-}
-.cardsEmptySubTitle {
-  font-family: var(--font-avenir-book);
-  font-size: 1.5rem;
-  color: var(--color-grey);
 }
 .cardsContainer {
   width: 100%;
@@ -53,7 +38,7 @@
   overflow: scroll;
 }
 
-.teamNavigation {
+.playersNavigation {
   margin-top: 2rem;
   width: 100%;
   display: flex;

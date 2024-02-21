@@ -1,24 +1,20 @@
 import { FC } from "react";
-import styles from "./AddTeamForm.module.css";
+import styles from "./TeamForm.module.css";
 import Input from "../../../ui/Input/Input";
 import Button from "../../../ui/Button/Button";
 import ImageUpload from "../../../components/ImageUpload/ImageUpload";
 import { useNavigate } from "react-router-dom";
 import {
-  AddTeamFormProps,
-  IAddFormInputs,
+  TeamFormProps,
+  ITeamFormInputs,
   InitialDefaults,
-} from "./IAddFormInputs";
+} from "./ITeamFormInputs";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectTeam } from "../../../core/redux/slices/team/teamSlice";
 
-const TeamForm: FC<AddTeamFormProps> = ({
-  onSubmit,
-  loading,
-  edit = false,
-}) => {
-  const { fieldsContainer, addTeamFormContainer, buttonsContainer } = styles;
+const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
+  const { fieldsContainer, teamFormContainer, buttonsContainer } = styles;
   const navigate = useNavigate();
 
   const team = useSelector(selectTeam);
@@ -36,20 +32,20 @@ const TeamForm: FC<AddTeamFormProps> = ({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IAddFormInputs>({ defaultValues: initialTeam });
-  const submitHandler: SubmitHandler<IAddFormInputs> = (
-    data: IAddFormInputs
+  } = useForm<ITeamFormInputs>({ defaultValues: initialTeam });
+  const submitHandler: SubmitHandler<ITeamFormInputs> = (
+    data: ITeamFormInputs
   ) => {
     onSubmit(data);
   };
 
-  const submitError: SubmitErrorHandler<IAddFormInputs> = (data) => {
+  const submitError: SubmitErrorHandler<ITeamFormInputs> = (data) => {
     console.log("Errors", data);
   };
 
   return (
     <form
-      className={addTeamFormContainer}
+      className={teamFormContainer}
       onSubmit={handleSubmit(submitHandler, submitError)}
     >
       {edit ? (
@@ -59,14 +55,14 @@ const TeamForm: FC<AddTeamFormProps> = ({
           {...register("imageUrl", {
             required: { value: true, message: "Image is required" },
           })}
-          setValue={setValue}
+          setValueForTeam={setValue}
         />
       ) : (
         <ImageUpload
           {...register("file_img", {
             required: { value: true, message: "Image is required" },
           })}
-          setValue={setValue}
+          setValueForTeam={setValue}
         />
       )}
       <div className={fieldsContainer}>

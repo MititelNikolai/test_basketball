@@ -1,4 +1,4 @@
-export interface IAddFormInputs {
+export interface ITeamFormInputs {
   name: string;
   foundationYear: string;
   division: string;
@@ -15,9 +15,9 @@ export interface InitialDefaults {
   imageUrl?: string | undefined;
 }
 
-export interface AddTeamFormProps {
+export interface TeamFormProps {
   loading?: boolean;
-  onSubmit: (data: IAddFormInputs) => void;
+  onSubmit: (data: ITeamFormInputs) => void;
   edit?: boolean;
 }
 

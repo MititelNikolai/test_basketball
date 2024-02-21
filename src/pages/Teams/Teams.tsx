@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import TeamsActions from "./TeamsActions";
-import TeamCard from "../../components/TeamCard/TeamCard";
-import Select from "react-select";
+import Card from "../../components/Card/Card";
+import emptyTeams from "../../assets/img/EmptyTeams.png";
 import styles from "./Teams.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeams } from "../../core/redux/slices/team/teamActions";
@@ -12,6 +12,8 @@ import {
 import { Outlet, useLocation } from "react-router-dom";
 
 import Pagination from "../../components/Pagination/Pagination";
+import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
+import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 const Teams: FC = () => {
   const { teamsContainer, cardsContainer, teamNavigation } = styles;
 
@@ -42,7 +44,10 @@ const Teams: FC = () => {
     location.pathname === "/teams" &&
       !searchName &&
       dispatch(
-        getTeams({ pageSize: itemsPerPage || 6, page: currentPage }) as any
+        getTeams({
+          pageSize: itemsPerPage || 6,
+          page: pageCount === 1 ? 1 : currentPage,
+        }) as any
       );
     if (searchName) {
       dispatch(
@@ -51,9 +56,16 @@ const Teams: FC = () => {
     }
 
     return () => {
-      /*   setSearch(undefined); */
+      /* setSearchName(undefined); */
     };
-  }, [dispatch, location.pathname, currentPage, searchName, itemsPerPage]);
+  }, [
+    dispatch,
+    location.pathname,
+    currentPage,
+    searchName,
+    itemsPerPage,
+    pageCount,
+  ]);
 
   return (
     <>
@@ -66,33 +78,35 @@ const Teams: FC = () => {
               handleFilter(search);
             }}
           />
-          <section className={cardsContainer}>
-            {teams && Array.isArray(teams) && teams.length !== 0
-              ? teams.map((teams) => {
-                  return <TeamCard {...teams} key={teams.id} />;
-                })
-              : null}
-          </section>
-          <div className={teamNavigation}>
-            <Pagination
-              handlePageClick={(e) => {
-                handlePageClick(e);
-              }}
-              pageCount={pageCount}
-            />
-            <Select
-              styles={{
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  borderColor: "#D1D1D1",
-                  borderRadius: "4px",
-                }),
-              }}
-              menuPosition='fixed'
-              options={options}
-              onChange={(option) => setItemsPerPage(option?.value)}
-            />
-          </div>
+          {teams && Array.isArray(teams) && teams.length !== 0 ? (
+            <>
+              <section className={cardsContainer}>
+                {teams.map((teams) => {
+                  return <Card type='team' {...teams} key={teams.id} />;
+                })}
+              </section>
+              <div className={teamNavigation}>
+                <Pagination
+                  handlePageClick={(e) => {
+                    handlePageClick(e);
+                  }}
+                  pageCount={pageCount}
+                />
+                <ItemsSelector
+                  options={options}
+                  handleChange={(option) => setItemsPerPage(option?.value)}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <EmptyCardMessage
+                imageLink={emptyTeams}
+                title='Empty here'
+                subTitle={!searchName ? "Add new teams to continue" : undefined}
+              />
+            </>
+          )}
         </section>
       ) : (
         <Outlet />

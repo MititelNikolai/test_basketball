@@ -12,6 +12,10 @@ import AddTeam from "./pages/AddTeam/AddTeam";
 import SingleTeam from "./pages/SingleTeam/SingleTeam";
 import EditTeam from "./pages/EditTeam/EditTeam";
 import TeamsActionsLayout from "./layouts/Teams/TeamsActionsLayout";
+import PlayersActionsLayout from "./layouts/Players/PlayersActionsLayout";
+import AddPlayer from "./pages/AddPlayer/AddPlayer";
+import SinglePlayer from "./pages/SinglePlayers/SinglePlayer";
+import EditPlayer from "./pages/EditPlayer/EditPlayer";
 
 function App() {
   return (
@@ -28,7 +32,13 @@ function App() {
             </Route>
           </Route>
 
-          <Route path='players' element={<Players />}></Route>
+          <Route path='players' element={<Players />}>
+            <Route element={<PlayersActionsLayout />}>
+              <Route path='add-player' element={<AddPlayer />} />
+              <Route path=':playerId' element={<SinglePlayer />} />
+              <Route path=':playerId/edit' element={<EditPlayer />} />
+            </Route>
+          </Route>
           <Route path='edit-profile' element={<EditProfile />}></Route>
         </Route>
         <Route path='*' element={<NotFound />} />

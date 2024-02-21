@@ -3,7 +3,7 @@
 }
 .innerContainer {
   width: 100%;
-  height: calc(100vh - 5rem);
+  height: 992px;
   background-color: var(--color-grey-lightest-v2);
   padding: 2rem 5rem 0 5rem;
 }

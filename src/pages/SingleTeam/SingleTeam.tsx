@@ -7,7 +7,6 @@ import styles from "./SingleTeam.module.css";
 import TeamInfo from "../../components/TeamInfo/TeamInfo";
 const SingleTeam: FC = () => {
   const { singleTeamContainer } = styles;
-
   const team = useSelector(selectTeam);
 
   return (

@@ -1,9 +1,11 @@
 import { UseFormSetValue } from "react-hook-form";
-import { IAddFormInputs } from "../../pages/AddTeam/components/IAddFormInputs";
+import { ITeamFormInputs } from "../../pages/AddTeam/components/ITeamFormInputs";
+import { IPlayerFormInputs } from "../../pages/AddPlayer/components/IPlayerFormProps";
 
 interface IPropsImage {
   onFileChange?: (file: File) => void;
-  setValue: UseFormSetValue<IAddFormInputs>;
+  setValueForTeam?: UseFormSetValue<ITeamFormInputs>;
+  setValueForPlayer?: UseFormSetValue<IPlayerFormInputs>;
   forwardedRef?: React.RefObject<HTMLInputElement>;
   edit?: boolean;
   imageUrl?: string | undefined;

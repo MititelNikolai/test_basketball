@@ -12,3 +12,20 @@ export const createSlug = (inputString: string) => {
   const stringWithSpaces = stringWithoutUpperCase.replace(/ /g, "-");
   return stringWithSpaces;
 };
+
+export const addSpaceBeforeUppercase = (text: string) => {
+  return text.replace(/([a-z])([A-Z])/g, "$1 $2");
+};
+
+export const jsonDateToString = (jsonString: string) => {
+  const dateObject = new Date(jsonString);
+
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObject.getDate()).padStart(2, "0");
+
+  const formattedDate = `${year}-${month}-${day}`;
+
+  console.log(formattedDate); // Выведет: '2022-01-30'
+  return formattedDate;
+};

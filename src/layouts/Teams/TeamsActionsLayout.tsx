@@ -2,17 +2,21 @@ import { FC, useEffect } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTeam } from "../../core/redux/slices/team/teamSlice";
-import { getTeam } from "../../core/redux/slices/team/teamActions";
+import {
+  resetSuccess,
+  selectTeam,
+} from "../../core/redux/slices/team/teamSlice";
+import { deleteTeam, getTeam } from "../../core/redux/slices/team/teamActions";
 import { RootState } from "../../core/redux/store";
 
 const TeamsActionsLayout: FC = () => {
   const location = useLocation();
   const { teamId } = useParams();
   const team = useSelector(selectTeam);
-  const { loading } = useSelector((state: RootState) => state.team);
+  const { loading, success } = useSelector((state: RootState) => state.team);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("TeamActionRendered");
     if (team?.id !== Number(teamId)) {
       location.pathname !== `/teams` &&
         location.pathname !== `/teams/add-team` &&
@@ -24,6 +28,10 @@ const TeamsActionsLayout: FC = () => {
       {!loading && (
         <>
           <Breadcrumbs
+            id={Number(teamId)}
+            deleteAction={teamId && deleteTeam(Number(teamId))}
+            success={success}
+            successAction={resetSuccess()}
             pathname={
               location.pathname !== `/teams/add-team`
                 ? `/teams/${team?.name}`

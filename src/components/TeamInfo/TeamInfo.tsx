@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { ITeamCardProps } from "../TeamCard/ITeamCardProps";
+import { ITeamInfoProps } from "./ITeamInfoProps";
 import styles from "./TeamInfo.module.css";
 import { backendUrl } from "../../core/redux/apiData";
-const TeamInfo: FC<ITeamCardProps> = ({
+const TeamInfo: FC<ITeamInfoProps> = ({
   name,
   foundationYear,
   conference,

@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
 import { IUpdateTeamData } from "../../core/redux/slices/team/team.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { IAddFormInputs } from "../AddTeam/components/IAddFormInputs";
+import { ITeamFormInputs } from "../AddTeam/components/ITeamFormInputs";
 import { updateTeam } from "../../core/redux/slices/team/teamActions";
 
 const EditTeam: FC = () => {
@@ -24,7 +24,7 @@ const EditTeam: FC = () => {
     }
   }, [navigate, dispatch, success]);
 
-  const handleSubmit = async (formData: IAddFormInputs) => {
+  const handleSubmit = async (formData: ITeamFormInputs) => {
     const { name, division, conference } = formData;
     const dataToServer: IUpdateTeamData = {
       id: Number(teamId),

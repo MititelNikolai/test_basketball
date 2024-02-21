@@ -30,9 +30,10 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
   } = styles;
 
   const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div>
-      <p className={textStyles}>{label}</p>
+      {label && <p className={textStyles}>{label}</p>}
       <div className={inputGroup}>
         <input
           value={value}
@@ -41,9 +42,9 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
           type={showPassword ? "text" : inputType}
           min={inputType === "number" ? 0 : undefined}
           className={inputStyles}
-          style={
-            background === "white" ? { backgroundColor: "#fff" } : undefined
-          }
+          style={{
+            backgroundColor: background === "white" ? "#fff" : undefined,
+          }}
           placeholder={placeholder}
           ref={ref}
           {...props}

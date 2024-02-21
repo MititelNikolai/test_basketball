@@ -1,4 +1,4 @@
-export interface ITeamCardProps {
+export interface ITeamInfoProps {
   id: number;
   name: string;
   foundationYear: number;

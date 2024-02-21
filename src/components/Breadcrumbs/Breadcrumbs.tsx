@@ -1,25 +1,31 @@
 import { FC, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Breadcrumbs.module.css";
 import { IBreadcrumbsProps } from "./IBreadcrumbsProps";
 import { dashIntoSpace } from "../../utils/stringFunctions";
 import IconCreate from "../../ui/icons/IconCreate";
 import IconDelete from "../../ui/icons/IconDelete";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteTeam } from "../../core/redux/slices/team/teamActions";
-import { RootState } from "../../core/redux/store";
-import { resetSuccess } from "../../core/redux/slices/team/teamSlice";
+import { useDispatch } from "react-redux";
 
-const Breadcrumbs: FC<IBreadcrumbsProps> = ({ pathname, actions = false }) => {
+const Breadcrumbs: FC<IBreadcrumbsProps> = ({
+  pathname,
+  actions = false,
+  deleteAction,
+  successAction,
+  id,
+  success,
+}) => {
   const dispatch = useDispatch();
-  const { success } = useSelector((state: RootState) => state.team);
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     if (success) {
-      dispatch(resetSuccess());
-      navigate("/teams");
+      const match = location.pathname.match(/^\/([^/]+)/);
+      const currentUrl = match ? match[0] : "/";
+      successAction && dispatch(successAction);
+      navigate(currentUrl);
     }
-  }, [navigate, dispatch, success]);
+  }, [navigate, dispatch, success, location.pathname, successAction]);
   const {
     breadcrumbsContainer,
     breadcrumbsStyle,
@@ -27,7 +33,6 @@ const Breadcrumbs: FC<IBreadcrumbsProps> = ({ pathname, actions = false }) => {
     singleTeamActions,
     deleteButton,
   } = styles;
-  const { teamId } = useParams();
 
   const pathnames = pathname.split("/").filter((x) => x);
   return (
@@ -51,13 +56,13 @@ const Breadcrumbs: FC<IBreadcrumbsProps> = ({ pathname, actions = false }) => {
       </div>
       {actions && (
         <div className={singleTeamActions}>
-          <Link to={`${teamId}/edit`}>
+          <Link to={`${id}/edit`}>
             <IconCreate height={24} width={24} />
           </Link>
           <div
             className={deleteButton}
             onClick={() => {
-              dispatch(deleteTeam(Number(teamId)) as any);
+              deleteAction && dispatch(deleteAction as any);
             }}
           >
             <IconDelete height={24} width={24} color='#E4163A' />

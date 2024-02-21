@@ -1,4 +1,4 @@
-.addTeamFormContainer {
+.playerFormContainer {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -14,4 +14,16 @@
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
+}
+
+.playerInfoStyles {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.inputWrapper {
+  width: 171px;
+  /*  padding-right: 0.75rem; */
 }
