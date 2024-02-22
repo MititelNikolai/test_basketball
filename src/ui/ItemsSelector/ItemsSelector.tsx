@@ -31,7 +31,9 @@ const ItemSelector: React.ForwardRefRenderFunction<
                 placeholder={placeholder}
                 classNamePrefix='custom-selector'
                 defaultValue={
-                  (options && options[defaultValueIndex || NaN]) || undefined
+                  options &&
+                  defaultValueIndex !== undefined &&
+                  options[defaultValueIndex]
                 }
                 unstyled
                 styles={{

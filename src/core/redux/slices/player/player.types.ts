@@ -3,7 +3,7 @@ export interface InitialState {
   error: any | null;
   success: boolean;
   playerDataFromServer: IDataFromServer;
-  currentPlayer?: IPlayerData;
+  currentPlayer?: ISinglePlayerData;
   positionsPlayers?: Array<string>;
 }
 
@@ -17,7 +17,20 @@ export interface IPlayerData {
   name: string;
   number: number;
   position: string;
-  team: number | string;
+  team: number;
+  birthday: string;
+  height: number;
+  weight: number;
+  avatarUrl: string;
+  id: number;
+}
+
+export interface ISinglePlayerData {
+  name: string;
+  number: number;
+  position: string;
+  team: number;
+  teamName: string;
   birthday: string;
   height: number;
   weight: number;
@@ -30,7 +43,7 @@ export interface IPlayerDataToServer {
   name: string;
   number: number;
   position: string;
-  team: number | string;
+  team: number;
   birthday: Date | string;
   height: number;
   weight: number;

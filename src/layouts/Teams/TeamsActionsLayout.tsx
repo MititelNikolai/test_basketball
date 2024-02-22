@@ -16,7 +16,6 @@ const TeamsActionsLayout: FC = () => {
   const { loading, success } = useSelector((state: RootState) => state.team);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("TeamActionRendered");
     if (team?.id !== Number(teamId)) {
       location.pathname !== `/teams` &&
         location.pathname !== `/teams/add-team` &&

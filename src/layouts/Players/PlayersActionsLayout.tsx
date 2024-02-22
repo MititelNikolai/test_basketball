@@ -19,7 +19,6 @@ const PlayersActionsLayout: FC = () => {
   const { loading, success } = useSelector((state: RootState) => state.player);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("PlayersActionsRendered");
     if (player?.id !== Number(playerId)) {
       location.pathname !== `/players` &&
         location.pathname !== `/players/add-player` &&

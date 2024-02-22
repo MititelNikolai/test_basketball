@@ -3,15 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { resetSuccess } from "../../core/redux/slices/player/playerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
-import {
-  IPlayerData,
-  IPlayerDataToServer,
-} from "../../core/redux/slices/player/player.types";
+import { IPlayerData } from "../../core/redux/slices/player/player.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import {
-  playerAdd,
-  updatePlayer,
-} from "../../core/redux/slices/player/playerAction";
+import { updatePlayer } from "../../core/redux/slices/player/playerAction";
 import { IPlayerFormInputs } from "../AddPlayer/components/IPlayerFormProps";
 import PlayerForm from "../AddPlayer/components/PlayerForm";
 import styles from "./EditPlayer.module.css";
@@ -19,6 +13,7 @@ const EditPlayer: FC = () => {
   const { editPlayerContainer } = styles;
   const { loading, success } = useSelector((state: RootState) => state.player);
   const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { playerId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,10 +22,9 @@ const EditPlayer: FC = () => {
       navigate("/players");
     }
   }, [navigate, dispatch, success]);
-  const { playerId } = useParams();
+
   const handleSubmit = async (formData: IPlayerFormInputs) => {
     const { name, number, position, team, birthday } = formData;
-    console.log(formData);
     const dataToServer: IPlayerData = {
       id: Number(playerId),
       name: name.trim(),

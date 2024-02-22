@@ -15,13 +15,14 @@ import Pagination from "../../components/Pagination/Pagination";
 import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
 import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 import emptyPlayers from "../../assets/img/emptyPlayers.png";
+import { getTeams } from "../../core/redux/slices/team/teamActions";
 
 const Players: FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const players = useSelector(selectPlayers);
   const teams = useSelector(selectTeams);
-  const playersOnDisplay = transformPlayersData(players, teams);
+  const [playersOnDisplay, setPlayersOnDisplay] = useState<any>(undefined);
   const countPlayers = useSelector(getNumberOfPlayers);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
@@ -44,6 +45,7 @@ const Players: FC = () => {
 
   useEffect(() => {
     if (location.pathname === "/players" && !searchName) {
+      dispatch(getTeams({}) as any);
       dispatch(
         getPlayers({
           pageSize: itemsPerPage || 6,
@@ -51,7 +53,9 @@ const Players: FC = () => {
         }) as any
       );
     }
-
+    if (teams.length !== 0) {
+      setPlayersOnDisplay(transformPlayersData(players, teams));
+    }
     if (searchName) {
       dispatch(
         getPlayers({ name: searchName, pageSize: itemsPerPage || 6 }) as any

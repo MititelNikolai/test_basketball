@@ -4,6 +4,7 @@ import {
   IGetPlayersParameters,
   IPlayerData,
   IPlayerDataToServer,
+  ISinglePlayerData,
 } from "./player.types";
 import { RootState } from "../../store";
 import axios from "axios";
@@ -113,7 +114,7 @@ export const getPlayer = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
-      return data as IPlayerData;
+      return data as ISinglePlayerData;
     } catch (error: any) {
       return rejectWithValue(`Failed to fetch players: ${error.message}`);
     }

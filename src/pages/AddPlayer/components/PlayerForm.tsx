@@ -15,11 +15,12 @@ import Input from "../../../ui/Input/Input";
 import ItemsSelector from "../../../ui/ItemsSelector/ItemsSelector";
 import { selectTeams } from "../../../core/redux/slices/team/teamSlice";
 import Button from "../../../ui/Button/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getTeams } from "../../../core/redux/slices/team/teamActions";
 import { getPositionsWithSpaces } from "../../../api/additionalRequests";
 import { RootState } from "../../../core/redux/store";
 import { jsonDateToString } from "../../../utils/stringFunctions";
+
 const PlayerForm: FC<IPlayerFormProps> = ({
   onSubmit,
   edit = false,
@@ -49,9 +50,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const teams = useSelector(selectTeams);
+  const player = useSelector(selectPlayer);
   useEffect(() => {
-    dispatch(getTeams({}) as any);
-
     const fetchData = async () => {
       try {
         const data = await getPositionsWithSpaces(userInfo.token);
@@ -65,21 +66,20 @@ const PlayerForm: FC<IPlayerFormProps> = ({
       }
     };
     fetchData();
-    if (teams) {
-      const teamsOptions: Array<ITeamsOptions> = teams?.map((team) => ({
+    if (teams.length !== 0) {
+      const options: Array<ITeamsOptions> = teams?.map((team) => ({
         value: team.id,
         label: team.name,
       }));
-      setTeamsOptions(teamsOptions);
-      const index = teamsOptions.findIndex((obj: any) => {
+      const index = options.findIndex((obj: any) => {
         return obj.value === player?.team;
       });
+
       setPlayerCurrentTeam(index);
+
+      setTeamsOptions(options);
     }
   }, [dispatch, userInfo.token]);
-
-  const teams = useSelector(selectTeams);
-  const player = useSelector(selectPlayer);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -103,7 +103,6 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     data: IPlayerFormInputs
   ) => {
     onSubmit(data);
-    console.log(data);
   };
   const submitError: SubmitErrorHandler<IPlayerFormInputs> = (data) => {
     console.log("Errors", data);
@@ -145,7 +144,6 @@ const PlayerForm: FC<IPlayerFormProps> = ({
 
             {edit ? (
               <>
-                {console.log("ItemsSelector Rendered", playerCurrentPosition)}
                 <ItemsSelector
                   defaultValueIndex={playerCurrentPosition}
                   forForm
@@ -161,11 +159,11 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                 />
 
                 <ItemsSelector
-                  forForm
                   defaultValueIndex={playerCurrentTeam}
+                  forForm
                   textPosition='left'
                   label='Team'
-                  options={teamsOptions}
+                  options={teamsOptions && teamsOptions}
                   handleChange={(option) => setValue("team", option?.value)}
                   selectErrorMessage={errors.team?.message}
                   isClearable
