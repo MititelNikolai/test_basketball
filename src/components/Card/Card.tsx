@@ -31,6 +31,7 @@ const TeamCard: FC<ICardProps> = ({
         <img
           className={cardImg}
           src={`${backendUrl}${type === "team" ? imageUrl : avatarUrl}`}
+          style={{ width: type === "player" ? "274px" : "150px" }}
           alt='Card Logo'
         />
       </div>
