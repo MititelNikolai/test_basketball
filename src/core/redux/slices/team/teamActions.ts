@@ -68,6 +68,7 @@ export const getTeams = createAsyncThunk(
       });
       return data;
     } catch (error: any) {
+      localStorage.removeItem("userData");
       return rejectWithValue(`Failed to fetch teams: ${error.message}`);
     }
   }

@@ -12,7 +12,7 @@
 .playerInfoImageContainer {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
 
   width: 33.1875rem;
 }

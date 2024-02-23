@@ -66,7 +66,6 @@ const ItemSelector: React.ForwardRefRenderFunction<
           <Select
             placeholder={placeholder}
             classNamePrefix='custom-selector'
-            /* defaultValue={options[0]} */
             unstyled
             styles={{
               valueContainer: (styles) => ({

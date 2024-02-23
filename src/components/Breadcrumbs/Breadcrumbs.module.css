@@ -7,6 +7,8 @@
   justify-content: space-between;
   background-color: var(--color-white);
   border-radius: 0.625rem 0.625rem 0 0;
+  border: 0.5px solid var(--color-grey-light);
+  border-bottom: none;
 }
 
 .breadcrumbsStyle {

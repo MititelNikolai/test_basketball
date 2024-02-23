@@ -52,6 +52,7 @@ export interface IPlayerDataToServer {
 
 export interface IGetPlayersParameters {
   name?: string;
+  teamIds?: Array<number>;
   page?: number;
   pageSize?: number;
 }

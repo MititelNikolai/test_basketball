@@ -15,23 +15,27 @@ import Pagination from "../../components/Pagination/Pagination";
 import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
 import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 import emptyPlayers from "../../assets/img/emptyPlayers.png";
-import { getTeams } from "../../core/redux/slices/team/teamActions";
+import { SelectOptions } from "./components/PlayerMultiSelect/IPlayerMultiSelect";
 
 const Players: FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const players = useSelector(selectPlayers);
   const teams = useSelector(selectTeams);
+
   const [playersOnDisplay, setPlayersOnDisplay] = useState<any>(undefined);
   const countPlayers = useSelector(getNumberOfPlayers);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
+  const [searchTeam, setSearchTeam] = useState<Array<SelectOptions>>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
+
   const options = [
     { value: 6, label: "6" },
     { value: 12, label: "12" },
     { value: 24, label: "24" },
   ];
+
   const pageCount =
     countPlayers && itemsPerPage && Math.ceil(countPlayers / itemsPerPage);
 
@@ -44,8 +48,11 @@ const Players: FC = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/players" && !searchName) {
-      dispatch(getTeams({}) as any);
+    if (
+      location.pathname === "/players" &&
+      !searchName &&
+      searchTeam.length === 0
+    ) {
       dispatch(
         getPlayers({
           pageSize: itemsPerPage || 6,
@@ -53,26 +60,45 @@ const Players: FC = () => {
         }) as any
       );
     }
-    if (teams.length !== 0) {
-      setPlayersOnDisplay(transformPlayersData(players, teams));
-    }
-    if (searchName) {
-      dispatch(
-        getPlayers({ name: searchName, pageSize: itemsPerPage || 6 }) as any
-      );
-    }
-
-    return () => {
-      /* setSearchName(undefined); */
-    };
   }, [
     dispatch,
     location.pathname,
     currentPage,
-    searchName,
     itemsPerPage,
     pageCount,
+    searchTeam.length,
+    searchName,
   ]);
+
+  useEffect(() => {
+    if (searchName && !searchTeam) {
+      dispatch(
+        getPlayers({ name: searchName, pageSize: itemsPerPage || 6 }) as any
+      );
+    }
+    if (searchTeam && !searchName) {
+      const teamIds = searchTeam.map((team) => Number(team.value));
+      dispatch(
+        getPlayers({
+          teamIds,
+          pageSize: itemsPerPage || 6,
+        }) as any
+      );
+    }
+    if (searchName && searchTeam) {
+      const teamIds = searchTeam.map((team) => Number(team.value));
+      dispatch(
+        getPlayers({
+          name: searchName,
+          teamIds,
+          pageSize: itemsPerPage || 6,
+        }) as any
+      );
+    }
+  }, [searchName, searchTeam, itemsPerPage, dispatch]);
+  useEffect(() => {
+    setPlayersOnDisplay(transformPlayersData(players, teams));
+  }, [players, teams]);
   const { playersContainer, cardsContainer, playersNavigation } = styles;
   return (
     <>
@@ -80,9 +106,16 @@ const Players: FC = () => {
         <section className={playersContainer}>
           <PlayersActions
             inSearch={!!searchName}
-            resetAction={() => setSearchName(undefined)}
-            filter={(search) => {
+            resetAction={() => {
+              setSearchName(undefined);
+              setSearchTeam([]);
+            }}
+            filterName={(search) => {
               handleFilter(search);
+            }}
+            searchTeam={searchTeam}
+            filterTeams={(selected) => {
+              setSearchTeam(selected);
             }}
           />
 
@@ -104,7 +137,9 @@ const Players: FC = () => {
                 />
                 <ItemsSelector
                   options={options}
-                  handleChange={(option) => setItemsPerPage(option?.value)}
+                  handleChange={(option) => {
+                    setItemsPerPage(option?.value);
+                  }}
                 />
               </div>
             </>

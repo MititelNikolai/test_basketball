@@ -38,13 +38,11 @@
   border-radius: 0.25rem;
   font-family: var(--font-avenir-medium);
   color: var(--color-grey-light);
-  /*  border: 0.5px solid var(--color-grey-lightest-v1); */
 }
 
 .custom-selector__option {
   cursor: pointer !important;
   padding: 0.25rem 0 0.25rem 0.875rem;
-
   font-size: 15px;
   background-color: var(--color-white);
   border: 0.25px solid var(--color-grey-lightest-v1);

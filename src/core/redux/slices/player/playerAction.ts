@@ -8,6 +8,7 @@ import {
 } from "./player.types";
 import { RootState } from "../../store";
 import axios from "axios";
+import qs from "qs";
 
 export const playerAdd = createAsyncThunk(
   "player/add",
@@ -59,7 +60,7 @@ export const updatePlayer = createAsyncThunk(
 export const getPlayers = createAsyncThunk(
   "player/getPlayers",
   async (
-    { name, page, pageSize }: IGetPlayersParameters = {},
+    { name, teamIds, page, pageSize }: IGetPlayersParameters = {},
     { rejectWithValue, getState }
   ) => {
     const { auth } = getState() as RootState;
@@ -67,6 +68,12 @@ export const getPlayers = createAsyncThunk(
     try {
       const { data } = await axios.get(`${backendUrl}/api/Player/GetPlayers`, {
         params: { name, page, pageSize },
+        paramsSerializer: (params) => {
+          return qs.stringify(
+            { ...params, TeamIds: teamIds },
+            { arrayFormat: "repeat" }
+          );
+        },
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -74,6 +81,7 @@ export const getPlayers = createAsyncThunk(
       });
       return data;
     } catch (error: any) {
+      localStorage.removeItem("userData");
       return rejectWithValue(`Failed to fetch players: ${error.message}`);
     }
   }

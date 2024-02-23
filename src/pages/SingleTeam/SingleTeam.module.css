@@ -1,13 +1,54 @@
-.singleTeamContainer {
+.singleTeamTable {
   background-color: var(--color-white);
   border: 0.5px solid var(--color-grey-light);
-  border-radius: 0 0 0.625rem 0.625rem;
-  overflow: hidden;
+  border-radius: 10px;
+  font-family: var(--font-avenir-medium);
+  color: var(--color-grey-light);
 }
-.singleTeamBreadcrumbs {
+.tableHeader {
+  font-size: 1.125rem;
+  padding: 1rem 2rem;
+}
+.singleTeamContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.teamInfoTable {
   width: 100%;
+}
+.teamInfoTable > tbody:last-child {
+  border: none !important;
+}
+
+.teamInfoTableInner {
+  display: flex;
+}
+.teamInfoTableInner > td {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 0.5px solid var(--color-grey-light);
+  text-align: center;
+  font-size: 0.875rem;
+}
+.teamInfoTableInner > tr {
+  border-bottom: 0.5px solid var(--color-grey-light);
+}
+.playerInfo {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  gap: 1rem;
+}
+.playerDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.playerName {
+  color: var(--color-grey);
+}
+.playerAvatar {
+  width: 2.5rem;
+  border-radius: 50%;
 }

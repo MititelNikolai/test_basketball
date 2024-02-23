@@ -1,15 +1,24 @@
 import { FC } from "react";
 import Select from "react-select";
 import "./PlayerMultiSelect.css";
-const PlayerMultiSelect: FC = () => {
+import { IPlayerMultiSelect } from "./IPlayerMultiSelect";
+
+const PlayerMultiSelect: FC<IPlayerMultiSelect> = ({
+  options,
+  selectedValues,
+  handleChange,
+}) => {
   return (
     <Select
+      isClearable={false}
       classNamePrefix='playerMultiSelect'
       closeMenuOnSelect={false}
-      defaultValue={["", ""]}
+      value={selectedValues}
+      onChange={(selectedOptions) => handleChange(selectedOptions)}
       isMulti
-      /* options={colourOptions}
-          styles={colourStyles} */
+      menuPosition='fixed'
+      unstyled
+      options={options}
     />
   );
 };
