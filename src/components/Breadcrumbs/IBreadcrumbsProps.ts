@@ -6,4 +6,5 @@ export interface IBreadcrumbsProps {
   editAction?: () => void;
   successAction?: any;
   success?: boolean;
+  needBorder?: boolean;
 }

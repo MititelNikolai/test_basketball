@@ -7,6 +7,7 @@
   transition: opacity 0.5s ease-in-out;
   width: 29.38rem;
   height: 2.5rem;
+  padding: 0.5rem 1rem;
   background-color: var(--color-red-light);
   font-family: var(--font-avenir-medium);
   font-size: 1rem;
@@ -18,3 +19,24 @@
 .notificationStyle.visible {
   opacity: 1;
 }
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .notificationStyle {
+    width: inherit;
+    margin: 0 auto;
+    top: 2.5rem;
+    right: 0;
+    left: 0;
+    align-items: center;
+  }
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+/* @media screen and (max-width: 375px) {
+  .notificationStyle {
+    width: auto;
+  }
+} */

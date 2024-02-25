@@ -26,17 +26,13 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading }) => {
 
   const password = watch("password", "");
 
-  // Длина логина: Минимальная длина от 4 до 8 символов
   const minLengthForLogin = 4;
   const maxLengthForLogin = 20;
 
-  // Разрешенные символы в логине
   const allowedCharactersForLogin = /^[a-zA-Z0-9]+$/;
 
-  // Длина пароля: Рекомендуется использовать пароли с длиной не менее 8 символов
   const minLengthForPassword = 8;
 
-  // Сложность пароля: Должен содержать комбинацию букв верхнего и нижнего регистра, цифр и специальных символов
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
 

@@ -14,7 +14,12 @@ import { useSelector } from "react-redux";
 import { selectTeam } from "../../../core/redux/slices/team/teamSlice";
 
 const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
-  const { fieldsContainer, teamFormContainer, buttonsContainer } = styles;
+  const {
+    fieldsContainer,
+    teamFormContainer,
+    buttonsContainer,
+    imageUploader,
+  } = styles;
   const navigate = useNavigate();
 
   const team = useSelector(selectTeam);
@@ -48,23 +53,25 @@ const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
       className={teamFormContainer}
       onSubmit={handleSubmit(submitHandler, submitError)}
     >
-      {edit ? (
-        <ImageUpload
-          edit
-          imageUrl={initialTeam.imageUrl}
-          {...register("imageUrl", {
-            required: { value: true, message: "Image is required" },
-          })}
-          setValueForTeam={setValue}
-        />
-      ) : (
-        <ImageUpload
-          {...register("file_img", {
-            required: { value: true, message: "Image is required" },
-          })}
-          setValueForTeam={setValue}
-        />
-      )}
+      <div className={imageUploader}>
+        {edit ? (
+          <ImageUpload
+            edit
+            imageUrl={initialTeam.imageUrl}
+            {...register("imageUrl", {
+              required: { value: true, message: "Image is required" },
+            })}
+            setValueForTeam={setValue}
+          />
+        ) : (
+          <ImageUpload
+            {...register("file_img", {
+              required: { value: true, message: "Image is required" },
+            })}
+            setValueForTeam={setValue}
+          />
+        )}
+      </div>
       <div className={fieldsContainer}>
         <Input
           inputType='text'

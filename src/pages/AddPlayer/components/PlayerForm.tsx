@@ -16,7 +16,6 @@ import ItemsSelector from "../../../ui/ItemsSelector/ItemsSelector";
 import { selectTeams } from "../../../core/redux/slices/team/teamSlice";
 import Button from "../../../ui/Button/Button";
 import { useNavigate } from "react-router-dom";
-import { getTeams } from "../../../core/redux/slices/team/teamActions";
 import { getPositionsWithSpaces } from "../../../api/additionalRequests";
 import { RootState } from "../../../core/redux/store";
 import { jsonDateToString } from "../../../utils/stringFunctions";
@@ -45,6 +44,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     playerInfoStyles,
     inputWrapper,
     buttonsContainer,
+    imageUploader,
   } = styles;
 
   const dispatch = useDispatch();
@@ -66,6 +66,8 @@ const PlayerForm: FC<IPlayerFormProps> = ({
       }
     };
     fetchData();
+  }, [dispatch, userInfo.token, player?.position]);
+  useEffect(() => {
     if (teams.length !== 0) {
       const options: Array<ITeamsOptions> = teams?.map((team) => ({
         value: team.id,
@@ -79,7 +81,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
 
       setTeamsOptions(options);
     }
-  }, [dispatch, userInfo.token]);
+  }, [player?.position, player?.team, teams]);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -105,7 +107,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     onSubmit(data);
   };
   const submitError: SubmitErrorHandler<IPlayerFormInputs> = (data) => {
-    console.log("Errors", data);
+    /*  console.log("Errors", data); */
   };
 
   return (
@@ -115,23 +117,25 @@ const PlayerForm: FC<IPlayerFormProps> = ({
           className={playerFormContainer}
           onSubmit={handleSubmit(submitHandler, submitError)}
         >
-          {edit ? (
-            <ImageUpload
-              edit
-              imageUrl={initialPlayer.avatarUrl}
-              {...register("avatarUrl", {
-                required: { value: true, message: "Image is required" },
-              })}
-              setValueForPlayer={setValue}
-            />
-          ) : (
-            <ImageUpload
-              {...register("file_img", {
-                required: { value: true, message: "Image is required" },
-              })}
-              setValueForPlayer={setValue}
-            />
-          )}
+          <div className={imageUploader}>
+            {edit ? (
+              <ImageUpload
+                edit
+                imageUrl={initialPlayer.avatarUrl}
+                {...register("avatarUrl", {
+                  required: { value: true, message: "Image is required" },
+                })}
+                setValueForPlayer={setValue}
+              />
+            ) : (
+              <ImageUpload
+                {...register("file_img", {
+                  required: { value: true, message: "Image is required" },
+                })}
+                setValueForPlayer={setValue}
+              />
+            )}
+          </div>
           <div className={fieldsContainer}>
             <Input
               inputType='text'

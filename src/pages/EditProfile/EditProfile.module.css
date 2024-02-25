@@ -1,4 +1,8 @@
-.teamFormContainer {
+.editProfileContainer {
+  background-color: var(--color-white);
+  border-radius: 0 0 0.625rem 0.625rem;
+}
+.editProfileContainer {
   display: flex;
   flex-direction: row;
   gap: 8.5rem;
@@ -21,7 +25,7 @@
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
 @media screen and (max-width: 1230px) {
-  .teamFormContainer {
+  .editProfileContainer {
     flex-direction: column;
     padding: 0 1.5rem 1.5rem 1.5rem;
     gap: 3rem;
@@ -40,9 +44,9 @@
 /*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
 
 @media screen and (max-width: 375px) {
-  .teamFormContainer {
+  .editProfileContainer {
     flex-direction: column;
-    padding: 0 1.5rem;
+    /*     padding: 0 1.5rem; */
     gap: 3rem;
   }
   .imageUploader {

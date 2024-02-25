@@ -1,5 +1,6 @@
 .inputGroup {
   position: relative;
+  width: inherit;
 }
 
 .inputStyles {
@@ -10,6 +11,7 @@
   font-family: var(--font-avenir-medium);
   color: var(--color-grey-dark);
   padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
 }
 
 .inputStyles::placeholder {
@@ -51,4 +53,19 @@
   transform: translateY(-50%);
   cursor: pointer;
   background-color: transparent;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  /* .textStyles {
+    font-size: 1.06rem;
+  } */
+}
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .textStyles {
+    font-size: 0.9375rem;
+  }
 }

@@ -2,9 +2,12 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  gap: 8.5rem;
   padding: 3rem 0;
 }
-
+.imageUploader {
+  padding-left: 4.8rem;
+}
 .fieldsContainer {
   display: flex;
   flex-direction: column;
@@ -24,6 +27,53 @@
 }
 
 .inputWrapper {
-  width: 171px;
-  /*  padding-right: 0.75rem; */
+  width: 10.7rem;
+}
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1230px) {
+  .playerFormContainer {
+    flex-direction: column;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    gap: 3rem;
+  }
+  .imageUploader {
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fieldsContainer {
+    width: inherit;
+  }
+
+  .inputWrapper {
+    width: 9rem;
+  }
+  .buttonsContainer {
+    justify-content: space-between;
+    gap: unset;
+  }
+  .buttonsContainer > button {
+    width: 9rem;
+  }
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .teamFormContainer {
+    flex-direction: column;
+    padding: 0 1.5rem;
+    gap: 3rem;
+  }
+  .imageUploader {
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fieldsContainer {
+    width: inherit;
+  }
 }

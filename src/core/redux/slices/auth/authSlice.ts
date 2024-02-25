@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, userLogin } from "./authActions";
+import { registerUser, userLogin, userUpdate } from "./authActions";
 import { RootState } from "../../store";
 import { IAuthSlice, IUser } from "./auth.types";
 
@@ -9,8 +9,8 @@ const data: IUser | null = storedUserData ? JSON.parse(storedUserData) : null;
 const initialState: IAuthSlice = {
   loading: false,
   userInfo: {
-    name: null,
-    avatarUrl: null,
+    name: data ? data?.name : null,
+    avatarUrl: data ? data?.avatarUrl : null,
     token: data ? data?.token : null,
   },
   error: null,
@@ -28,6 +28,12 @@ const authSlice = createSlice({
       state.userInfo.token = null;
       state.isAuthenticated = false;
       localStorage.removeItem("userData");
+    },
+    resetError: (state) => {
+      state.error = null;
+    },
+    resetSuccess: (state) => {
+      state.success = false;
     },
   },
   extraReducers(builder) {
@@ -61,10 +67,23 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    //Update
+    builder.addCase(userUpdate.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(userUpdate.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(userUpdate.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetError, resetSuccess } = authSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.auth.userInfo;
 export const selectIsAuthenticated = (state: RootState) =>

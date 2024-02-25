@@ -8,6 +8,7 @@ import { ILoginData } from "../../core/redux/slices/auth/auth.types";
 
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
+import { resetError } from "../../core/redux/slices/auth/authSlice";
 const Authorization: FC = () => {
   const { loading, error, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
@@ -16,7 +17,10 @@ const Authorization: FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) navigate("/");
-  }, [navigate, isAuthenticated]);
+    return () => {
+      dispatch(resetError());
+    };
+  }, [navigate, isAuthenticated, dispatch]);
   const handleSubmit = (data: ILoginData) => {
     dispatch(userLogin(data) as any);
   };

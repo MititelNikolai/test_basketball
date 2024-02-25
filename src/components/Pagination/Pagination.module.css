@@ -10,7 +10,6 @@
   align-items: center;
   height: 2.5rem;
   width: 2.5rem;
-
   font-family: var(--font-avenir-medium);
   font-size: 0.875rem;
   color: var(--color-grey);
@@ -20,4 +19,23 @@
 .pageCountNumberActive {
   background-color: var(--color-red);
   color: var(--color-white);
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .pageCountNumber {
+    height: 1.75rem;
+    width: 1.75rem;
+    font-size: 0.9375rem;
+  }
+}
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .pageCountNumber {
+    height: 1.75rem;
+    width: 1.75rem;
+    font-size: 0.9375rem;
+  }
 }

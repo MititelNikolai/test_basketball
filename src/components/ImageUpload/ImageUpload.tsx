@@ -7,7 +7,10 @@ import { backendUrl } from "../../core/redux/apiData";
 const ImageUpload: React.ForwardRefRenderFunction<
   HTMLInputElement,
   IPropsImage
-> = ({ setValueForTeam, setValueForPlayer, edit, imageUrl }, ref) => {
+> = (
+  { setValueForTeam, setValueForPlayer, setValueForUser, edit, imageUrl },
+  ref
+) => {
   const { uploadImageContainer, uploadImage, uploadImageInput } = styles;
   const [previewImage, setPreviewImage] = useState<string | null | undefined>(
     edit ? `${backendUrl}${imageUrl}` : null
@@ -24,7 +27,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
     if (file) {
       setValueForTeam && setValueForTeam("file_img", file);
       setValueForPlayer && setValueForPlayer("file_img", file);
-
+      setValueForUser && setValueForUser("file_img", file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result as string | null);

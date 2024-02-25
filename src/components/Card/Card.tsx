@@ -16,7 +16,9 @@ const TeamCard: FC<ICardProps> = ({
   const {
     teamCardContainer,
     teamCardImg,
+    teamCardImgPlayer,
     cardImg,
+    cardImgPlayer,
     teamCardInfo,
     teamName,
     teamYear,
@@ -25,13 +27,13 @@ const TeamCard: FC<ICardProps> = ({
   return (
     <Link to={`${id}`} className={teamCardContainer}>
       <div
-        className={teamCardImg}
-        style={{ alignItems: type === "team" ? "center" : "end" }}
+        className={
+          type === "team" ? teamCardImg : `${teamCardImg} ${teamCardImgPlayer}`
+        }
       >
         <img
-          className={cardImg}
+          className={type === "team" ? cardImg : `${cardImg} ${cardImgPlayer}`}
           src={`${backendUrl}${type === "team" ? imageUrl : avatarUrl}`}
-          style={{ width: type === "player" ? "274px" : "150px" }}
           alt='Card Logo'
         />
       </div>

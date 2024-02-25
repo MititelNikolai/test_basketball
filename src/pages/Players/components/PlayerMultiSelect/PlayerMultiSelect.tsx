@@ -10,6 +10,7 @@ const PlayerMultiSelect: FC<IPlayerMultiSelect> = ({
 }) => {
   return (
     <Select
+      className='playerMultiSelectContainer'
       isClearable={false}
       classNamePrefix='playerMultiSelect'
       closeMenuOnSelect={false}

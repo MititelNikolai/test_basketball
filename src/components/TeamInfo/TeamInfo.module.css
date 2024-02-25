@@ -52,3 +52,50 @@
   font-family: var(--font-avenir-medium);
   font-size: 1.125rem;
 }
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1230px) {
+  .teamInfoContainer {
+    flex-direction: column;
+    height: 33.875rem;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+  }
+  .teamInfoImageContainer {
+    width: 5.625rem;
+    margin-bottom: 3rem;
+  }
+  .teamInfoDescriptionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .teamInfoName {
+    font-size: 1.06rem;
+  }
+  .descriptionGrid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: unset;
+    gap: 2rem;
+  }
+  .descriptionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .descriptionKey {
+    font-size: 1.06rem;
+  }
+
+  .descriptionValue {
+    font-size: 0.9375rem;
+  }
+}

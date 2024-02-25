@@ -45,3 +45,90 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .playersContainer {
+    padding-bottom: 1rem;
+  }
+  .actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    height: max-content;
+    margin: 0;
+  }
+
+  .actionWrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+  .actionsContainer > a {
+    width: 100%;
+  }
+  .actionWrapper > button {
+    width: 100%;
+  }
+  .actionWrapper input {
+    width: 100%;
+  }
+  .cardsContainer {
+    width: 100%;
+    height: unset;
+    padding: 1rem 0;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.75rem;
+    overflow: scroll;
+  }
+  .teamNavigation {
+    margin: 0;
+    height: 1.75rem;
+  }
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .playersContainer {
+    padding-bottom: 1rem;
+  }
+  .actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    height: max-content;
+    margin: 0;
+  }
+
+  .actionWrapper {
+    flex-direction: column;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .actionsContainer > a {
+    width: 100%;
+  }
+
+  .actionWrapper > button {
+    width: 100%;
+  }
+  .cardsContainer {
+    width: 100%;
+    height: unset;
+    padding: 1rem 0;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.75rem;
+    overflow: scroll;
+  }
+  .teamNavigation {
+    margin: 0;
+    height: 1.75rem;
+  }
+}

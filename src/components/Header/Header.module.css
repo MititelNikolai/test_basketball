@@ -11,8 +11,11 @@
   position: relative;
   z-index: 10;
 }
-
-.userContainer {
+.headerLogo {
+  width: 175px;
+  height: 44px;
+}
+.userContainer > a {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,4 +29,69 @@
 .userAvatar {
   height: 2.25rem;
   width: 2.25rem;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.headerMobileMenu {
+  display: none;
+}
+.leftMenu {
+  display: none;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .userContainer {
+    display: none;
+  }
+  .logoWrapper {
+    position: static;
+    margin: 0 auto;
+  }
+  .headerContainer {
+    padding: 0 0.75rem;
+    align-items: center;
+    justify-content: unset;
+    height: 3.875rem;
+  }
+  .headerMobileMenu {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+  }
+  .leftMenu {
+    display: flex;
+  }
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .headerLogo {
+    display: flex;
+    width: 8.5rem;
+    height: 2.125rem;
+  }
+  .userContainer {
+    display: none;
+  }
+  .logoWrapper {
+    position: static;
+    margin: 0 auto;
+  }
+  .headerContainer {
+    padding: 0 0.75rem;
+    align-items: center;
+    justify-content: unset;
+    height: 3.875rem;
+  }
+  .headerMobileMenu {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+  }
+  .leftMenu {
+    display: flex;
+  }
 }

@@ -14,6 +14,7 @@ const Breadcrumbs: FC<IBreadcrumbsProps> = ({
   successAction,
   id,
   success,
+  needBorder,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Breadcrumbs: FC<IBreadcrumbsProps> = ({
   }, [navigate, dispatch, success, location.pathname, successAction]);
   const {
     breadcrumbsContainer,
+    breadcrumbsBorder,
     breadcrumbsStyle,
     separateStyle,
     singleTeamActions,
@@ -36,7 +38,13 @@ const Breadcrumbs: FC<IBreadcrumbsProps> = ({
 
   const pathnames = pathname.split("/").filter((x) => x);
   return (
-    <div className={breadcrumbsContainer}>
+    <div
+      className={
+        needBorder
+          ? [breadcrumbsContainer, breadcrumbsBorder].join(" ")
+          : breadcrumbsContainer
+      }
+    >
       <div>
         {pathnames.map((linkName, index) => {
           const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;

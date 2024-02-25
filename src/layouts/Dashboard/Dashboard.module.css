@@ -3,7 +3,33 @@
 }
 .innerContainer {
   width: 100%;
-  height: 992px;
+  /*   height: 992px; */
   background-color: var(--color-grey-lightest-v2);
   padding: 2rem 5rem 0 5rem;
+}
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .sidebarWrapper {
+    display: none;
+  }
+  .innerContainer {
+    width: 100%;
+    height: calc(100vh - 62px);
+    background-color: var(--color-grey-lightest-v2);
+    padding: 1rem 0.75rem;
+  }
+}
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .sidebarWrapper {
+    display: none;
+  }
+  .innerContainer {
+    width: 100%;
+    /* height: calc(100vh - 62px); */
+    background-color: var(--color-grey-lightest-v2);
+    padding: 1rem 0.75rem;
+  }
 }

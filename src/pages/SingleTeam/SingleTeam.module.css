@@ -52,3 +52,55 @@
   width: 2.5rem;
   border-radius: 50%;
 }
+
+.firstColumn {
+  width: 5%;
+  padding-left: 2rem !important;
+  text-align: left !important;
+}
+.secondColumn {
+  width: 70%;
+  text-align: left !important;
+}
+.thirdColumn {
+  width: 12%;
+}
+.fourthColumn {
+  width: 10%;
+}
+.fifthColumn {
+  width: 10%;
+  padding-right: 2rem !important;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1230px) {
+  .singleTeamContainer {
+    gap: 1rem;
+  }
+  .tableHeader {
+    font-size: 0.9375rem;
+    padding: 0.75rem 1rem;
+  }
+  .firstColumn {
+    width: 10%;
+    padding-left: 1rem !important;
+  }
+  .secondColumn {
+    width: 90%;
+  }
+  .thirdColumn {
+    display: none !important;
+    width: 0%;
+  }
+  .fourthColumn {
+    display: none !important;
+    width: 0%;
+  }
+  .fifthColumn {
+    display: none !important;
+    width: 0%;
+    padding-right: 0;
+  }
+}

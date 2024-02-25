@@ -14,3 +14,12 @@
 .loginFormStyles > span {
   text-align: center;
 }
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .loginFormStyles > span {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

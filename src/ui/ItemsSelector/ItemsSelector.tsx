@@ -64,6 +64,7 @@ const ItemSelector: React.ForwardRefRenderFunction<
       ) : (
         <>
           <Select
+            className='custom-selector'
             placeholder={placeholder}
             classNamePrefix='custom-selector'
             unstyled

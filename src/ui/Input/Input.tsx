@@ -32,7 +32,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div>
+    <>
       {label && <p className={textStyles}>{label}</p>}
       <div className={inputGroup}>
         <input
@@ -66,7 +66,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, IPropsInput> = (
       </div>
 
       {needMessage && <p className={warningStyles}>{inputErrorMessage}</p>}
-    </div>
+    </>
   );
 };
 

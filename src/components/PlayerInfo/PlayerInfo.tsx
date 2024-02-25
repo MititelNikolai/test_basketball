@@ -21,7 +21,6 @@ const PlayerInfo: FC<IPlayerInfoProps> = ({
     playerInfoName,
     playerInfoNumber,
     descriptionGrid,
-    descriptionColumn,
     descriptionContainer,
     descriptionKey,
     descriptionValue,
@@ -37,30 +36,26 @@ const PlayerInfo: FC<IPlayerInfoProps> = ({
           <span className={playerInfoNumber}>{` #${number}`}</span>
         </p>
         <div className={descriptionGrid}>
-          <div className={descriptionColumn}>
-            <div className={descriptionContainer}>
-              <p className={descriptionKey}>Position</p>
-              <p className={descriptionValue}>{position}</p>
-            </div>
-            <div className={descriptionContainer}>
-              <p className={descriptionKey}>Height</p>
-              <p className={descriptionValue}>{height}</p>
-            </div>
-            <div className={descriptionContainer}>
-              <p className={descriptionKey}>Age</p>
-              <p className={descriptionValue}>{calculateAge(birthday)}</p>
-            </div>
+          <div className={descriptionContainer}>
+            <p className={descriptionKey}>Position</p>
+            <p className={descriptionValue}>{position}</p>
           </div>
-          <div className={descriptionColumn}>
-            <div className={descriptionContainer}>
-              <p className={descriptionKey}>Team</p>
-              <p className={descriptionValue}>{teamName}</p>
-            </div>
 
-            <div className={descriptionContainer}>
-              <p className={descriptionKey}>Weight</p>
-              <p className={descriptionValue}>{weight}</p>
-            </div>
+          <div className={descriptionContainer}>
+            <p className={descriptionKey}>Team</p>
+            <p className={descriptionValue}>{teamName}</p>
+          </div>
+          <div className={descriptionContainer}>
+            <p className={descriptionKey}>Height</p>
+            <p className={descriptionValue}>{height}</p>
+          </div>
+          <div className={descriptionContainer}>
+            <p className={descriptionKey}>Weight</p>
+            <p className={descriptionValue}>{weight}</p>
+          </div>
+          <div className={descriptionContainer}>
+            <p className={descriptionKey}>Age</p>
+            <p className={descriptionValue}>{calculateAge(birthday)}</p>
           </div>
         </div>
       </div>

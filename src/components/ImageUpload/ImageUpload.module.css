@@ -1,6 +1,5 @@
 .uploadImageContainer {
-  padding-left: 4.8rem;
-  width: 34.32rem;
+  width: inherit;
 }
 .uploadImage {
   display: flex;
@@ -26,4 +25,18 @@
   opacity: 0;
   overflow: hidden;
   z-index: -1;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .uploadImage {
+    width: 11.56rem;
+    height: 9rem;
+  }
 }

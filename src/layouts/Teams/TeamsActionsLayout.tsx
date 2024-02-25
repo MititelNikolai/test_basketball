@@ -27,6 +27,7 @@ const TeamsActionsLayout: FC = () => {
       {!loading && (
         <>
           <Breadcrumbs
+            needBorder={location.pathname === `/teams/${teamId}`}
             id={Number(teamId)}
             deleteAction={teamId && deleteTeam(Number(teamId))}
             success={success}

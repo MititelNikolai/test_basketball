@@ -93,6 +93,7 @@ const Teams: FC = () => {
                   pageCount={pageCount}
                 />
                 <ItemsSelector
+                  placeholder={String(options[0].label)}
                   options={options}
                   handleChange={(option) => setItemsPerPage(option?.value)}
                 />

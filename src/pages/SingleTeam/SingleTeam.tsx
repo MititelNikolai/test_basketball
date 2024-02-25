@@ -23,6 +23,11 @@ const SingleTeam: FC = () => {
     playerInfo,
     playerName,
     playerPosition,
+    firstColumn,
+    secondColumn,
+    thirdColumn,
+    fourthColumn,
+    fifthColumn,
   } = styles;
   const team = useSelector(selectTeam);
   const players = useSelector(selectPlayers);
@@ -46,35 +51,19 @@ const SingleTeam: FC = () => {
                   <td className={tableHeader}>Roster</td>
                 </tr>
                 <tr className={teamInfoTableInner}>
-                  <td
-                    style={{
-                      width: "5%",
-                      paddingLeft: "2rem",
-                      textAlign: "left",
-                    }}
-                  >
-                    #
-                  </td>
-                  <td style={{ width: "70%", textAlign: "left" }}>Player</td>
-                  <td style={{ width: "12%" }}>Height</td>
-                  <td style={{ width: "10%" }}>Weight</td>
-                  <td style={{ width: "4%", paddingRight: "2rem" }}>Age</td>
+                  <td className={firstColumn}>#</td>
+                  <td className={secondColumn}>Player</td>
+                  <td className={thirdColumn}>Height</td>
+                  <td className={fourthColumn}>Weight</td>
+                  <td className={fifthColumn}>Age</td>
                 </tr>
                 {players && players.length !== 0 ? (
                   <>
                     {players.map((player) => {
                       return (
                         <tr className={teamInfoTableInner} key={player.id}>
-                          <td
-                            style={{
-                              width: "5%",
-                              paddingLeft: "2rem",
-                              textAlign: "left",
-                            }}
-                          >
-                            {player.number}
-                          </td>
-                          <td style={{ width: "70%", textAlign: "left" }}>
+                          <td className={firstColumn}>{player.number}</td>
+                          <td className={secondColumn}>
                             <div className={playerInfo}>
                               <img
                                 className={playerAvatar}
@@ -90,12 +79,12 @@ const SingleTeam: FC = () => {
                             </div>
                           </td>
                           <td
-                            style={{ width: "12%" }}
+                            className={thirdColumn}
                           >{`${player.height} cm`}</td>
                           <td
-                            style={{ width: "10%" }}
+                            className={fourthColumn}
                           >{`${player.weight} kg`}</td>
-                          <td style={{ width: "4%", paddingRight: "2rem" }}>
+                          <td className={fifthColumn}>
                             {calculateAge(player.birthday)}
                           </td>
                         </tr>

@@ -1,13 +1,13 @@
 .playerMultiSelect__control {
   width: 22.75rem;
   cursor: pointer !important;
-  color: var(--color-grey-light);
+  color: var(--color-grey);
   background-color: var(--color-white);
   border-radius: 4px;
   border: 0.5px solid var(--color-grey-lightest-v1);
   font-family: var(--font-avenir-medium);
   font-size: 0.9375rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
 }
 .playerMultiSelect__placeholder {
   font-size: 0.875rem;
@@ -54,4 +54,28 @@
 }
 .playerMultiSelect__option:last-child {
   border-radius: 0 0 0.25rem 0.25rem;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .playerMultiSelect__control {
+    width: 100% !important;
+  }
+  .playerMultiSelectContainer {
+    width: inherit;
+  }
+}
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .playerMultiSelect__control {
+    width: 100% !important;
+  }
+  .playerMultiSelectContainer {
+    width: inherit;
+  }
+  .playerMultiSelect__placeholder {
+    font-size: 0.9375rem;
+  }
 }

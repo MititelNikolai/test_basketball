@@ -19,6 +19,15 @@
   justify-content: center;
   align-items: center;
 }
+.teamCardImgPlayer {
+  align-items: end;
+}
+.cardImg {
+  width: 9.375rem;
+}
+.cardImgPlayer {
+  width: 17.125rem;
+}
 
 .teamCardInfo {
   display: flex;
@@ -42,4 +51,74 @@
 }
 .playerNumber {
   color: var(--color-red-light);
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 767px) {
+  .teamCardContainer {
+    min-width: 10.59rem;
+    height: 12.6rem;
+    line-height: 1;
+  }
+  .teamCardImg {
+    height: 6.69rem;
+  }
+  .teamCardInfo {
+    height: 5.875rem;
+    padding: 0.6875rem;
+  }
+  .teamName {
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .teamYear {
+    font-size: 0.8125rem;
+  }
+  .playerNumber {
+    font-size: 0.8125rem;
+  }
+  .cardImg {
+    width: 3.65rem;
+  }
+  .cardImgPlayer {
+    width: 7.6rem;
+  }
+}
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .teamCardContainer {
+    min-width: 10.59rem;
+    height: 12.6rem;
+    line-height: 1;
+  }
+  .teamCardImg {
+    height: 6.69rem;
+  }
+  .teamCardInfo {
+    height: 5.875rem;
+    padding: 0.6875rem;
+  }
+  .teamName {
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .teamYear {
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+  .playerNumber {
+    font-size: 0.8125rem;
+  }
+  .cardImg {
+    width: 3.65rem;
+  }
+  .cardImgPlayer {
+    width: 7.6rem;
+  }
 }

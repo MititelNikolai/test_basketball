@@ -7,8 +7,11 @@
   justify-content: space-between;
   background-color: var(--color-white);
   border-radius: 0.625rem 0.625rem 0 0;
-  border: 0.5px solid var(--color-grey-light);
   border-bottom: none;
+}
+
+.breadcrumbsBorder {
+  border: 0.5px solid var(--color-grey-light);
 }
 
 .breadcrumbsStyle {
@@ -28,4 +31,19 @@
 
 .deleteButton {
   cursor: pointer;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .breadcrumbsContainer {
+    height: 3rem;
+    padding: 1rem 0.75rem 1rem 1rem;
+  }
+  .breadcrumbsStyle {
+    font-size: 0.8125rem;
+  }
+  .singleTeamActions {
+    gap: 0.75rem;
+  }
 }

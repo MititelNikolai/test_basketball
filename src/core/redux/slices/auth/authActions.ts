@@ -1,7 +1,8 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ILoginData, IRegisterData } from "./auth.types";
+import { ILoginData, IRegisterData, IUpdateUserData } from "./auth.types";
 import { backendUrl } from "../../apiData";
+import { RootState } from "../../store";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -47,6 +48,30 @@ export const userLogin = createAsyncThunk(
           "User with the specified username / password was not found."
         );
       }
+    }
+  }
+);
+
+export const userUpdate = createAsyncThunk(
+  "auth/update",
+  async (formData: IUpdateUserData, { rejectWithValue, getState }) => {
+    const { auth } = getState() as RootState;
+    const token = auth.userInfo.token;
+    try {
+      const response = await axios.post(
+        `${backendUrl}/api/Auth/Change`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

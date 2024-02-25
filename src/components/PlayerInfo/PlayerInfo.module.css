@@ -35,14 +35,14 @@
 .descriptionGrid {
   position: relative;
   width: 25.625rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   justify-content: space-between;
-}
-.descriptionColumn {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 3.375rem;
 }
+
 .descriptionContainer {
   display: flex;
   flex-direction: column;
@@ -57,4 +57,51 @@
 .descriptionValue {
   font-family: var(--font-avenir-medium);
   font-size: 1.125rem;
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1230px) {
+  .playerInfoContainer {
+    flex-direction: column;
+    height: 46.8125rem;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+  }
+  .playerInfoImageContainer {
+    width: 8.9375rem;
+    margin-bottom: 3rem;
+  }
+  .playerInfoDescriptionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .playerInfoName {
+    font-size: 1.06rem;
+  }
+  .descriptionGrid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: unset;
+    gap: 2rem;
+  }
+  .descriptionContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .descriptionKey {
+    font-size: 1.06rem;
+  }
+
+  .descriptionValue {
+    font-size: 0.9375rem;
+  }
 }

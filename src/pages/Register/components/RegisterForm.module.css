@@ -19,3 +19,36 @@
 .registerFormStyles > span {
   text-align: center;
 }
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .registerFormHeader {
+    text-align: center;
+  }
+
+  .registerFormStyles {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .registerFormStyles > button {
+    margin-top: 1rem;
+  }
+
+  .registerFormStyles > span {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+/*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
+
+@media screen and (max-width: 375px) {
+  .authLayoutLeftForm {
+    padding: 0 1.5rem 0 1.5rem;
+    width: 100%;
+  }
+}
