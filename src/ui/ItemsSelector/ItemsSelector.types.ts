@@ -13,4 +13,5 @@ export interface ItemsSelectorProps {
   label?: string;
   defaultValueIndex?: number;
   selectErrorMessage?: string;
+  isDisabled?: boolean;
 }

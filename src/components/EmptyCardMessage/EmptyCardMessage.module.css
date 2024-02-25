@@ -13,10 +13,31 @@
   font-family: var(--font-avenir-black);
   font-size: 2.25rem;
   color: var(--color-red-lightest);
-  margin-top: 1.5rem;
 }
 .cardsEmptySubTitle {
   font-family: var(--font-avenir-book);
   font-size: 1.5rem;
   color: var(--color-grey);
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .cardsEmpty {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 3rem 0 1.2rem 0;
+    gap: 3rem;
+    line-height: 1;
+  }
+  .cardsEmpty > img {
+    width: 14.06rem;
+  }
+  .cardsEmptyTitle {
+    margin-top: 0;
+    font-size: 1.06rem;
+  }
+  .cardsEmptySubTitle {
+    font-size: 0.9375rem;
+  }
 }

@@ -91,6 +91,8 @@ const EditProfile: FC = () => {
                 required: { value: true, message: "Image is required" },
               })}
               setValueForUser={setValue}
+              needMessage
+              errorMessage={errors.file_img?.message}
             />
           </div>
           <div className={fieldsContainer}>

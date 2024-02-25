@@ -26,3 +26,17 @@
   color: var(--color-grey);
   font-size: 1.5rem;
 }
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1024px) {
+  .notFoundImg {
+    width: 17.2rem;
+  }
+  .notFoundTitle {
+    font-size: 1.06rem;
+  }
+
+  .notFoundSubtitle {
+    font-size: 0.9375rem;
+  }
+}

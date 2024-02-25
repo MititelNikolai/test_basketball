@@ -11,6 +11,8 @@ interface IPropsImage {
   forwardedRef?: React.RefObject<HTMLInputElement>;
   edit?: boolean;
   imageUrl?: string | undefined;
+  needMessage?: boolean;
+  errorMessage?: string;
 }
 
 export default IPropsImage;

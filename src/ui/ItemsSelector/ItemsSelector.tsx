@@ -17,6 +17,7 @@ const ItemSelector: React.ForwardRefRenderFunction<
     forForm,
     defaultValueIndex,
     selectErrorMessage,
+    isDisabled,
   },
   ref
 ) => {
@@ -28,6 +29,7 @@ const ItemSelector: React.ForwardRefRenderFunction<
             {label && <p className='textStyles'>{label}</p>}
             <div className='inputGroup'>
               <Select
+                isDisabled={isDisabled}
                 placeholder={placeholder}
                 classNamePrefix='custom-selector'
                 defaultValue={

@@ -133,6 +133,8 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   required: { value: true, message: "Image is required" },
                 })}
                 setValueForPlayer={setValue}
+                needMessage
+                errorMessage={errors.file_img?.message}
               />
             )}
           </div>
@@ -167,6 +169,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   forForm
                   textPosition='left'
                   label='Team'
+                  isDisabled
                   options={teamsOptions && teamsOptions}
                   handleChange={(option) => setValue("team", option?.value)}
                   selectErrorMessage={errors.team?.message}

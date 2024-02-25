@@ -69,6 +69,8 @@ const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
               required: { value: true, message: "Image is required" },
             })}
             setValueForTeam={setValue}
+            needMessage
+            errorMessage={errors.file_img?.message}
           />
         )}
       </div>

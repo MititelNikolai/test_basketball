@@ -8,10 +8,19 @@ const ImageUpload: React.ForwardRefRenderFunction<
   HTMLInputElement,
   IPropsImage
 > = (
-  { setValueForTeam, setValueForPlayer, setValueForUser, edit, imageUrl },
+  {
+    setValueForTeam,
+    setValueForPlayer,
+    setValueForUser,
+    edit,
+    imageUrl,
+    needMessage,
+    errorMessage,
+  },
   ref
 ) => {
-  const { uploadImageContainer, uploadImage, uploadImageInput } = styles;
+  const { uploadImageContainer, uploadImage, uploadImageInput, warningStyles } =
+    styles;
   const [previewImage, setPreviewImage] = useState<string | null | undefined>(
     edit ? `${backendUrl}${imageUrl}` : null
   );
@@ -36,23 +45,26 @@ const ImageUpload: React.ForwardRefRenderFunction<
     }
   };
   return (
-    <div className={uploadImageContainer}>
-      <input
-        type='file'
-        ref={fileInputRef}
-        className={uploadImageInput}
-        onChange={handleFileChange}
-      />
-      <div
-        className={uploadImage}
-        onClick={handleImageClick}
-        style={{
-          backgroundImage: previewImage ? `url(${previewImage})` : "",
-        }}
-      >
-        <IconAddImage height={74} width={75} />
+    <>
+      <div className={uploadImageContainer}>
+        <input
+          type='file'
+          ref={fileInputRef}
+          className={uploadImageInput}
+          onChange={handleFileChange}
+        />
+        <div
+          className={uploadImage}
+          onClick={handleImageClick}
+          style={{
+            backgroundImage: previewImage ? `url(${previewImage})` : "",
+          }}
+        >
+          <IconAddImage height={74} width={75} />
+        </div>
       </div>
-    </div>
+      {needMessage && <p className={warningStyles}>{errorMessage}</p>}
+    </>
   );
 };
 

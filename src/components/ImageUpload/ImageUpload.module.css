@@ -26,6 +26,14 @@
   overflow: hidden;
   z-index: -1;
 }
+.warningStyles {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-avenir-medium);
+  color: var(--color-red-lightest);
+  font-size: 0.75rem;
+  height: 1.5rem;
+}
 
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
