@@ -62,8 +62,8 @@ const ImageUpload: React.ForwardRefRenderFunction<
         >
           <IconAddImage height={74} width={75} />
         </div>
+        {needMessage && <p className={warningStyles}>{errorMessage}</p>}
       </div>
-      {needMessage && <p className={warningStyles}>{errorMessage}</p>}
     </>
   );
 };

@@ -29,6 +29,7 @@
 .warningStyles {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: var(--font-avenir-medium);
   color: var(--color-red-lightest);
   font-size: 0.75rem;
@@ -38,6 +39,11 @@
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
 @media screen and (max-width: 1024px) {
+  .uploadImage {
+    flex-direction: column;
+    width: 11.56rem;
+    height: 9rem;
+  }
 }
 
 /*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
