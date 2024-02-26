@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { getPositionsWithSpaces } from "../../../api/additionalRequests";
 import { RootState } from "../../../core/redux/store";
 import { jsonDateToString } from "../../../utils/stringFunctions";
+import { getTeams } from "../../../core/redux/slices/team/teamActions";
 
 const PlayerForm: FC<IPlayerFormProps> = ({
   onSubmit,
@@ -68,6 +69,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     fetchData();
   }, [dispatch, userInfo.token, player?.position]);
   useEffect(() => {
+    if (teams.length === 0) {
+      dispatch(getTeams({}) as any);
+    }
     if (teams.length !== 0) {
       const options: Array<ITeamsOptions> = teams?.map((team) => ({
         value: team.id,
@@ -81,7 +85,8 @@ const PlayerForm: FC<IPlayerFormProps> = ({
 
       setTeamsOptions(options);
     }
-  }, [player?.position, player?.team, teams]);
+    console.log("Rendered");
+  }, [player?.position, player?.team, teams, dispatch]);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -109,7 +114,6 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   const submitError: SubmitErrorHandler<IPlayerFormInputs> = (data) => {
     /*  console.log("Errors", data); */
   };
-
   return (
     <>
       {playerPositions && teamsOptions && (

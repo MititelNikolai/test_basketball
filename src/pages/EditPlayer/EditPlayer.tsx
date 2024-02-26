@@ -53,7 +53,6 @@ const EditPlayer: FC = () => {
           />
         </div>
       )}
-      ;
     </>
   );
 };
