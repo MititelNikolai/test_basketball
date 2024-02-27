@@ -84,7 +84,50 @@
     gap: 0.75rem;
     overflow: scroll;
   }
-  .teamNavigation {
+  .playersNavigation {
+    margin: 0;
+    height: 1.75rem;
+  }
+}
+
+/*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
+
+@media screen and (max-width: 1445px) {
+  .playersContainer {
+    padding-bottom: 1rem;
+  }
+  .actionsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    height: max-content;
+    margin: 0;
+  }
+  .actionsContainer > a {
+    width: 100%;
+  }
+  .actionsContainer > div {
+    width: 100%;
+  }
+
+  .actionWrapper input {
+    width: 100%;
+  }
+  .actionWrapper > button {
+    width: 100%;
+  }
+  .cardsContainer {
+    width: 100%;
+    height: unset;
+    padding: 1rem 0;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.75rem;
+    overflow: scroll;
+  }
+  .playersNavigation {
     margin: 0;
     height: 1.75rem;
   }
@@ -127,7 +170,7 @@
     gap: 0.75rem;
     overflow: scroll;
   }
-  .teamNavigation {
+  .playersNavigation {
     margin: 0;
     height: 1.75rem;
   }

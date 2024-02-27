@@ -37,7 +37,6 @@ const EditProfile: FC = () => {
   const storedUserData = localStorage.getItem("userData");
   if (storedUserData) {
     userData = JSON.parse(storedUserData);
-    console.log(userData);
   }
 
   const user: IEditUser = {
@@ -54,7 +53,6 @@ const EditProfile: FC = () => {
 
   const submitHandler: SubmitHandler<IEditUser> = async (data: IEditUser) => {
     const { avatarUrl, userName, file_img } = data;
-    console.log(userData && userData.token);
     const dataToServer: IEditUserToServer = {
       userName: (userName && userName.trim()) || undefined,
       avatarUrl:
@@ -73,7 +71,7 @@ const EditProfile: FC = () => {
   }, [navigate, dispatch, success]);
 
   const submitError: SubmitErrorHandler<IEditUser> = (data) => {
-    console.log("Errors", data);
+    /*  console.log("Errors", data); */
   };
   return (
     <>

@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./layouts/Dashboard/Dashboard";
@@ -23,6 +23,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
+        <Route path='' element={<Navigate to='/teams' replace />} />
         <Route path='/' element={<PrivateRouter component={Dashboard} />}>
           <Route path='teams' element={<Teams />}>
             <Route element={<TeamsActionsLayout />}>

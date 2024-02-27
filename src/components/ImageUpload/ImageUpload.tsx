@@ -16,6 +16,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
     imageUrl,
     needMessage,
     errorMessage,
+    clearError,
   },
   ref
 ) => {
@@ -37,6 +38,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
       setValueForTeam && setValueForTeam("file_img", file);
       setValueForPlayer && setValueForPlayer("file_img", file);
       setValueForUser && setValueForUser("file_img", file);
+      clearError && clearError();
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result as string | null);
@@ -52,6 +54,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
           ref={fileInputRef}
           className={uploadImageInput}
           onChange={handleFileChange}
+          accept='image/*'
         />
         <div
           className={uploadImage}

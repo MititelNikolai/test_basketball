@@ -42,9 +42,10 @@ const playerSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(playerAdd.fulfilled, (state) => {
+    builder.addCase(playerAdd.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      state.addedPlayerSuccess = action.payload.id;
     });
     builder.addCase(playerAdd.rejected, (state, action) => {
       state.loading = false;

@@ -13,8 +13,9 @@ const Sidebar: FC = () => {
     <nav className={sideBarContainer}>
       <div className={linkWrapper}>
         {links.map((link) => {
-          const active =
-            location.pathname === `/${link.link}` ? "#E4163A" : undefined;
+          const active = location.pathname.includes(`/${link.link}`)
+            ? "#E4163A"
+            : undefined;
           return (
             <NavLink to={link.link} className={linkContainer} key={link.id}>
               <link.icon color={active} height={24} width={24} />

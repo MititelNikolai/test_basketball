@@ -28,11 +28,17 @@ const teamSlice = createSlice({
     resetSuccess: (state) => {
       state.success = false;
     },
+    resetAddedTeamSuccess: (state) => {
+      state.addedTeamSuccess = undefined;
+    },
     clearCurrentTeam: (state) => {
       delete state.currentTeam;
     },
     clearTeamItems: (state) => {
       state.teamDataFromServer.data = [];
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers(builder) {
@@ -41,9 +47,10 @@ const teamSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(addTeam.fulfilled, (state) => {
+    builder.addCase(addTeam.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      state.addedTeamSuccess = action.payload.id;
     });
     builder.addCase(addTeam.rejected, (state, action) => {
       state.loading = false;
@@ -115,6 +122,11 @@ export const getPageTeams = (state: RootState) =>
 export const getSizeTeams = (state: RootState) =>
   state.team.teamDataFromServer.size;
 export const selectTeam = (state: RootState) => state.team.currentTeam;
-export const { resetSuccess, clearCurrentTeam, clearTeamItems } =
-  teamSlice.actions;
+export const {
+  resetSuccess,
+  clearCurrentTeam,
+  clearTeamItems,
+  resetAddedTeamSuccess,
+  resetError,
+} = teamSlice.actions;
 export default teamSlice.reducer;

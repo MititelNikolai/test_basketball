@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Input from "../../ui/Input/Input";
 import IconSearch from "../../ui/icons/IconSearch";
 import Button from "../../ui/Button/Button";
@@ -15,15 +15,19 @@ interface ITeamActions {
 const TeamsActions: FC<ITeamActions> = ({ filter, resetAction, inSearch }) => {
   const { actionsContainer, actionWrapper } = styles;
   const [search, setSearch] = useState("");
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      filter(search);
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [search, filter]);
   return (
     <div className={actionsContainer}>
       <div className={actionWrapper}>
         <Input
           handleClick={
             !inSearch
-              ? () => {
-                  filter(search);
-                }
+              ? () => {}
               : () => {
                   setSearch("");
                   resetAction();

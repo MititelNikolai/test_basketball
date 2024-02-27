@@ -36,6 +36,7 @@ const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<ITeamFormInputs>({ defaultValues: initialTeam });
   const submitHandler: SubmitHandler<ITeamFormInputs> = (
@@ -47,7 +48,6 @@ const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
   const submitError: SubmitErrorHandler<ITeamFormInputs> = (data) => {
     console.log("Errors", data);
   };
-
   return (
     <form
       className={teamFormContainer}
@@ -71,6 +71,7 @@ const TeamForm: FC<TeamFormProps> = ({ onSubmit, loading, edit = false }) => {
             setValueForTeam={setValue}
             needMessage
             errorMessage={errors.file_img?.message}
+            clearError={() => clearErrors("file_img")}
           />
         )}
       </div>

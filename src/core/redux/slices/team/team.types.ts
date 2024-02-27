@@ -4,6 +4,7 @@ export interface InitialState {
   success: boolean;
   teamDataFromServer: IDataFromServer;
   currentTeam?: ITeamData;
+  addedTeamSuccess?: number;
 }
 export interface IDataFromServer {
   data: Array<ITeamData>;

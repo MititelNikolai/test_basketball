@@ -85,7 +85,6 @@ const PlayerForm: FC<IPlayerFormProps> = ({
 
       setTeamsOptions(options);
     }
-    console.log("Rendered");
   }, [player?.position, player?.team, teams, dispatch]);
 
   const initialPlayer: InitialDefaults = {

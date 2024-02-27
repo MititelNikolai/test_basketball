@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
 
 const Register: FC = () => {
-  const { loading, success, isAuthenticated } = useSelector(
+  const { loading, success, isAuthenticated, error } = useSelector(
     (state: RootState) => state.auth
   );
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const Register: FC = () => {
         <RegisterForm
           onSubmit={(data) => handleSubmit(data)}
           loading={loading}
+          error={error}
         />
       </AuthorizationLayout>
     </>

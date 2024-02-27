@@ -8,6 +8,7 @@ interface IPropsImage {
   setValueForTeam?: UseFormSetValue<ITeamFormInputs>;
   setValueForPlayer?: UseFormSetValue<IPlayerFormInputs>;
   setValueForUser?: UseFormSetValue<IEditUser>;
+  clearError?: () => void;
   forwardedRef?: React.RefObject<HTMLInputElement>;
   edit?: boolean;
   imageUrl?: string | undefined;

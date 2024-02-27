@@ -15,17 +15,19 @@ import { playerAdd } from "../../core/redux/slices/player/playerAction";
 const AddPlayer: FC = () => {
   const { addPlayerContainer } = styles;
 
-  const { loading, success } = useSelector((state: RootState) => state.player);
+  const { loading, success, addedPlayerSuccess } = useSelector(
+    (state: RootState) => state.player
+  );
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   dispatch(clearCurrentPlayer());
   useEffect(() => {
-    if (success) {
+    if (addedPlayerSuccess) {
       dispatch(resetSuccess());
-      navigate("/players");
+      navigate(`/players/${addedPlayerSuccess}`);
     }
-  }, [navigate, dispatch, success]);
+  }, [navigate, dispatch, success, addedPlayerSuccess]);
 
   const handleSubmit = async (formData: IPlayerFormInputs) => {
     const { name, number, position, team, birthday } = formData;

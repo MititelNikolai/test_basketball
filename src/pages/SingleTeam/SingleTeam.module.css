@@ -1,9 +1,27 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table,
+th,
+td {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+th,
+td {
+  padding: 0;
+}
 .singleTeamTable {
   background-color: var(--color-white);
   border: 0.5px solid var(--color-grey-light);
   border-radius: 10px;
   font-family: var(--font-avenir-medium);
   color: var(--color-grey-light);
+  overflow: hidden;
 }
 .tableHeader {
   font-size: 1.125rem;
@@ -72,7 +90,32 @@
   width: 10%;
   padding-right: 2rem !important;
 }
+@keyframes blink {
+  0% {
+    background-color: var(--color-red-light);
+    color: var(--color-white);
+  }
+  50% {
+    background-color: var(--color-white);
+    color: var(--color-black);
+  }
+  100% {
+    background-color: var(--color-red-light);
+    color: var(--color-white);
+  }
+}
 
+.warning {
+  background-color: var(--color-red-light);
+  color: var(--color-white);
+  animation: blink 1.7s 1;
+}
+
+.warning .playerName {
+  background-color: var(--color-red-light);
+  color: var(--color-white);
+  animation: blink 1.7s 1;
+}
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
 @media screen and (max-width: 1230px) {

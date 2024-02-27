@@ -10,16 +10,17 @@ import {
   selectTeams,
 } from "../../core/redux/slices/team/teamSlice";
 import { Outlet, useLocation } from "react-router-dom";
-
 import Pagination from "../../components/Pagination/Pagination";
 import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
 import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
+import { RootState } from "../../core/redux/store";
+
 const Teams: FC = () => {
   const { teamsContainer, cardsContainer, teamNavigation } = styles;
-
   const dispatch = useDispatch();
   const teams = useSelector(selectTeams);
   const countTeams = useSelector(getNumberOfTeams);
+  const { addedTeamSuccess } = useSelector((state: RootState) => state.team);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,7 +55,6 @@ const Teams: FC = () => {
         getTeams({ name: searchName, pageSize: itemsPerPage || 6 }) as any
       );
     }
-
     return () => {
       /* setSearchName(undefined); */
     };
@@ -65,6 +65,7 @@ const Teams: FC = () => {
     searchName,
     itemsPerPage,
     pageCount,
+    addedTeamSuccess,
   ]);
 
   return (

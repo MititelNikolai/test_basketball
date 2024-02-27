@@ -20,7 +20,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
 
   return (
     <>
-      {error && <Notification error={error} />}
+      {error && <Notification message={error} />}
       <h2 className={loginFormHeader}>Sing In</h2>
       <form className={loginFormStyles} onSubmit={handleSubmit(submitHandler)}>
         <Input

@@ -9,4 +9,5 @@ export interface RegisterFormInput {
 export interface RegisterFormProps {
   loading: boolean;
   onSubmit: (data: RegisterFormInput) => void;
+  error?: string;
 }

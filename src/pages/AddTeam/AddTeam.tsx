@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import styles from "./AddTeam.module.css";
 import { useNavigate } from "react-router-dom";
-
 import TeamForm from "./components/TeamForm";
 import { ITeamFormInputs } from "./components/ITeamFormInputs";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,21 +12,21 @@ import {
 } from "../../core/redux/slices/team/teamSlice";
 import { IAddTeamData } from "../../core/redux/slices/team/team.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
-
-  const { loading, success } = useSelector((state: RootState) => state.team);
+  const { loading, addedTeamSuccess } = useSelector(
+    (state: RootState) => state.team
+  );
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   dispatch(clearCurrentTeam());
   useEffect(() => {
-    if (success) {
-      dispatch(resetSuccess());
-      navigate("/teams");
+    if (addedTeamSuccess) {
+      navigate(`/teams/${addedTeamSuccess}`);
+      dispatch(resetSuccess() as any);
     }
-  }, [navigate, dispatch, success]);
+  }, [navigate, dispatch, addedTeamSuccess]);
 
   const handleSubmit = async (formData: ITeamFormInputs) => {
     const { name, division, conference } = formData;

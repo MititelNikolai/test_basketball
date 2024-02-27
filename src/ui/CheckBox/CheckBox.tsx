@@ -54,7 +54,7 @@ const CheckBox: React.ForwardRefRenderFunction<
         <>
           <label
             className={
-              error
+              errorText
                 ? `${checkboxContainer} ${checkboxError}`
                 : `${checkboxContainer} `
             }
@@ -69,7 +69,7 @@ const CheckBox: React.ForwardRefRenderFunction<
             />
             <span
               className={
-                disabled
+                errorText
                   ? `${checkboxInput} ${checkboxError}`
                   : `${checkboxInput} `
               }

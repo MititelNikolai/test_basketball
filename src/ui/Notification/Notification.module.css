@@ -1,8 +1,8 @@
 .notificationStyle {
   display: flex;
-  position: fixed;
-  top: 2.5rem;
-  right: 2.5rem;
+  position: absolute;
+  top: 2.25rem;
+  right: 2.25rem;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   width: 29.38rem;
@@ -15,7 +15,9 @@
   border-radius: 4px;
   align-items: center;
   justify-content: center;
+  z-index: 100;
 }
+
 .notificationStyle.visible {
   opacity: 1;
 }
@@ -26,7 +28,7 @@
   .notificationStyle {
     width: inherit;
     margin: 0 auto;
-    top: 2.5rem;
+    top: 2.25rem;
     right: 0;
     left: 0;
     align-items: center;

@@ -17,7 +17,7 @@ const Dashboard: FC = () => {
           <Sidebar />
         </div>
         <div
-          style={{ overflow: activeMenu ? "hidden" : "auto" }}
+          style={{ overflow: activeMenu ? "hidden" : "scroll" }}
           className={innerContainer}
         >
           <Outlet />

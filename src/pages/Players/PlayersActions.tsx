@@ -34,7 +34,12 @@ const PlayersActions: FC<ITeamActions> = ({
     Array<SelectOptions> | undefined
   >();
   const teams = useSelector(selectTeams);
-
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      filterName(search);
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [search, filterName]);
   useEffect(() => {
     dispatch(getTeams({}) as any);
   }, [dispatch]);
@@ -55,9 +60,7 @@ const PlayersActions: FC<ITeamActions> = ({
         <Input
           handleClick={
             !inSearch
-              ? () => {
-                  filterName(search);
-                }
+              ? () => {}
               : () => {
                   setSearch("");
                   resetAction();

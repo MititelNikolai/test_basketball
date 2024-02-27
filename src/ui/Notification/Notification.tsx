@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import styles from "./Notification.module.css";
 interface INotification {
-  error: string;
+  message?: string;
 }
 
-const Notification: FC<INotification> = ({ error }) => {
+const Notification: FC<INotification> = ({ message }) => {
   const { notificationStyle, visible } = styles;
   const [isVisible, setIsVisible] = useState(true);
   useEffect(() => {
@@ -19,7 +19,7 @@ const Notification: FC<INotification> = ({ error }) => {
         isVisible ? `${notificationStyle} ${visible}` : notificationStyle
       }
     >
-      {error}
+      {message}
     </div>
   );
 };

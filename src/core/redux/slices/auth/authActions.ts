@@ -18,9 +18,11 @@ export const registerUser = createAsyncThunk(
         { userName, login, password },
         config
       );
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
+      if (error.response.status === 409) {
+        return rejectWithValue("This user already exists");
+      }
       return rejectWithValue("Registration failed");
     }
   }

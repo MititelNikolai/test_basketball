@@ -1,5 +1,6 @@
 .teamsContainer {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   width: 100%;
@@ -63,7 +64,7 @@
 
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1445px) {
   .teamsContainer {
     padding-bottom: 1rem;
   }

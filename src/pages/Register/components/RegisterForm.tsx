@@ -5,8 +5,9 @@ import Input from "../../../ui/Input/Input";
 import CheckBox from "../../../ui/CheckBox/CheckBox";
 import Button from "../../../ui/Button/Button";
 import CustomLink from "../../../ui/CustomLink/CustomLink";
+import Notification from "../../../ui/Notification/Notification";
 import styles from "./RegisterForm.module.css";
-const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading }) => {
+const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
   const { registerFormStyles, registerFormHeader } = styles;
   const {
     register,
@@ -38,6 +39,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading }) => {
 
   return (
     <>
+      {error && <Notification message={error} />}
       <h2 className={registerFormHeader}>Sing Up</h2>
       <form
         onSubmit={handleSubmit(submitHandler, submitError)}

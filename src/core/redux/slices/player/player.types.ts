@@ -5,6 +5,7 @@ export interface InitialState {
   playerDataFromServer: IDataFromServer;
   currentPlayer?: ISinglePlayerData;
   positionsPlayers?: Array<string>;
+  addedPlayerSuccess?: number;
 }
 
 export interface IDataFromServer {
