@@ -6,22 +6,28 @@ import {
   resetSuccess,
   selectTeam,
 } from "../../core/redux/slices/team/teamSlice";
-import { deleteTeam, getTeam } from "../../core/redux/slices/team/teamActions";
+import {
+  AllTeamActions,
+  deleteTeam,
+  getTeam,
+} from "../../core/redux/slices/team/teamActions";
 import { RootState } from "../../core/redux/store";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const TeamsActionsLayout: FC = () => {
   const location = useLocation();
   const { teamId } = useParams();
   const team = useSelector(selectTeam);
   const { loading, success } = useSelector((state: RootState) => state.team);
-  const dispatch = useDispatch();
+  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   useEffect(() => {
     if (team?.id !== Number(teamId)) {
       location.pathname !== `/teams` &&
         location.pathname !== `/teams/add-team` &&
-        dispatch(getTeam(Number(teamId)) as any);
+        dispatchTeam(getTeam(Number(teamId)));
     }
-  }, [dispatch, teamId, team?.id, location.pathname]);
+  }, [dispatchTeam, teamId, team?.id, location.pathname]);
   return (
     <div>
       {!loading && (

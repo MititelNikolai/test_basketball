@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { IPlayerData } from "../../core/redux/slices/player/player.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { updatePlayer } from "../../core/redux/slices/player/playerAction";
+import {
+  AllPlayersActions,
+  updatePlayer,
+} from "../../core/redux/slices/player/playerAction";
 import { IPlayerFormInputs } from "../AddPlayer/components/IPlayerFormProps";
 import PlayerForm from "../AddPlayer/components/PlayerForm";
 import styles from "./EditPlayer.module.css";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 const EditPlayer: FC = () => {
   const { editPlayerContainer } = styles;
   const { loading, success } = useSelector((state: RootState) => state.player);
@@ -16,6 +20,8 @@ const EditPlayer: FC = () => {
   const { playerId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
+    useDispatch();
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
@@ -38,7 +44,7 @@ const EditPlayer: FC = () => {
         ? await uploadImageToServer(formData.file_img, userInfo.token)
         : formData.avatarUrl,
     };
-    dispatch(updatePlayer(dataToServer) as any);
+    dispatchPlayers(updatePlayer(dataToServer));
   };
   return (
     <>

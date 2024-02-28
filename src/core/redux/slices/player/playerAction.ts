@@ -80,9 +80,9 @@ export const getPlayers = createAsyncThunk(
         },
       });
       return data;
-    } catch (error: any) {
+    } catch (error) {
       localStorage.removeItem("userData");
-      return rejectWithValue(`Failed to fetch players: ${error.message}`);
+      return rejectWithValue(error);
     }
   }
 );
@@ -103,8 +103,8 @@ export const getPositions = createAsyncThunk(
       );
 
       return data;
-    } catch (error: any) {
-      return rejectWithValue(`Failed to fetch Positions: ${error.message}`);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -123,8 +123,8 @@ export const getPlayer = createAsyncThunk(
         },
       });
       return data as ISinglePlayerData;
-    } catch (error: any) {
-      return rejectWithValue(`Failed to fetch players: ${error.message}`);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -143,8 +143,25 @@ export const deletePlayer = createAsyncThunk(
         },
       });
       return data;
-    } catch (error: any) {
-      return rejectWithValue(`Failed to delete player: ${error.message}`);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
+
+// Определение типа для каждого thunk-действия
+type AddPlayerAction = ReturnType<typeof playerAdd.fulfilled>;
+type UpdatePlayerAction = ReturnType<typeof updatePlayer.fulfilled>;
+export type GetPlayersAction = ReturnType<typeof getPlayers.fulfilled>;
+type GetPositionsPlayersAction = ReturnType<typeof getPositions.fulfilled>;
+type GetPlayerAction = ReturnType<typeof getPlayer.fulfilled>;
+type DeletePlayerAction = ReturnType<typeof deletePlayer.fulfilled>;
+
+// Объединение типов для всех возможных действий
+export type AllPlayersActions =
+  | AddPlayerAction
+  | UpdatePlayerAction
+  | GetPlayersAction
+  | GetPositionsPlayersAction
+  | GetPlayerAction
+  | DeletePlayerAction;

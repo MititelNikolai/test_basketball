@@ -6,7 +6,7 @@ export const transformPlayersData = (
   teamsData: Array<ITeamData>
 ) => {
   const teamsMap: Record<number, ITeamData> = teamsData.reduce(
-    (map: any, team) => {
+    (map: Record<number, ITeamData>, team) => {
       map[team.id] = team;
       return map;
     },
@@ -14,7 +14,7 @@ export const transformPlayersData = (
   );
 
   const transformedPlayers = playersData.map((player) => {
-    const teamId: any = player.team;
+    const teamId: number = player.team;
     const teamInfo = teamsMap[teamId] || {};
     return {
       ...player,

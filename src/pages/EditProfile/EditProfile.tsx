@@ -10,8 +10,12 @@ import Input from "../../ui/Input/Input";
 import Button from "../../ui/Button/Button";
 import { IUser } from "../../core/redux/slices/auth/auth.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { userUpdate } from "../../core/redux/slices/auth/authActions";
+import {
+  AllAuthActions,
+  userUpdate,
+} from "../../core/redux/slices/auth/authActions";
 import { resetSuccess } from "../../core/redux/slices/auth/authSlice";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 export interface IEditUser {
   userName: string | null;
   avatarUrl: string | null;
@@ -32,6 +36,8 @@ const EditProfile: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dispatchUser: ThunkDispatch<RootState, void, AllAuthActions> =
+    useDispatch();
   const { loading, success } = useSelector((state: RootState) => state.auth);
   let userData: IUser | null = null;
   const storedUserData = localStorage.getItem("userData");
@@ -60,7 +66,7 @@ const EditProfile: FC = () => {
           (await uploadImageToServer(file_img, userData && userData.token))) ||
         avatarUrl,
     };
-    dispatch(userUpdate(dataToServer) as any);
+    dispatchUser(userUpdate(dataToServer));
   };
 
   useEffect(() => {

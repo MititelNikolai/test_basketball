@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ILoginData, IRegisterData, IUpdateUserData } from "./auth.types";
 import { backendUrl } from "../../apiData";
@@ -19,8 +19,9 @@ export const registerUser = createAsyncThunk(
         config
       );
       return response.data;
-    } catch (error: any) {
-      if (error.response.status === 409) {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 409) {
         return rejectWithValue("This user already exists");
       }
       return rejectWithValue("Registration failed");
@@ -44,8 +45,10 @@ export const userLogin = createAsyncThunk(
       );
       localStorage.setItem("userToken", data.token);
       return data;
-    } catch (error: any) {
-      if (error.response.status === 401) {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response && axiosError.response.status === 401) {
         return rejectWithValue(
           "User with the specified username / password was not found."
         );
@@ -78,3 +81,14 @@ export const userUpdate = createAsyncThunk(
   }
 );
 export default registerUser;
+
+// Определение типа для каждого thunk-действия
+type RegisterUserAction = ReturnType<typeof registerUser.fulfilled>;
+type LoginUserAction = ReturnType<typeof userLogin.fulfilled>;
+type UpdateUserAction = ReturnType<typeof userUpdate.fulfilled>;
+
+// Объединение типов для всех возможных действий
+export type AllAuthActions =
+  | RegisterUserAction
+  | LoginUserAction
+  | UpdateUserAction;

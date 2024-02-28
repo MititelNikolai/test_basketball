@@ -19,7 +19,11 @@ import { useNavigate } from "react-router-dom";
 import { getPositionsWithSpaces } from "../../../api/additionalRequests";
 import { RootState } from "../../../core/redux/store";
 import { jsonDateToString } from "../../../utils/stringFunctions";
-import { getTeams } from "../../../core/redux/slices/team/teamActions";
+import {
+  AllTeamActions,
+  getTeams,
+} from "../../../core/redux/slices/team/teamActions";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const PlayerForm: FC<IPlayerFormProps> = ({
   onSubmit,
@@ -48,7 +52,8 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     imageUploader,
   } = styles;
 
-  const dispatch = useDispatch();
+  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   const navigate = useNavigate();
 
   const teams = useSelector(selectTeams);
@@ -58,7 +63,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
       try {
         const data = await getPositionsWithSpaces(userInfo.token);
         setPlayerPositions(data);
-        const index = data.findIndex((obj: any) => {
+        const index = data.findIndex((obj: IPositionsOptions) => {
           return obj.value === player?.position;
         });
         setPlayerCurrentPosition(index);
@@ -67,17 +72,17 @@ const PlayerForm: FC<IPlayerFormProps> = ({
       }
     };
     fetchData();
-  }, [dispatch, userInfo.token, player?.position]);
+  }, [userInfo.token, player?.position]);
   useEffect(() => {
     if (teams.length === 0) {
-      dispatch(getTeams({}) as any);
+      dispatchTeam(getTeams({}));
     }
     if (teams.length !== 0) {
       const options: Array<ITeamsOptions> = teams?.map((team) => ({
         value: team.id,
         label: team.name,
       }));
-      const index = options.findIndex((obj: any) => {
+      const index = options.findIndex((obj: ITeamsOptions) => {
         return obj.value === player?.team;
       });
 
@@ -85,7 +90,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
 
       setTeamsOptions(options);
     }
-  }, [player?.position, player?.team, teams, dispatch]);
+  }, [player?.position, player?.team, teams, dispatchTeam]);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -159,7 +164,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Position'
                   options={playerPositions}
-                  handleChange={(option) => setValue("position", option?.value)}
+                  handleChange={(option) =>
+                    setValue("position", String(option?.value) ?? undefined)
+                  }
                   selectErrorMessage={errors.position?.message}
                   isClearable
                   {...register("position", {
@@ -174,7 +181,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   label='Team'
                   isDisabled
                   options={teamsOptions && teamsOptions}
-                  handleChange={(option) => setValue("team", option?.value)}
+                  handleChange={(option) =>
+                    setValue("team", Number(option?.value) ?? undefined)
+                  }
                   selectErrorMessage={errors.team?.message}
                   isClearable
                   {...register("team", {
@@ -189,7 +198,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Position'
                   options={playerPositions}
-                  handleChange={(option) => setValue("position", option?.value)}
+                  handleChange={(option) =>
+                    setValue("position", String(option?.value) ?? undefined)
+                  }
                   selectErrorMessage={errors.position?.message}
                   isClearable
                   {...register("position", {
@@ -201,7 +212,9 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Team'
                   options={teamsOptions}
-                  handleChange={(option) => setValue("team", option?.value)}
+                  handleChange={(option) =>
+                    setValue("team", Number(option?.value) ?? undefined)
+                  }
                   selectErrorMessage={errors.team?.message}
                   isClearable
                   {...register("team", {

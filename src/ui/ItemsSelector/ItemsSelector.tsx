@@ -56,7 +56,7 @@ const ItemSelector: React.ForwardRefRenderFunction<
                 isClearable={isClearable}
                 menuPosition='fixed'
                 options={options}
-                onChange={(option) => handleChange(option)}
+                onChange={(option) => handleChange(option ? option : null)}
               />
 
               <p className='warningStyles'>{selectErrorMessage}</p>

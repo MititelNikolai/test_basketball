@@ -4,10 +4,14 @@ import PlayersActions from "./PlayersActions";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearCurrentPlayer,
   getNumberOfPlayers,
   selectPlayers,
 } from "../../core/redux/slices/player/playerSlice";
-import { getPlayers } from "../../core/redux/slices/player/playerAction";
+import {
+  AllPlayersActions,
+  getPlayers,
+} from "../../core/redux/slices/player/playerAction";
 import { selectTeams } from "../../core/redux/slices/team/teamSlice";
 import { transformPlayersData } from "../../utils/teamIdToName";
 import Card from "../../components/Card/Card";
@@ -16,14 +20,21 @@ import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
 import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 import emptyPlayers from "../../assets/img/emptyPlayers.png";
 import { SelectOptions } from "./components/PlayerMultiSelect/IPlayerMultiSelect";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../core/redux/store";
+import { DisplayData } from "./Players.types";
 
 const Players: FC = () => {
   const location = useLocation();
+  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
+    useDispatch();
   const dispatch = useDispatch();
   const players = useSelector(selectPlayers);
   const teams = useSelector(selectTeams);
 
-  const [playersOnDisplay, setPlayersOnDisplay] = useState<any>(undefined);
+  const [playersOnDisplay, setPlayersOnDisplay] = useState<
+    Array<DisplayData> | undefined
+  >(undefined);
   const countPlayers = useSelector(getNumberOfPlayers);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [searchTeam, setSearchTeam] = useState<Array<SelectOptions>>([]);
@@ -53,15 +64,17 @@ const Players: FC = () => {
       !searchName &&
       searchTeam.length === 0
     ) {
-      dispatch(
+      dispatch(clearCurrentPlayer());
+      dispatchPlayers(
         getPlayers({
           pageSize: itemsPerPage || 6,
           page: pageCount === 1 ? 1 : currentPage,
-        }) as any
+        })
       );
     }
   }, [
     dispatch,
+    dispatchPlayers,
     location.pathname,
     currentPage,
     itemsPerPage,
@@ -72,30 +85,30 @@ const Players: FC = () => {
 
   useEffect(() => {
     if (searchName && !searchTeam) {
-      dispatch(
-        getPlayers({ name: searchName, pageSize: itemsPerPage || 6 }) as any
+      dispatchPlayers(
+        getPlayers({ name: searchName, pageSize: itemsPerPage || 6 })
       );
     }
     if (searchTeam && !searchName) {
       const teamIds = searchTeam.map((team) => Number(team.value));
-      dispatch(
+      dispatchPlayers(
         getPlayers({
           teamIds,
           pageSize: itemsPerPage || 6,
-        }) as any
+        })
       );
     }
     if (searchName && searchTeam) {
       const teamIds = searchTeam.map((team) => Number(team.value));
-      dispatch(
+      dispatchPlayers(
         getPlayers({
           name: searchName,
           teamIds,
           pageSize: itemsPerPage || 6,
-        }) as any
+        })
       );
     }
-  }, [searchName, searchTeam, itemsPerPage, dispatch]);
+  }, [searchName, searchTeam, itemsPerPage, dispatchPlayers]);
   useEffect(() => {
     setPlayersOnDisplay(transformPlayersData(players, teams));
   }, [players, teams]);
@@ -139,7 +152,7 @@ const Players: FC = () => {
                   placeholder={String(options[0].label)}
                   options={options}
                   handleChange={(option) => {
-                    setItemsPerPage(option?.value);
+                    setItemsPerPage(Number(option?.value) ?? undefined);
                   }}
                 />
               </div>

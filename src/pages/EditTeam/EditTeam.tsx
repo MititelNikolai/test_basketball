@@ -8,7 +8,11 @@ import { RootState } from "../../core/redux/store";
 import { IUpdateTeamData } from "../../core/redux/slices/team/team.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
 import { ITeamFormInputs } from "../AddTeam/components/ITeamFormInputs";
-import { updateTeam } from "../../core/redux/slices/team/teamActions";
+import {
+  AllTeamActions,
+  updateTeam,
+} from "../../core/redux/slices/team/teamActions";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const EditTeam: FC = () => {
   const { editTeamContainer } = styles;
@@ -17,10 +21,12 @@ const EditTeam: FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
-      navigate("/teams");
+      navigate(`/teams`);
     }
   }, [navigate, dispatch, success]);
 
@@ -36,7 +42,7 @@ const EditTeam: FC = () => {
         ? await uploadImageToServer(formData.file_img, userInfo.token)
         : formData.imageUrl,
     };
-    dispatch(updateTeam(dataToServer) as any);
+    dispatchTeam(updateTeam(dataToServer));
   };
 
   return (

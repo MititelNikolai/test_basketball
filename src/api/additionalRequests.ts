@@ -14,7 +14,7 @@ export const getPositionsWithSpaces = async (token: string | null) => {
       label: addSpaceBeforeUppercase(position),
       value: position,
     }));
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching positions:", error);
     throw error;
   }

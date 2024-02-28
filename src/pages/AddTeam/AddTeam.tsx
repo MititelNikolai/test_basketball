@@ -5,13 +5,17 @@ import TeamForm from "./components/TeamForm";
 import { ITeamFormInputs } from "./components/ITeamFormInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
-import { addTeam } from "../../core/redux/slices/team/teamActions";
+import {
+  AllTeamActions,
+  addTeam,
+} from "../../core/redux/slices/team/teamActions";
 import {
   clearCurrentTeam,
   resetSuccess,
 } from "../../core/redux/slices/team/teamSlice";
 import { IAddTeamData } from "../../core/redux/slices/team/team.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
   const { loading, addedTeamSuccess } = useSelector(
@@ -20,11 +24,13 @@ const AddTeam: FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   dispatch(clearCurrentTeam());
   useEffect(() => {
     if (addedTeamSuccess) {
       navigate(`/teams/${addedTeamSuccess}`);
-      dispatch(resetSuccess() as any);
+      dispatch(resetSuccess());
     }
   }, [navigate, dispatch, addedTeamSuccess]);
 
@@ -39,7 +45,7 @@ const AddTeam: FC = () => {
         formData.file_img &&
         (await uploadImageToServer(formData.file_img, userInfo.token)),
     };
-    dispatch(addTeam(dataToServer) as any);
+    dispatchTeam(addTeam(dataToServer));
   };
 
   return (

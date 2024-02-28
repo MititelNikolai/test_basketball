@@ -67,9 +67,9 @@ export const getTeams = createAsyncThunk(
         },
       });
       return data;
-    } catch (error: any) {
+    } catch (error) {
       localStorage.removeItem("userData");
-      return rejectWithValue(`Failed to fetch teams: ${error.message}`);
+      return rejectWithValue(error);
     }
   }
 );
@@ -88,8 +88,8 @@ export const getTeam = createAsyncThunk(
         },
       });
       return data as ITeamData;
-    } catch (error: any) {
-      return rejectWithValue(`Failed to fetch teams: ${error.message}`);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -107,8 +107,23 @@ export const deleteTeam = createAsyncThunk(
         },
       });
       return data;
-    } catch (error: any) {
-      return rejectWithValue(`Failed to delete team: ${error.message}`);
+    } catch (error: unknown) {
+      return rejectWithValue(error);
     }
   }
 );
+
+// Определение типа для каждого thunk-действия
+type AddTeamAction = ReturnType<typeof addTeam.fulfilled>;
+type UpdateTeamAction = ReturnType<typeof updateTeam.fulfilled>;
+type GetTeamsAction = ReturnType<typeof getTeams.fulfilled>;
+type GetTeamAction = ReturnType<typeof getTeam.fulfilled>;
+type DeleteTeamAction = ReturnType<typeof deleteTeam.fulfilled>;
+
+// Объединение типов для всех возможных действий
+export type AllTeamActions =
+  | AddTeamAction
+  | UpdateTeamAction
+  | GetTeamsAction
+  | GetTeamAction
+  | DeleteTeamAction;

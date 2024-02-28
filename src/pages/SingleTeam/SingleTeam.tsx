@@ -1,16 +1,19 @@
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { resetError, selectTeam } from "../../core/redux/slices/team/teamSlice";
 
 import styles from "./SingleTeam.module.css";
 import TeamInfo from "../../components/TeamInfo/TeamInfo";
-import { getPlayers } from "../../core/redux/slices/player/playerAction";
+import {
+  AllPlayersActions,
+  getPlayers,
+} from "../../core/redux/slices/player/playerAction";
 import { useParams } from "react-router-dom";
 import { selectPlayers } from "../../core/redux/slices/player/playerSlice";
 import { backendUrl } from "../../core/redux/apiData";
 import { calculateAge } from "../../utils/calculateAge";
 import { RootState } from "../../core/redux/store";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 const SingleTeam: FC = () => {
   const {
     singleTeamContainer,
@@ -35,15 +38,17 @@ const SingleTeam: FC = () => {
   const players = useSelector(selectPlayers);
   const { error } = useSelector((state: RootState) => state.team);
   const { teamId } = useParams();
+  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
+    useDispatch();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(
-      getPlayers({ teamIds: [Number(teamId)] && [Number(teamId)] }) as any
+    dispatchPlayers(
+      getPlayers({ teamIds: [Number(teamId)] && [Number(teamId)] })
     );
     setTimeout(() => {
       dispatch(resetError());
     }, 5000);
-  }, [dispatch, teamId]);
+  }, [dispatch, teamId, dispatchPlayers]);
   return (
     <>
       {team && (

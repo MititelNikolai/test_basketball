@@ -4,8 +4,12 @@ import Card from "../../components/Card/Card";
 import emptyTeams from "../../assets/img/EmptyTeams.png";
 import styles from "./Teams.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTeams } from "../../core/redux/slices/team/teamActions";
 import {
+  AllTeamActions,
+  getTeams,
+} from "../../core/redux/slices/team/teamActions";
+import {
+  clearCurrentTeam,
   getNumberOfTeams,
   selectTeams,
 } from "../../core/redux/slices/team/teamSlice";
@@ -14,9 +18,13 @@ import Pagination from "../../components/Pagination/Pagination";
 import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
 import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 import { RootState } from "../../core/redux/store";
+import { SelectOptions } from "../../ui/ItemsSelector/ItemsSelector.types";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const Teams: FC = () => {
   const { teamsContainer, cardsContainer, teamNavigation } = styles;
+  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   const dispatch = useDispatch();
   const teams = useSelector(selectTeams);
   const countTeams = useSelector(getNumberOfTeams);
@@ -24,7 +32,7 @@ const Teams: FC = () => {
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
-  const options = [
+  const options: Array<SelectOptions> = [
     { value: 6, label: "6" },
     { value: 12, label: "12" },
     { value: 24, label: "24" },
@@ -44,21 +52,21 @@ const Teams: FC = () => {
   useEffect(() => {
     location.pathname === "/teams" &&
       !searchName &&
-      dispatch(
+      dispatchTeam(
         getTeams({
           pageSize: itemsPerPage || 6,
           page: pageCount === 1 ? 1 : currentPage,
-        }) as any
+        })
       );
+    location.pathname === "/teams" && dispatch(clearCurrentTeam());
     if (searchName) {
-      dispatch(
-        getTeams({ name: searchName, pageSize: itemsPerPage || 6 }) as any
-      );
+      dispatchTeam(getTeams({ name: searchName, pageSize: itemsPerPage || 6 }));
     }
     return () => {
       /* setSearchName(undefined); */
     };
   }, [
+    dispatchTeam,
     dispatch,
     location.pathname,
     currentPage,
@@ -96,7 +104,9 @@ const Teams: FC = () => {
                 <ItemsSelector
                   placeholder={String(options[0].label)}
                   options={options}
-                  handleChange={(option) => setItemsPerPage(option?.value)}
+                  handleChange={(option) =>
+                    setItemsPerPage(Number(option?.value) ?? undefined)
+                  }
                 />
               </div>
             </>

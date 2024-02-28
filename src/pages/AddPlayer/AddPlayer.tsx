@@ -11,7 +11,11 @@ import {
 } from "../../core/redux/slices/player/playerSlice";
 import { IPlayerFormInputs } from "./components/IPlayerFormProps";
 import { IPlayerDataToServer } from "../../core/redux/slices/player/player.types";
-import { playerAdd } from "../../core/redux/slices/player/playerAction";
+import {
+  AllPlayersActions,
+  playerAdd,
+} from "../../core/redux/slices/player/playerAction";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 const AddPlayer: FC = () => {
   const { addPlayerContainer } = styles;
 
@@ -21,6 +25,8 @@ const AddPlayer: FC = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
+    useDispatch();
   dispatch(clearCurrentPlayer());
   useEffect(() => {
     if (addedPlayerSuccess) {
@@ -43,7 +49,7 @@ const AddPlayer: FC = () => {
         formData.file_img &&
         (await uploadImageToServer(formData.file_img, userInfo.token)),
     };
-    dispatch(playerAdd(dataToServer) as any);
+    dispatchPlayers(playerAdd(dataToServer));
   };
   return (
     <section className={addPlayerContainer}>

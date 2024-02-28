@@ -1,12 +1,14 @@
+import { SingleValue } from "react-select";
+
 export interface SelectOptions {
-  value: number | string | undefined;
-  label: string | undefined;
+  value: number | string;
+  label: string;
 }
 
 export interface ItemsSelectorProps {
   options?: Array<SelectOptions>;
-  handleChange: (option: any) => void;
-  textPosition?: "center" | "left" | undefined;
+  handleChange: (option: SingleValue<SelectOptions>) => void;
+  textPosition?: "center" | "left";
   isClearable?: boolean;
   placeholder?: string;
   forForm?: boolean;

@@ -8,23 +8,26 @@ import {
 import { RootState } from "../../core/redux/store";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import {
+  AllPlayersActions,
   deletePlayer,
   getPlayer,
 } from "../../core/redux/slices/player/playerAction";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 
 const PlayersActionsLayout: FC = () => {
   const location = useLocation();
   const { playerId } = useParams();
   const player = useSelector(selectPlayer);
   const { loading, success } = useSelector((state: RootState) => state.player);
-  const dispatch = useDispatch();
+  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
+    useDispatch();
   useEffect(() => {
     if (player?.id !== Number(playerId)) {
       location.pathname !== `/players` &&
         location.pathname !== `/players/add-player` &&
-        dispatch(getPlayer(Number(playerId)) as any);
+        dispatchPlayers(getPlayer(Number(playerId)));
     }
-  }, [dispatch, playerId, player?.id, location.pathname]);
+  }, [dispatchPlayers, playerId, player?.id, location.pathname]);
   return (
     <div>
       <div>

@@ -7,9 +7,14 @@ import Button from "../../ui/Button/Button";
 import styles from "./Players.module.css";
 import PlayerMultiSelect from "./components/PlayerMultiSelect/PlayerMultiSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { getTeams } from "../../core/redux/slices/team/teamActions";
+import {
+  AllTeamActions,
+  getTeams,
+} from "../../core/redux/slices/team/teamActions";
 import { selectTeams } from "../../core/redux/slices/team/teamSlice";
 import { SelectOptions } from "./components/PlayerMultiSelect/IPlayerMultiSelect";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../core/redux/store";
 
 interface ITeamActions {
   filterName: (search: string) => void;
@@ -27,7 +32,8 @@ const PlayersActions: FC<ITeamActions> = ({
   searchTeam,
 }) => {
   const { actionsContainer, actionWrapper } = styles;
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, void, AllTeamActions> =
+    useDispatch();
   const [search, setSearch] = useState("");
 
   const [filterOptions, setFilterOptions] = useState<
@@ -41,7 +47,7 @@ const PlayersActions: FC<ITeamActions> = ({
     return () => clearTimeout(timeoutId);
   }, [search, filterName]);
   useEffect(() => {
-    dispatch(getTeams({}) as any);
+    dispatch(getTeams({}));
   }, [dispatch]);
   useEffect(() => {
     teams.length !== 0 &&
@@ -79,7 +85,7 @@ const PlayersActions: FC<ITeamActions> = ({
           selectedValues={searchTeam}
           options={filterOptions}
           handleChange={(option) => {
-            filterTeams(option);
+            filterTeams(option ? option.slice() : []);
           }}
         />
       </div>
