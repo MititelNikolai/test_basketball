@@ -8,6 +8,7 @@ import {
 } from "./player.types";
 import { RootState } from "../../store";
 import axios from "axios";
+import AxiosStatic from "axios";
 import qs from "qs";
 
 export const playerAdd = createAsyncThunk(
@@ -29,7 +30,10 @@ export const playerAdd = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -53,7 +57,10 @@ export const updatePlayer = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -82,7 +89,10 @@ export const getPlayers = createAsyncThunk(
       return data;
     } catch (error) {
       localStorage.removeItem("userData");
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -124,7 +134,10 @@ export const getPlayer = createAsyncThunk(
       });
       return data as ISinglePlayerData;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -144,7 +157,10 @@ export const deletePlayer = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );

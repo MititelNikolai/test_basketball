@@ -1,6 +1,9 @@
 import { FC, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { resetSuccess } from "../../core/redux/slices/player/playerSlice";
+import {
+  clearCurrentPlayer,
+  resetSuccess,
+} from "../../core/redux/slices/player/playerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { IPlayerData } from "../../core/redux/slices/player/player.types";
@@ -25,9 +28,10 @@ const EditPlayer: FC = () => {
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
-      navigate("/players");
+      dispatch(clearCurrentPlayer());
+      navigate(`/players/${playerId}`);
     }
-  }, [navigate, dispatch, success]);
+  }, [navigate, dispatch, success, playerId]);
 
   const handleSubmit = async (formData: IPlayerFormInputs) => {
     const { name, number, position, team, birthday } = formData;

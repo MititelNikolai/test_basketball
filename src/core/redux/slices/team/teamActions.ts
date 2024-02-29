@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { backendUrl } from "../../apiData";
 import axios from "axios";
+import AxiosStatic from "axios";
 import { RootState } from "../../store";
 import { IAddTeamData, IGetTeamsParameters, ITeamData } from "./team.types";
 
@@ -23,7 +24,10 @@ export const addTeam = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -46,7 +50,10 @@ export const updateTeam = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -69,7 +76,10 @@ export const getTeams = createAsyncThunk(
       return data;
     } catch (error) {
       localStorage.removeItem("userData");
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -89,7 +99,10 @@ export const getTeam = createAsyncThunk(
       });
       return data as ITeamData;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -107,8 +120,13 @@ export const deleteTeam = createAsyncThunk(
         },
       });
       return data;
-    } catch (error: unknown) {
-      return rejectWithValue(error);
+    } catch (error) {
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      if (error.response?.status === 500) {
+        return rejectWithValue("Team has players");
+      }
     }
   }
 );

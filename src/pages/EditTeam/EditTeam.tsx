@@ -2,7 +2,10 @@ import { FC, useEffect } from "react";
 import TeamForm from "../AddTeam/components/TeamForm";
 import styles from "./EditTeam.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { resetSuccess } from "../../core/redux/slices/team/teamSlice";
+import {
+  clearCurrentTeam,
+  resetSuccess,
+} from "../../core/redux/slices/team/teamSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
 import { IUpdateTeamData } from "../../core/redux/slices/team/team.types";
@@ -26,9 +29,10 @@ const EditTeam: FC = () => {
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
-      navigate(`/teams`);
+      dispatch(clearCurrentTeam());
+      navigate(`/teams/${teamId}`);
     }
-  }, [navigate, dispatch, success]);
+  }, [navigate, dispatch, success, teamId]);
 
   const handleSubmit = async (formData: ITeamFormInputs) => {
     const { name, division, conference } = formData;

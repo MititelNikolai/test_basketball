@@ -11,21 +11,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../core/redux/store";
 import { ThunkDispatch } from "@reduxjs/toolkit";
+import { resetError } from "../../core/redux/slices/auth/authSlice";
 
 const Register: FC = () => {
   const { loading, success, isAuthenticated, error } = useSelector(
     (state: RootState) => state.auth
   );
   const navigate = useNavigate();
-
+  const dispatchUser: ThunkDispatch<RootState, void, AllAuthActions> =
+    useDispatch();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (success) navigate("/login");
     if (isAuthenticated) navigate("/");
-  }, [navigate, isAuthenticated, success]);
-  const dispatch: ThunkDispatch<RootState, void, AllAuthActions> =
-    useDispatch();
+    return () => {
+      dispatch(resetError());
+    };
+  }, [navigate, isAuthenticated, success, dispatch]);
 
-  const handleSubmit = (data: IRegisterData) => dispatch(registerUser(data));
+  const handleSubmit = (data: IRegisterData) =>
+    dispatchUser(registerUser(data));
   return (
     <>
       <AuthorizationLayout image={SingUp}>
