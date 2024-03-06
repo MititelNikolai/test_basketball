@@ -35,6 +35,9 @@ const playerSlice = createSlice({
     clearPlayerItems: (state) => {
       state.playerDataFromServer.data = [];
     },
+    resetAddedPlayerSuccess: (state) => {
+      state.addedPlayerSuccess = undefined;
+    },
   },
   extraReducers(builder) {
     //playerAdd
@@ -133,7 +136,11 @@ export const getSizePlayers = (state: RootState) =>
 export const selectPlayer = (state: RootState) => state.player.currentPlayer;
 export const selectPositions = (state: RootState) =>
   state.player.positionsPlayers;
-export const { resetSuccess, clearCurrentPlayer, clearPlayerItems } =
-  playerSlice.actions;
+export const {
+  resetSuccess,
+  clearCurrentPlayer,
+  clearPlayerItems,
+  resetAddedPlayerSuccess,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;

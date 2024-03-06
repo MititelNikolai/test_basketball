@@ -7,6 +7,7 @@ import {
   IPositionsOptions,
 } from "./IPlayerFormProps";
 import ImageUpload from "../../../components/ImageUpload/ImageUpload";
+import Notification from "../../../ui/Notification/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlayer } from "../../../core/redux/slices/player/playerSlice";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
@@ -29,6 +30,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   onSubmit,
   edit = false,
   loading,
+  error,
 }) => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [playerPositions, setPlayerPositions] = useState<
@@ -120,6 +122,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   };
   return (
     <>
+      {error && <Notification message={error} positionCenter />}
       {playerPositions && teamsOptions && (
         <form
           className={playerFormContainer}

@@ -22,7 +22,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
   };
 
   const submitError: SubmitErrorHandler<RegisterFormInput> = (data) => {
-    console.log("Errors", data);
+    /* console.log("Errors", data); */
   };
 
   const password = watch("password", "");

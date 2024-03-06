@@ -96,6 +96,7 @@ const Teams: FC = () => {
               </section>
               <div className={teamNavigation}>
                 <Pagination
+                  currentPage={currentPage}
                   handlePageClick={(e) => {
                     handlePageClick(e);
                   }}

@@ -7,6 +7,7 @@ import { RootState } from "../../core/redux/store";
 import { useNavigate } from "react-router-dom";
 import {
   clearCurrentPlayer,
+  resetAddedPlayerSuccess,
   resetSuccess,
 } from "../../core/redux/slices/player/playerSlice";
 import { IPlayerFormInputs } from "./components/IPlayerFormProps";
@@ -19,7 +20,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 const AddPlayer: FC = () => {
   const { addPlayerContainer } = styles;
 
-  const { loading, success, addedPlayerSuccess } = useSelector(
+  const { loading, success, addedPlayerSuccess, error } = useSelector(
     (state: RootState) => state.player
   );
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -33,6 +34,9 @@ const AddPlayer: FC = () => {
       dispatch(resetSuccess());
       navigate(`/players/${addedPlayerSuccess}`);
     }
+    return () => {
+      dispatch(resetAddedPlayerSuccess());
+    };
   }, [navigate, dispatch, success, addedPlayerSuccess]);
 
   const handleSubmit = async (formData: IPlayerFormInputs) => {
@@ -53,7 +57,11 @@ const AddPlayer: FC = () => {
   };
   return (
     <section className={addPlayerContainer}>
-      <PlayerForm onSubmit={(data) => handleSubmit(data)} loading={loading} />
+      <PlayerForm
+        onSubmit={(data) => handleSubmit(data)}
+        loading={loading}
+        error={error}
+      />
     </section>
   );
 };

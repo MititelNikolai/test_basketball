@@ -19,6 +19,7 @@ export interface TeamFormProps {
   loading?: boolean;
   onSubmit: (data: ITeamFormInputs) => void;
   edit?: boolean;
+  error?: string;
 }
 
 export interface IAddTeamDataToServer {

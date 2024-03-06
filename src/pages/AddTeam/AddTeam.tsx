@@ -11,14 +11,14 @@ import {
 } from "../../core/redux/slices/team/teamActions";
 import {
   clearCurrentTeam,
-  resetSuccess,
+  resetAddedTeamSuccess,
 } from "../../core/redux/slices/team/teamSlice";
 import { IAddTeamData } from "../../core/redux/slices/team/team.types";
 import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
-  const { loading, addedTeamSuccess } = useSelector(
+  const { loading, addedTeamSuccess, error } = useSelector(
     (state: RootState) => state.team
   );
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -30,7 +30,7 @@ const AddTeam: FC = () => {
   useEffect(() => {
     if (addedTeamSuccess) {
       navigate(`/teams/${addedTeamSuccess}`);
-      dispatch(resetSuccess());
+      dispatch(resetAddedTeamSuccess());
     }
   }, [navigate, dispatch, addedTeamSuccess]);
 
@@ -50,7 +50,11 @@ const AddTeam: FC = () => {
 
   return (
     <div className={addTeamContainer}>
-      <TeamForm onSubmit={(data) => handleSubmit(data)} loading={loading} />
+      <TeamForm
+        onSubmit={(data) => handleSubmit(data)}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 };

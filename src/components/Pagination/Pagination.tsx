@@ -5,15 +5,21 @@ import IconChevronRight from "../../ui/icons/IconChevronRight";
 import IconChevronLeft from "../../ui/icons/IconChevronLeft";
 interface PaginationProps {
   handlePageClick: (event: { selected: number }) => void;
-  pageCount: number | null | undefined;
+  pageCount?: number | null;
+  currentPage?: number;
 }
 
-const Pagination: FC<PaginationProps> = ({ handlePageClick, pageCount }) => {
+const Pagination: FC<PaginationProps> = ({
+  handlePageClick,
+  pageCount,
+  currentPage,
+}) => {
   const { paginationContainer, pageCountNumberActive, pageCountNumber } =
     styles;
 
   return (
     <ReactPaginate
+      initialPage={currentPage && currentPage - 1}
       breakLabel='...'
       breakLinkClassName={pageCountNumber}
       nextLabel={<IconChevronRight />}

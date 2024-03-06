@@ -13,6 +13,7 @@ export interface IPlayerFormProps {
   edit?: boolean;
   onSubmit: (data: IPlayerFormInputs) => void;
   loading?: boolean;
+  error?: string;
 }
 
 export interface InitialDefaults {

@@ -1,6 +1,6 @@
 export interface InitialState {
   loading: boolean;
-  error: unknown | null;
+  error: any | null;
   success: boolean;
   playerDataFromServer: IDataFromServer;
   currentPlayer?: ISinglePlayerData;

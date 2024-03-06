@@ -27,6 +27,9 @@ export const addTeam = createAsyncThunk(
       if (!AxiosStatic.isAxiosError(error)) {
         throw error;
       }
+      if (error.response?.status === 409) {
+        return rejectWithValue("Such a team already exists");
+      }
       return rejectWithValue(error.message);
     }
   }
@@ -52,6 +55,9 @@ export const updateTeam = createAsyncThunk(
     } catch (error) {
       if (!AxiosStatic.isAxiosError(error)) {
         throw error;
+      }
+      if (error.response?.status === 409) {
+        return rejectWithValue("Such a team already exists");
       }
       return rejectWithValue(error.message);
     }

@@ -143,6 +143,7 @@ const Players: FC = () => {
               </section>
               <div className={playersNavigation}>
                 <Pagination
+                  currentPage={currentPage}
                   handlePageClick={(e) => {
                     handlePageClick(e);
                   }}

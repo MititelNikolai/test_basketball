@@ -4,7 +4,6 @@
   top: 2.25rem;
   right: 2.25rem;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
   width: 29.38rem;
   height: 2.5rem;
   padding: 0.5rem 1rem;
@@ -17,8 +16,12 @@
   justify-content: center;
   z-index: 100;
 }
-
+.notificationStyle.center {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .notificationStyle.visible {
+  transition: opacity 0.5s ease-in-out;
   opacity: 1;
 }
 

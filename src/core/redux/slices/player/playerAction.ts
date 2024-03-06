@@ -33,6 +33,9 @@ export const playerAdd = createAsyncThunk(
       if (!AxiosStatic.isAxiosError(error)) {
         throw error;
       }
+      if (error.response?.status === 409) {
+        return rejectWithValue("Such a player already exists");
+      }
       return rejectWithValue(error.message);
     }
   }
@@ -59,6 +62,9 @@ export const updatePlayer = createAsyncThunk(
     } catch (error) {
       if (!AxiosStatic.isAxiosError(error)) {
         throw error;
+      }
+      if (error.response?.status === 409) {
+        return rejectWithValue("Such a player already exists");
       }
       return rejectWithValue(error.message);
     }
@@ -114,7 +120,10 @@ export const getPositions = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error);
+      if (!AxiosStatic.isAxiosError(error)) {
+        throw error;
+      }
+      return rejectWithValue(error.message);
     }
   }
 );
