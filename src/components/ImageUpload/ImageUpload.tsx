@@ -1,12 +1,11 @@
 import { forwardRef, useRef, useState } from "react";
+import { IconAddImage } from "../ui/icons";
+import ImageUploadProps from "./ImageUploadProps";
 import styles from "./ImageUpload.module.css";
-import IconAddImage from "../../ui/icons/IconAddImage";
-import IPropsImage from "./IPropsImage";
-import { backendUrl } from "../../core/redux/apiData";
 
 const ImageUpload: React.ForwardRefRenderFunction<
   HTMLInputElement,
-  IPropsImage
+  ImageUploadProps
 > = (
   {
     setValueForTeam,
@@ -14,7 +13,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
     setValueForUser,
     edit,
     imageUrl,
-    needMessage,
+    haveMessage,
     errorMessage,
     clearError,
   },
@@ -22,6 +21,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
 ) => {
   const { uploadImageContainer, uploadImage, uploadImageInput, warningStyles } =
     styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [previewImage, setPreviewImage] = useState<string | null | undefined>(
     edit ? `${backendUrl}${imageUrl}` : null
   );
@@ -54,7 +54,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
           ref={fileInputRef}
           className={uploadImageInput}
           onChange={handleFileChange}
-          accept='image/*'
+          accept='image/jpeg, image/png'
         />
         <div
           className={uploadImage}
@@ -65,7 +65,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
         >
           <IconAddImage height={74} width={75} />
         </div>
-        {needMessage && <p className={warningStyles}>{errorMessage}</p>}
+        {haveMessage && <p className={warningStyles}>{errorMessage}</p>}
       </div>
     </>
   );

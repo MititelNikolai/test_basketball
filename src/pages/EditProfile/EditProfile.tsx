@@ -1,30 +1,20 @@
 import { FC, useEffect } from "react";
-import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "./EditProfile.module.css";
-import ImageUpload from "../../components/ImageUpload/ImageUpload";
-import { RootState } from "../../core/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-import Input from "../../ui/Input/Input";
-import Button from "../../ui/Button/Button";
-import { IUser } from "../../core/redux/slices/auth/auth.types";
-import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
+import { useDispatch, useSelector } from "react-redux";
+import { userUpdate } from "../../core/redux/slices/auth/authActions";
 import {
-  AllAuthActions,
-  userUpdate,
-} from "../../core/redux/slices/auth/authActions";
-import { resetSuccess } from "../../core/redux/slices/auth/authSlice";
-import { ThunkDispatch } from "@reduxjs/toolkit";
-export interface IEditUser {
-  userName: string | null;
-  avatarUrl: string | null;
-  file_img: File | undefined;
-}
-export interface IEditUserToServer {
-  userName?: string;
-  avatarUrl?: string;
-}
+  resetSuccess,
+  selectAuthStatus,
+} from "../../core/redux/slices/auth/authSlice";
+import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
+import uploadImageToServer from "../../core/api/uploadImageToServer";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { Breadcrumbs, ImageUpload } from "../../components";
+import { Input, Button } from "../../components/ui";
+import EditUser from "./EditUser.interfaces";
+import styles from "./EditProfile.module.css";
+
 const EditProfile: FC = () => {
   const {
     editProfileContainer,
@@ -36,30 +26,34 @@ const EditProfile: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const dispatchUser: ThunkDispatch<RootState, void, AllAuthActions> =
-    useDispatch();
-  const { loading, success } = useSelector((state: RootState) => state.auth);
+  const dispatchUser = useTypedDispatch();
+  const { loading, success } = useSelector(selectAuthStatus);
   let userData: IUser | null = null;
   const storedUserData = localStorage.getItem("userData");
+
   if (storedUserData) {
     userData = JSON.parse(storedUserData);
   }
 
-  const user: IEditUser = {
+  const user: EditUser = {
     userName: userData && userData.name,
     avatarUrl: userData && userData.avatarUrl,
     file_img: undefined,
   };
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<IEditUser>({ defaultValues: user });
+  } = useForm<EditUser>({ defaultValues: user });
 
-  const submitHandler: SubmitHandler<IEditUser> = async (data: IEditUser) => {
+  const submitHandler: SubmitHandler<EditUser> = async (data: EditUser) => {
     const { avatarUrl, userName, file_img } = data;
-    const dataToServer: IEditUserToServer = {
+    const dataToServer: {
+      userName?: string;
+      avatarUrl?: string;
+    } = {
       userName: (userName && userName.trim()) || undefined,
       avatarUrl:
         (file_img &&
@@ -69,6 +63,10 @@ const EditProfile: FC = () => {
     dispatchUser(userUpdate(dataToServer));
   };
 
+  const submitError: SubmitErrorHandler<EditUser> = (data) => {
+    /*  console.log("Errors", data); */
+  };
+
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
@@ -76,9 +74,6 @@ const EditProfile: FC = () => {
     }
   }, [navigate, dispatch, success]);
 
-  const submitError: SubmitErrorHandler<IEditUser> = (data) => {
-    /*  console.log("Errors", data); */
-  };
   return (
     <>
       <Breadcrumbs pathname={location.pathname} />
@@ -95,18 +90,18 @@ const EditProfile: FC = () => {
                 required: { value: true, message: "Image is required" },
               })}
               setValueForUser={setValue}
-              needMessage
+              haveMessage
               errorMessage={errors.file_img?.message}
             />
           </div>
           <div className={fieldsContainer}>
             <Input
-              inputType='text'
+              inputFieldType='text'
               label='User Name'
               {...register("userName", {
                 required: { value: false, message: "Name is required" },
               })}
-              inputErrorMessage={errors.userName?.message}
+              errorMessage={errors.userName?.message}
             />
 
             <div className={buttonsContainer}>

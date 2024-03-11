@@ -1,33 +1,26 @@
 import { FC, useEffect, useState } from "react";
-import styles from "./Players.module.css";
-import PlayersActions from "./PlayersActions";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearCurrentPlayer,
+  resetCurrentPlayer,
   getNumberOfPlayers,
   selectPlayers,
 } from "../../core/redux/slices/player/playerSlice";
-import {
-  AllPlayersActions,
-  getPlayers,
-} from "../../core/redux/slices/player/playerAction";
+import { getPlayers } from "../../core/redux/slices/player/playerAction";
 import { selectTeams } from "../../core/redux/slices/team/teamSlice";
-import { transformPlayersData } from "../../utils/teamIdToName";
-import Card from "../../components/Card/Card";
-import Pagination from "../../components/Pagination/Pagination";
-import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
-import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
 import emptyPlayers from "../../assets/img/emptyPlayers.png";
-import { SelectOptions } from "./components/PlayerMultiSelect/IPlayerMultiSelect";
-import { ThunkDispatch } from "@reduxjs/toolkit";
-import { RootState } from "../../core/redux/store";
-import { DisplayData } from "./Players.types";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { transformPlayersData } from "../../utils/teamIdToName";
+import PlayersActions from "./PlayersActions";
+import { Card, Pagination, EmptyCardMessage } from "../../components";
+import { ItemsSelector } from "../../components/ui";
+import { DisplayData } from "./Players.interfaces";
+import { SelectOptions } from "./components/PlayerMultiSelect/PlayerMultiSelect.interfaces";
+import styles from "./Players.module.css";
 
 const Players: FC = () => {
   const location = useLocation();
-  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
-    useDispatch();
+  const dispatchPlayers = useTypedDispatch();
   const dispatch = useDispatch();
   const players = useSelector(selectPlayers);
   const teams = useSelector(selectTeams);
@@ -35,6 +28,7 @@ const Players: FC = () => {
   const [playersOnDisplay, setPlayersOnDisplay] = useState<
     Array<DisplayData> | undefined
   >(undefined);
+
   const countPlayers = useSelector(getNumberOfPlayers);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [searchTeam, setSearchTeam] = useState<Array<SelectOptions>>([]);
@@ -64,7 +58,7 @@ const Players: FC = () => {
       !searchName &&
       searchTeam.length === 0
     ) {
-      dispatch(clearCurrentPlayer());
+      dispatch(resetCurrentPlayer());
       dispatchPlayers(
         getPlayers({
           pageSize: itemsPerPage || 6,
@@ -109,10 +103,12 @@ const Players: FC = () => {
       );
     }
   }, [searchName, searchTeam, itemsPerPage, dispatchPlayers]);
+
   useEffect(() => {
     setPlayersOnDisplay(transformPlayersData(players, teams));
   }, [players, teams]);
   const { playersContainer, cardsContainer, playersNavigation } = styles;
+
   return (
     <>
       {location.pathname === "/players" ? (

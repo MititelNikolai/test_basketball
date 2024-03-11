@@ -1,43 +1,34 @@
 import { FC } from "react";
-import { ITeamInfoProps } from "./ITeamInfoProps";
+import TeamInfoProps from "./TeamInfoProps";
 import styles from "./TeamInfo.module.css";
-import { backendUrl } from "../../core/redux/apiData";
-const TeamInfo: FC<ITeamInfoProps> = ({
+
+const TeamInfo: FC<TeamInfoProps> = ({
   name,
   foundationYear,
   conference,
   division,
   imageUrl,
 }) => {
-  const {
-    teamInfoContainer,
-    teamInfoImageContainer,
-    teamInfoDescriptionContainer,
-    teamInfoName,
-    descriptionGrid,
-    descriptionContainer,
-    descriptionKey,
-    descriptionValue,
-  } = styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
-    <div className={teamInfoContainer}>
-      <div className={teamInfoImageContainer}>
+    <div className={styles.teamInfoContainer}>
+      <div className={styles.teamInfoImageContainer}>
         <img src={`${backendUrl}${imageUrl}`} alt='Team Logo' />
       </div>
-      <div className={teamInfoDescriptionContainer}>
-        <p className={teamInfoName}>{name}</p>
-        <div className={descriptionGrid}>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Year of Foundation</p>
-            <p className={descriptionValue}>{foundationYear}</p>
+      <div className={styles.teamInfoDescriptionContainer}>
+        <p className={styles.teamInfoName}>{name}</p>
+        <div className={styles.descriptionGrid}>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Year of Foundation</p>
+            <p className={styles.descriptionValue}>{foundationYear}</p>
           </div>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Division</p>
-            <p className={descriptionValue}>{division}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Division</p>
+            <p className={styles.descriptionValue}>{division}</p>
           </div>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Conference</p>
-            <p className={descriptionValue}>{conference}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Conference</p>
+            <p className={styles.descriptionValue}>{conference}</p>
           </div>
         </div>
       </div>

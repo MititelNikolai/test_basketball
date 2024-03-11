@@ -1,24 +1,22 @@
 import { FC, useEffect } from "react";
-import AuthorizationLayout from "../../layouts/authorization/AuthorizationLayout";
-import SingIn from "../../assets/img/singIn.png";
-import LoginForm from "./components/LoginForm";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  AllAuthActions,
-  userLogin,
-} from "../../core/redux/slices/auth/authActions";
-import { ILoginData } from "../../core/redux/slices/auth/auth.types";
-
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../core/redux/store";
-import { resetError } from "../../core/redux/slices/auth/authSlice";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../core/redux/slices/auth/authActions";
+import {
+  resetError,
+  selectAuthStatus,
+  selectIsAuthenticated,
+} from "../../core/redux/slices/auth/authSlice";
+import SingIn from "../../assets/img/singIn.png";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import AuthorizationLayout from "../../layouts/Authorization/AuthorizationLayout";
+import LoginForm from "./components/LoginForm";
+import { ILoginData } from "../../core/redux/slices/auth/auth.interfaces";
+
 const Authorization: FC = () => {
-  const { loading, error, isAuthenticated } = useSelector(
-    (state: RootState) => state.auth
-  );
-  const dispatchLogin: ThunkDispatch<RootState, void, AllAuthActions> =
-    useDispatch();
+  const { loading, error } = useSelector(selectAuthStatus);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const dispatchLogin = useTypedDispatch();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {

@@ -1,10 +1,10 @@
 import { FC } from "react";
-import styles from "./PlayerInfo.module.css";
-import { IPlayerInfoProps } from "./IPlayerInfoProps";
-import { backendUrl } from "../../core/redux/apiData";
 import { calculateAge } from "../../utils/calculateAge";
-const PlayerInfo: FC<IPlayerInfoProps> = ({
-  id,
+import { addSpaceBeforeUppercase } from "../../utils/stringFunctions";
+import PlayerInfoProps from "./PlayerInfoProps";
+import styles from "./PlayerInfo.module.css";
+
+const PlayerInfo: FC<PlayerInfoProps> = ({
   name,
   number,
   position,
@@ -14,48 +14,40 @@ const PlayerInfo: FC<IPlayerInfoProps> = ({
   weight,
   avatarUrl,
 }) => {
-  const {
-    playerInfoContainer,
-    playerInfoImageContainer,
-    playerInfoDescriptionContainer,
-    playerInfoName,
-    playerInfoNumber,
-    descriptionGrid,
-    descriptionContainer,
-    descriptionKey,
-    descriptionValue,
-  } = styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
-    <div className={playerInfoContainer}>
-      <div className={playerInfoImageContainer}>
+    <div className={styles.playerInfoContainer}>
+      <div className={styles.playerInfoImageContainer}>
         <img src={`${backendUrl}${avatarUrl}`} alt='Team Logo' />
       </div>
-      <div className={playerInfoDescriptionContainer}>
-        <p className={playerInfoName}>
+      <div className={styles.playerInfoDescriptionContainer}>
+        <p className={styles.playerInfoName}>
           {name}
-          <span className={playerInfoNumber}>{` #${number}`}</span>
+          <span className={styles.playerInfoNumber}>{` #${number}`}</span>
         </p>
-        <div className={descriptionGrid}>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Position</p>
-            <p className={descriptionValue}>{position}</p>
+        <div className={styles.descriptionGrid}>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Position</p>
+            <p className={styles.descriptionValue}>
+              {addSpaceBeforeUppercase(position)}
+            </p>
           </div>
 
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Team</p>
-            <p className={descriptionValue}>{teamName}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Team</p>
+            <p className={styles.descriptionValue}>{teamName}</p>
           </div>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Height</p>
-            <p className={descriptionValue}>{height}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Height</p>
+            <p className={styles.descriptionValue}>{height}</p>
           </div>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Weight</p>
-            <p className={descriptionValue}>{weight}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Weight</p>
+            <p className={styles.descriptionValue}>{weight}</p>
           </div>
-          <div className={descriptionContainer}>
-            <p className={descriptionKey}>Age</p>
-            <p className={descriptionValue}>{calculateAge(birthday)}</p>
+          <div className={styles.descriptionContainer}>
+            <p className={styles.descriptionKey}>Age</p>
+            <p className={styles.descriptionValue}>{calculateAge(birthday)}</p>
           </div>
         </div>
       </div>

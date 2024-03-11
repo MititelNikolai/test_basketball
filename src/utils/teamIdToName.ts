@@ -1,5 +1,5 @@
-import { IPlayerData } from "../core/redux/slices/player/player.types";
-import { ITeamData } from "../core/redux/slices/team/team.types";
+import { IPlayerData } from "../core/redux/slices/player/player.interfaces";
+import { ITeamData } from "../core/redux/slices/team/team.interfaces";
 
 export const transformPlayersData = (
   playersData: Array<IPlayerData>,

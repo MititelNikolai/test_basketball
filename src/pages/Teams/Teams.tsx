@@ -1,42 +1,39 @@
 import { FC, useEffect, useState } from "react";
-import TeamsActions from "./TeamsActions";
-import Card from "../../components/Card/Card";
-import emptyTeams from "../../assets/img/EmptyTeams.png";
-import styles from "./Teams.module.css";
+import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getTeams } from "../../core/redux/slices/team/teamActions";
 import {
-  AllTeamActions,
-  getTeams,
-} from "../../core/redux/slices/team/teamActions";
-import {
-  clearCurrentTeam,
+  resetCurrentTeam,
   getNumberOfTeams,
   selectTeams,
+  selectTeamStatus,
 } from "../../core/redux/slices/team/teamSlice";
-import { Outlet, useLocation } from "react-router-dom";
-import Pagination from "../../components/Pagination/Pagination";
-import ItemsSelector from "../../ui/ItemsSelector/ItemsSelector";
-import EmptyCardMessage from "../../components/EmptyCardMessage/EmptyCardMessage";
-import { RootState } from "../../core/redux/store";
-import { SelectOptions } from "../../ui/ItemsSelector/ItemsSelector.types";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import emptyTeams from "../../assets/img/EmptyTeams.png";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import TeamsActions from "./TeamsActions";
+import { Card, Pagination, EmptyCardMessage } from "../../components";
+import { ItemsSelector } from "../../components/ui";
+import { SelectOptions } from "../../components/ui/ItemsSelector/ItemsSelectorProps";
+import styles from "./Teams.module.css";
 
 const Teams: FC = () => {
   const { teamsContainer, cardsContainer, teamNavigation } = styles;
-  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
-    useDispatch();
+
+  const dispatchTeam = useTypedDispatch();
   const dispatch = useDispatch();
   const teams = useSelector(selectTeams);
   const countTeams = useSelector(getNumberOfTeams);
-  const { addedTeamSuccess } = useSelector((state: RootState) => state.team);
+  const { addedTeamSuccess } = useSelector(selectTeamStatus);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
+
   const options: Array<SelectOptions> = [
     { value: 6, label: "6" },
     { value: 12, label: "12" },
     { value: 24, label: "24" },
   ];
+
   const pageCount =
     countTeams && itemsPerPage && Math.ceil(countTeams / itemsPerPage);
 
@@ -58,13 +55,10 @@ const Teams: FC = () => {
           page: pageCount === 1 ? 1 : currentPage,
         })
       );
-    location.pathname === "/teams" && dispatch(clearCurrentTeam());
+    location.pathname === "/teams" && dispatch(resetCurrentTeam());
     if (searchName) {
       dispatchTeam(getTeams({ name: searchName, pageSize: itemsPerPage || 6 }));
     }
-    return () => {
-      /* setSearchName(undefined); */
-    };
   }, [
     dispatchTeam,
     dispatch,

@@ -1,13 +1,12 @@
 import { FC, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import styles from "./Breadcrumbs.module.css";
-import { IBreadcrumbsProps } from "./IBreadcrumbsProps";
-import { dashIntoSpace } from "../../utils/stringFunctions";
-import IconCreate from "../../ui/icons/IconCreate";
-import IconDelete from "../../ui/icons/IconDelete";
 import { useDispatch } from "react-redux";
+import { dashIntoSpace } from "../../utils/stringFunctions";
+import { IconCreate, IconDelete } from "../ui/icons";
+import BreadcrumbsProps from "./BreadcrumbsProps";
+import styles from "./Breadcrumbs.module.css";
 
-const Breadcrumbs: FC<IBreadcrumbsProps> = ({
+const Breadcrumbs: FC<BreadcrumbsProps> = ({
   pathname,
   actions = false,
   deleteAction,

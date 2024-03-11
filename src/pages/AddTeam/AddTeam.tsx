@@ -1,32 +1,35 @@
 import { FC, useEffect } from "react";
-import styles from "./AddTeam.module.css";
 import { useNavigate } from "react-router-dom";
-import TeamForm from "./components/TeamForm";
-import { ITeamFormInputs } from "./components/ITeamFormInputs";
 import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../core/redux/store";
 import {
   AllTeamActions,
   addTeam,
 } from "../../core/redux/slices/team/teamActions";
 import {
-  clearCurrentTeam,
+  resetCurrentTeam,
   resetAddedTeamSuccess,
+  selectTeamStatus,
 } from "../../core/redux/slices/team/teamSlice";
-import { IAddTeamData } from "../../core/redux/slices/team/team.types";
-import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
+import { IAddTeamData } from "../../core/redux/slices/team/team.interfaces";
+import uploadImageToServer from "../../core/api/uploadImageToServer";
+import TeamForm from "./components/TeamForm";
+import { ITeamFormInputs } from "./components/TeamForm.interfaces";
+import styles from "./AddTeam.module.css";
+
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
-  const { loading, addedTeamSuccess, error } = useSelector(
-    (state: RootState) => state.team
-  );
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const { loading, addedTeamSuccess, error } = useSelector(selectTeamStatus);
+
+  const userInfo = useSelector(selectCurrentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
     useDispatch();
-  dispatch(clearCurrentTeam());
+  dispatch(resetCurrentTeam());
   useEffect(() => {
     if (addedTeamSuccess) {
       navigate(`/teams/${addedTeamSuccess}`);

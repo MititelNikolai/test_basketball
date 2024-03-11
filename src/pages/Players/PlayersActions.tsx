@@ -1,28 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import Input from "../../ui/Input/Input";
-import IconDelete from "../../ui/icons/IconDelete";
-import IconSearch from "../../ui/icons/IconSearch";
 import { NavLink } from "react-router-dom";
-import Button from "../../ui/Button/Button";
-import styles from "./Players.module.css";
-import PlayerMultiSelect from "./components/PlayerMultiSelect/PlayerMultiSelect";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  AllTeamActions,
-  getTeams,
-} from "../../core/redux/slices/team/teamActions";
+import { useSelector } from "react-redux";
+import { getTeams } from "../../core/redux/slices/team/teamActions";
 import { selectTeams } from "../../core/redux/slices/team/teamSlice";
-import { SelectOptions } from "./components/PlayerMultiSelect/IPlayerMultiSelect";
-import { ThunkDispatch } from "@reduxjs/toolkit";
-import { RootState } from "../../core/redux/store";
-
-interface ITeamActions {
-  filterName: (search: string) => void;
-  filterTeams: (selected: Array<SelectOptions>) => void;
-  resetAction: () => void;
-  inSearch: boolean;
-  searchTeam: Array<SelectOptions> | undefined;
-}
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { Input, Button } from "../../components/ui";
+import { IconDelete, IconSearch } from "../../components/ui/icons";
+import PlayerMultiSelect from "./components/PlayerMultiSelect/PlayerMultiSelect";
+import { SelectOptions } from "./components/PlayerMultiSelect/PlayerMultiSelect.interfaces";
+import { ITeamActions } from "./Players.interfaces";
+import styles from "./Players.module.css";
 
 const PlayersActions: FC<ITeamActions> = ({
   filterName,
@@ -32,8 +19,7 @@ const PlayersActions: FC<ITeamActions> = ({
   searchTeam,
 }) => {
   const { actionsContainer, actionWrapper } = styles;
-  const dispatch: ThunkDispatch<RootState, void, AllTeamActions> =
-    useDispatch();
+  const dispatchTeams = useTypedDispatch();
   const [search, setSearch] = useState("");
 
   const [filterOptions, setFilterOptions] = useState<
@@ -47,8 +33,9 @@ const PlayersActions: FC<ITeamActions> = ({
     return () => clearTimeout(timeoutId);
   }, [search, filterName]);
   useEffect(() => {
-    dispatch(getTeams({}));
-  }, [dispatch]);
+    dispatchTeams(getTeams({}));
+  }, [dispatchTeams]);
+
   useEffect(() => {
     teams.length !== 0 &&
       setFilterOptions(
@@ -60,6 +47,7 @@ const PlayersActions: FC<ITeamActions> = ({
         })
       );
   }, [teams]);
+
   return (
     <div className={actionsContainer}>
       <div className={actionWrapper}>
@@ -74,10 +62,10 @@ const PlayersActions: FC<ITeamActions> = ({
           }
           setValue={setSearch}
           value={search}
-          inputType='text'
+          inputFieldType='text'
           placeholder='Search...'
           background='white'
-          needMessage={false}
+          haveMessage={false}
         >
           {inSearch ? <IconDelete /> : <IconSearch />}
         </Input>

@@ -22,7 +22,7 @@
 
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1445px) {
   .cardsEmpty {
     width: 100%;
     margin-top: 1rem;

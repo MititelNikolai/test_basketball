@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Select from "react-select";
 import "./PlayerMultiSelect.css";
-import { IPlayerMultiSelect } from "./IPlayerMultiSelect";
+import { IPlayerMultiSelect } from "./PlayerMultiSelect.interfaces";
 
 const PlayerMultiSelect: FC<IPlayerMultiSelect> = ({
   options,

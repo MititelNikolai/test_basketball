@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { InitialState } from "./player.types";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { InitialState } from "./player.interfaces";
 import {
   getPlayers,
   playerAdd,
@@ -26,17 +26,17 @@ const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    resetSuccess: (state) => {
+    resetPlayerSuccess: (state) => {
       state.success = false;
     },
-    clearCurrentPlayer: (state) => {
+    resetAddedPlayerSuccess: (state) => {
+      delete state.addedPlayerSuccess;
+    },
+    resetCurrentPlayer: (state) => {
       delete state.currentPlayer;
     },
-    clearPlayerItems: (state) => {
+    resetPlayerItems: (state) => {
       state.playerDataFromServer.data = [];
-    },
-    resetAddedPlayerSuccess: (state) => {
-      state.addedPlayerSuccess = undefined;
     },
   },
   extraReducers(builder) {
@@ -136,10 +136,23 @@ export const getSizePlayers = (state: RootState) =>
 export const selectPlayer = (state: RootState) => state.player.currentPlayer;
 export const selectPositions = (state: RootState) =>
   state.player.positionsPlayers;
+export const selectPlayerStatus = createSelector(
+  (state: RootState) => state.player.success,
+  (state: RootState) => state.player.loading,
+  (state: RootState) => state.player.error,
+  (state: RootState) => state.player.addedPlayerSuccess,
+  (success, loading, error, addedPlayerSuccess) => ({
+    success,
+    loading,
+    error,
+    addedPlayerSuccess,
+  })
+);
+
 export const {
-  resetSuccess,
-  clearCurrentPlayer,
-  clearPlayerItems,
+  resetPlayerSuccess,
+  resetCurrentPlayer,
+  resetPlayerItems,
   resetAddedPlayerSuccess,
 } = playerSlice.actions;
 

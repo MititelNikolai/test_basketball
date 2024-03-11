@@ -13,12 +13,12 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-
   width: 33.1875rem;
 }
 .playerInfoImageContainer > img {
   width: 100%;
   object-fit: cover;
+  overflow: hidden;
 }
 .playerInfoDescriptionContainer {
   padding: 4.06rem 3.5625rem;
@@ -64,7 +64,7 @@
 @media screen and (max-width: 1230px) {
   .playerInfoContainer {
     flex-direction: column;
-    height: 46.8125rem;
+    height: 100%;
     align-items: center;
     justify-content: center;
     padding: 3rem 0;
@@ -73,6 +73,7 @@
     width: 8.9375rem;
     margin-bottom: 3rem;
   }
+
   .playerInfoDescriptionContainer {
     display: flex;
     flex-direction: column;

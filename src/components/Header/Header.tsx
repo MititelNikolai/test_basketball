@@ -1,17 +1,13 @@
 import { FC } from "react";
-import logo from "../../assets/img/logo.png";
-import IconProfile from "../../ui/icons/IconProfile";
-import styles from "./Header.module.css";
-import { IUser } from "../../core/redux/slices/auth/auth.types";
 import { NavLink, Navigate } from "react-router-dom";
-import { backendUrl } from "../../core/redux/apiData";
-import IconBurgerMenu from "../../ui/icons/IconBurgerMenu";
-import MobileSidebar from "../MobileSidebar/MobileSidebar";
-interface IHeaderProps {
-  menuToggle: () => void;
-  menuState: boolean;
-}
-const Header: FC<IHeaderProps> = ({ menuToggle, menuState }) => {
+import { IconProfile, IconBurgerMenu } from "../ui/icons";
+import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
+import { MobileSidebar } from "../index";
+import logo from "../../assets/img/logo.png";
+import HeaderProps from "./HeaderProps";
+import styles from "./Header.module.css";
+
+const Header: FC<HeaderProps> = ({ menuToggle, menuState }) => {
   const {
     headerContainer,
     userContainer,
@@ -22,7 +18,7 @@ const Header: FC<IHeaderProps> = ({ menuToggle, menuState }) => {
     headerLogo,
     leftMenu,
   } = styles;
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   let userData: IUser | null = null;
   try {
     const storedUserData = localStorage.getItem("userData");

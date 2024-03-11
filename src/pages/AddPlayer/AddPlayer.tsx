@@ -1,43 +1,31 @@
 import { FC, useEffect } from "react";
-import styles from "./AddPlayer.module.css";
-import PlayerForm from "./components/PlayerForm";
-import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../core/redux/store";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  clearCurrentPlayer,
+  resetCurrentPlayer,
   resetAddedPlayerSuccess,
-  resetSuccess,
+  resetPlayerSuccess,
+  selectPlayerStatus,
 } from "../../core/redux/slices/player/playerSlice";
-import { IPlayerFormInputs } from "./components/IPlayerFormProps";
-import { IPlayerDataToServer } from "../../core/redux/slices/player/player.types";
-import {
-  AllPlayersActions,
-  playerAdd,
-} from "../../core/redux/slices/player/playerAction";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
+import { IPlayerDataToServer } from "../../core/redux/slices/player/player.interfaces";
+import { playerAdd } from "../../core/redux/slices/player/playerAction";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import uploadImageToServer from "../../core/api/uploadImageToServer";
+import PlayerForm from "./components/PlayerForm";
+import { IPlayerFormInputs } from "./components/PlayerForm.interfaces";
+import styles from "./AddPlayer.module.css";
+
 const AddPlayer: FC = () => {
   const { addPlayerContainer } = styles;
 
-  const { loading, success, addedPlayerSuccess, error } = useSelector(
-    (state: RootState) => state.player
-  );
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { loading, success, addedPlayerSuccess, error } =
+    useSelector(selectPlayerStatus);
+  const userInfo = useSelector(selectCurrentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
-    useDispatch();
-  dispatch(clearCurrentPlayer());
-  useEffect(() => {
-    if (addedPlayerSuccess) {
-      dispatch(resetSuccess());
-      navigate(`/players/${addedPlayerSuccess}`);
-    }
-    return () => {
-      dispatch(resetAddedPlayerSuccess());
-    };
-  }, [navigate, dispatch, success, addedPlayerSuccess]);
+  const dispatchPlayers = useTypedDispatch();
+  dispatch(resetCurrentPlayer());
 
   const handleSubmit = async (formData: IPlayerFormInputs) => {
     const { name, number, position, team, birthday } = formData;
@@ -55,6 +43,17 @@ const AddPlayer: FC = () => {
     };
     dispatchPlayers(playerAdd(dataToServer));
   };
+
+  useEffect(() => {
+    if (addedPlayerSuccess) {
+      dispatch(resetPlayerSuccess());
+      navigate(`/players/${addedPlayerSuccess}`);
+    }
+    return () => {
+      dispatch(resetAddedPlayerSuccess());
+    };
+  }, [navigate, dispatch, success, addedPlayerSuccess]);
+
   return (
     <section className={addPlayerContainer}>
       <PlayerForm

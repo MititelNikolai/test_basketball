@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   addTeam,
   deleteTeam,
@@ -6,7 +6,7 @@ import {
   getTeams,
   updateTeam,
 } from "./teamActions";
-import { InitialState } from "./team.types";
+import { InitialState } from "./team.interfaces";
 import { RootState } from "../../store";
 
 const initialState: InitialState = {
@@ -25,20 +25,20 @@ const teamSlice = createSlice({
   name: "team",
   initialState,
   reducers: {
-    resetSuccess: (state) => {
+    resetTeamSuccess: (state) => {
       state.success = false;
     },
-    resetAddedTeamSuccess: (state) => {
-      state.addedTeamSuccess = undefined;
+    resetTeamError: (state) => {
+      state.error = null;
     },
-    clearCurrentTeam: (state) => {
+    resetAddedTeamSuccess: (state) => {
+      delete state.addedTeamSuccess;
+    },
+    resetCurrentTeam: (state) => {
       delete state.currentTeam;
     },
-    clearTeamItems: (state) => {
+    resetTeamItems: (state) => {
       state.teamDataFromServer.data = [];
-    },
-    resetError: (state) => {
-      state.error = null;
     },
   },
   extraReducers(builder) {
@@ -122,11 +122,23 @@ export const getPageTeams = (state: RootState) =>
 export const getSizeTeams = (state: RootState) =>
   state.team.teamDataFromServer.size;
 export const selectTeam = (state: RootState) => state.team.currentTeam;
+export const selectTeamStatus = createSelector(
+  (state: RootState) => state.team.success,
+  (state: RootState) => state.team.loading,
+  (state: RootState) => state.team.error,
+  (state: RootState) => state.team.addedTeamSuccess,
+  (success, loading, error, addedTeamSuccess) => ({
+    success,
+    loading,
+    error,
+    addedTeamSuccess,
+  })
+);
 export const {
-  resetSuccess,
-  clearCurrentTeam,
-  clearTeamItems,
+  resetTeamSuccess,
+  resetCurrentTeam,
+  resetTeamItems,
   resetAddedTeamSuccess,
-  resetError,
+  resetTeamError,
 } = teamSlice.actions;
 export default teamSlice.reducer;

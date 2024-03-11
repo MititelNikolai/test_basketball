@@ -1,17 +1,14 @@
 import { FC } from "react";
-import { links } from "../Sidebar/SidebarLinks";
-import { IUser } from "../../core/redux/slices/auth/auth.types";
 import { NavLink, Navigate, useLocation } from "react-router-dom";
-import styles from "./MobileSidebar.module.css";
-import { backendUrl } from "../../core/redux/apiData";
-import IconProfile from "../../ui/icons/IconProfile";
 import { useDispatch } from "react-redux";
 import { logout } from "../../core/redux/slices/auth/authSlice";
-import IconInput from "../../ui/icons/IconInput";
-interface IMobileSidebarProps {
-  handleClick: () => void;
-}
-const MobileSidebar: FC<IMobileSidebarProps> = ({ handleClick }) => {
+import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
+import { links } from "../Sidebar/SidebarLinks";
+import { IconProfile, IconInput } from "../ui/icons";
+import MobileSidebarProps from "./IMobileSidebarProps";
+import styles from "./MobileSidebar.module.css";
+
+const MobileSidebar: FC<MobileSidebarProps> = ({ handleClick }) => {
   const {
     mobileSidebarContainer,
     mobileSidebarBackground,
@@ -24,6 +21,7 @@ const MobileSidebar: FC<IMobileSidebarProps> = ({ handleClick }) => {
     linkContainer,
     linkText,
   } = styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const dispatch = useDispatch();
   const location = useLocation();
   let userData: IUser | null = null;

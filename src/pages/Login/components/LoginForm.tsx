@@ -1,13 +1,17 @@
 import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { LoginFormInput, LoginFormProps } from "./LoginForm.types";
-import Input from "../../../ui/Input/Input";
-import Button from "../../../ui/Button/Button";
+import { LoginFormInput, LoginFormProps } from "./LoginForm.interfaces";
+import {
+  Input,
+  Button,
+  CustomLink,
+  Notification,
+} from "../../../components/ui";
 import styles from "./LoginForm.module.css";
-import CustomLink from "../../../ui/CustomLink/CustomLink";
-import Notification from "../../../ui/Notification/Notification";
+
 const LoginForm: FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
   const { loginFormHeader, loginFormStyles } = styles;
+
   const {
     register,
     handleSubmit,
@@ -25,16 +29,16 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
       <form className={loginFormStyles} onSubmit={handleSubmit(submitHandler)}>
         <Input
           label='Login'
-          inputType='text'
-          inputErrorMessage={errors.login?.message}
+          inputFieldType='text'
+          errorMessage={errors.login?.message}
           {...register("login", {
             required: { value: true, message: "Login is required" },
           })}
         ></Input>
         <Input
           label='Password'
-          inputType='password'
-          inputErrorMessage={errors.password?.message}
+          inputFieldType='password'
+          errorMessage={errors.password?.message}
           {...register("password", {
             required: { value: true, message: "Password is required" },
           })}

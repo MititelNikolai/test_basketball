@@ -1,80 +1,68 @@
 import { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { resetError, selectTeam } from "../../core/redux/slices/team/teamSlice";
-
-import styles from "./SingleTeam.module.css";
-import TeamInfo from "../../components/TeamInfo/TeamInfo";
-import {
-  AllPlayersActions,
-  getPlayers,
-} from "../../core/redux/slices/player/playerAction";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  resetTeamError,
+  selectTeam,
+  selectTeamStatus,
+} from "../../core/redux/slices/team/teamSlice";
+import { getPlayers } from "../../core/redux/slices/player/playerAction";
 import { selectPlayers } from "../../core/redux/slices/player/playerSlice";
-import { backendUrl } from "../../core/redux/apiData";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
 import { calculateAge } from "../../utils/calculateAge";
-import { RootState } from "../../core/redux/store";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { TeamInfo } from "../../components";
+import styles from "./SingleTeam.module.css";
+
 const SingleTeam: FC = () => {
-  const {
-    singleTeamContainer,
-    teamInfoTable,
-    teamInfoTableInner,
-    singleTeamTable,
-    tableHeader,
-    teamTableBody,
-    playerDescription,
-    playerAvatar,
-    playerInfo,
-    playerName,
-    playerPosition,
-    firstColumn,
-    secondColumn,
-    thirdColumn,
-    fourthColumn,
-    fifthColumn,
-    warning,
-  } = styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const team = useSelector(selectTeam);
   const players = useSelector(selectPlayers);
-  const { error } = useSelector((state: RootState) => state.team);
+  const { error } = useSelector(selectTeamStatus);
   const { teamId } = useParams();
-  const dispatchPlayers: ThunkDispatch<RootState, void, AllPlayersActions> =
-    useDispatch();
+
+  const dispatchPlayers = useTypedDispatch();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatchPlayers(
       getPlayers({ teamIds: [Number(teamId)] && [Number(teamId)] })
     );
     setTimeout(() => {
-      dispatch(resetError());
+      dispatch(resetTeamError());
     }, 5000);
   }, [dispatch, teamId, dispatchPlayers]);
+
   return (
     <>
       {team && (
-        <section className={singleTeamContainer}>
+        <section className={styles.singleTeamContainer}>
           <TeamInfo {...team} />
-          <div className={singleTeamTable}>
-            <table className={teamInfoTable}>
-              <tbody className={teamTableBody}>
+          <div className={styles.singleTeamTable}>
+            <table className={styles.teamInfoTable}>
+              <tbody className={styles.teamTableBody}>
                 <tr>
-                  <td className={tableHeader}>Roster</td>
+                  <td className={styles.tableHeader}>Roster</td>
                 </tr>
-                <tr className={teamInfoTableInner}>
-                  <td className={firstColumn}>#</td>
-                  <td className={secondColumn}>Player</td>
-                  <td className={thirdColumn}>Height</td>
-                  <td className={fourthColumn}>Weight</td>
-                  <td className={fifthColumn}>Age</td>
+                <tr className={styles.teamInfoTableInner}>
+                  <td className={styles.firstColumn}>#</td>
+                  <td className={styles.secondColumn}>Player</td>
+                  <td className={styles.thirdColumn}>Height</td>
+                  <td className={styles.fourthColumn}>Weight</td>
+                  <td className={styles.fifthColumn}>Age</td>
                 </tr>
                 {players && players.length !== 0 ? (
                   <>
                     {players.map((player) => {
                       return (
-                        <tr className={teamInfoTableInner} key={player.id}>
+                        <tr
+                          className={styles.teamInfoTableInner}
+                          key={player.id}
+                        >
                           <td
                             className={
-                              error ? `${firstColumn} ${warning}` : firstColumn
+                              error
+                                ? `${styles.firstColumn} ${styles.warning}`
+                                : styles.firstColumn
                             }
                           >
                             {player.number}
@@ -82,19 +70,21 @@ const SingleTeam: FC = () => {
                           <td
                             className={
                               error
-                                ? `${secondColumn} ${warning}`
-                                : secondColumn
+                                ? `${styles.secondColumn} ${styles.warning}`
+                                : styles.secondColumn
                             }
                           >
-                            <div className={playerInfo}>
+                            <div className={styles.playerInfo}>
                               <img
-                                className={playerAvatar}
+                                className={styles.playerAvatar}
                                 src={`${backendUrl}${player.avatarUrl}`}
                                 alt='Player Avatar'
                               />
-                              <div className={playerDescription}>
-                                <p className={playerName}>{player.name}</p>
-                                <p className={playerPosition}>
+                              <div className={styles.playerDescription}>
+                                <p className={styles.playerName}>
+                                  {player.name}
+                                </p>
+                                <p className={styles.playerPosition}>
                                   {player.position}
                                 </p>
                               </div>
@@ -102,19 +92,23 @@ const SingleTeam: FC = () => {
                           </td>
                           <td
                             className={
-                              error ? `${thirdColumn} ${warning}` : thirdColumn
+                              error
+                                ? `${styles.thirdColumn} ${styles.warning}`
+                                : styles.thirdColumn
                             }
                           >{`${player.height} cm`}</td>
                           <td
                             className={
                               error
-                                ? `${fourthColumn} ${warning}`
-                                : fourthColumn
+                                ? `${styles.fourthColumn} ${styles.warning}`
+                                : styles.fourthColumn
                             }
                           >{`${player.weight} kg`}</td>
                           <td
                             className={
-                              error ? `${fifthColumn} ${warning}` : fifthColumn
+                              error
+                                ? `${styles.fifthColumn} ${styles.warning}`
+                                : styles.fifthColumn
                             }
                           >
                             {calculateAge(player.birthday)}

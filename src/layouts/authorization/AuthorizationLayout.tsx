@@ -1,7 +1,11 @@
 import { FC } from "react";
-import IAuthorization from "./IAuthorizationLayout";
+import AuthorizationLayoutProps from "./AuthorizationLayoutProps";
 import styles from "./AuthorizationLayout.module.css";
-const Authorization: FC<IAuthorization> = ({ image, children }) => {
+
+const AuthorizationLayout: FC<AuthorizationLayoutProps> = ({
+  image,
+  children,
+}) => {
   const {
     authLayoutContainer,
     authLayoutLeft,
@@ -20,4 +24,4 @@ const Authorization: FC<IAuthorization> = ({ image, children }) => {
   );
 };
 
-export default Authorization;
+export default AuthorizationLayout;

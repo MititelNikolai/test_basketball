@@ -1,30 +1,37 @@
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import {
+  selectPlayer,
+  selectPositions,
+} from "../../../core/redux/slices/player/playerSlice";
+import {
+  getNumberOfTeams,
+  selectTeams,
+} from "../../../core/redux/slices/team/teamSlice";
+import { getTeams } from "../../../core/redux/slices/team/teamActions";
+import { getPositions } from "../../../core/redux/slices/player/playerAction";
+import {
+  addSpaceBeforeUppercase,
+  jsonDateToString,
+} from "../../../utils/stringFunctions";
+import { useTypedDispatch } from "../../../hooks/useTypedDispatch";
 import {
   IPlayerFormInputs,
   IPlayerFormProps,
   InitialDefaults,
   ITeamsOptions,
   IPositionsOptions,
-} from "./IPlayerFormProps";
-import ImageUpload from "../../../components/ImageUpload/ImageUpload";
-import Notification from "../../../ui/Notification/Notification";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPlayer } from "../../../core/redux/slices/player/playerSlice";
-import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
-import styles from "./PlayerForm.module.css";
-import Input from "../../../ui/Input/Input";
-import ItemsSelector from "../../../ui/ItemsSelector/ItemsSelector";
-import { selectTeams } from "../../../core/redux/slices/team/teamSlice";
-import Button from "../../../ui/Button/Button";
-import { useNavigate } from "react-router-dom";
-import { getPositionsWithSpaces } from "../../../api/additionalRequests";
-import { RootState } from "../../../core/redux/store";
-import { jsonDateToString } from "../../../utils/stringFunctions";
+} from "./PlayerForm.interfaces";
 import {
-  AllTeamActions,
-  getTeams,
-} from "../../../core/redux/slices/team/teamActions";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+  Notification,
+  ItemsSelector,
+  Button,
+  Input,
+} from "../../../components/ui";
+import { ImageUpload } from "../../../components";
+import styles from "./PlayerForm.module.css";
 
 const PlayerForm: FC<IPlayerFormProps> = ({
   onSubmit,
@@ -32,19 +39,20 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   loading,
   error,
 }) => {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-  const [playerPositions, setPlayerPositions] = useState<
-    Array<IPositionsOptions> | undefined
+  const teamCount = useSelector(getNumberOfTeams);
+  const [playerCurrentTeam, setPlayerCurrentTeam] = useState<
+    number | undefined
   >(undefined);
   const [teamsOptions, setTeamsOptions] = useState<
     Array<ITeamsOptions> | undefined
   >(undefined);
+  const [playerPositionOptions, setPlayerPositionOptions] = useState<
+    Array<IPositionsOptions> | undefined
+  >(undefined);
   const [playerCurrentPosition, setPlayerCurrentPosition] = useState<
     number | undefined
   >(undefined);
-  const [playerCurrentTeam, setPlayerCurrentTeam] = useState<
-    number | undefined
-  >(undefined);
+
   const {
     playerFormContainer,
     fieldsContainer,
@@ -54,45 +62,13 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     imageUploader,
   } = styles;
 
-  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
-    useDispatch();
+  const dispatchTeam = useTypedDispatch();
+  const dispatchPositions = useTypedDispatch();
   const navigate = useNavigate();
 
   const teams = useSelector(selectTeams);
+  const positions = useSelector(selectPositions);
   const player = useSelector(selectPlayer);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getPositionsWithSpaces(userInfo.token);
-        setPlayerPositions(data);
-        const index = data.findIndex((obj: IPositionsOptions) => {
-          return obj.value === player?.position;
-        });
-        setPlayerCurrentPosition(index);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [userInfo.token, player?.position]);
-  useEffect(() => {
-    if (teams.length === 0) {
-      dispatchTeam(getTeams({}));
-    }
-    if (teams.length !== 0) {
-      const options: Array<ITeamsOptions> = teams?.map((team) => ({
-        value: team.id,
-        label: team.name,
-      }));
-      const index = options.findIndex((obj: ITeamsOptions) => {
-        return obj.value === player?.team;
-      });
-
-      setPlayerCurrentTeam(index);
-
-      setTeamsOptions(options);
-    }
-  }, [player?.position, player?.team, teams, dispatchTeam]);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -120,10 +96,51 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   const submitError: SubmitErrorHandler<IPlayerFormInputs> = (data) => {
     /*  console.log("Errors", data); */
   };
+
+  useEffect(() => {
+    if (!positions) {
+      dispatchPositions(getPositions());
+    }
+    if (positions && positions.length !== 0) {
+      const options: Array<IPositionsOptions> = positions.map(
+        (position: string) => ({
+          label: addSpaceBeforeUppercase(position),
+          value: position,
+        })
+      );
+      const index = options.findIndex((obj: IPositionsOptions) => {
+        return obj.value === player?.position;
+      });
+      setPlayerCurrentPosition(index);
+      setPlayerPositionOptions(options);
+    }
+  }, [dispatchPositions, player?.position, positions]);
+
+  useEffect(() => {
+    if (teamCount !== 0) {
+      if (teams.length === 0) {
+        dispatchTeam(getTeams({}));
+      }
+      if (teams.length !== 0) {
+        const options: Array<ITeamsOptions> = teams?.map((team) => ({
+          value: team.id,
+          label: team.name,
+        }));
+        const index = options.findIndex((obj: ITeamsOptions) => {
+          return obj.value === player?.team;
+        });
+
+        setPlayerCurrentTeam(index);
+
+        setTeamsOptions(options);
+      }
+    }
+  }, [player?.position, player?.team, teams, dispatchTeam, teamCount]);
+
   return (
     <>
       {error && <Notification message={error} positionCenter />}
-      {playerPositions && teamsOptions && (
+      {playerPositionOptions && (
         <form
           className={playerFormContainer}
           onSubmit={handleSubmit(submitHandler, submitError)}
@@ -144,19 +161,19 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   required: { value: true, message: "Image is required" },
                 })}
                 setValueForPlayer={setValue}
-                needMessage
+                haveMessage
                 errorMessage={errors.file_img?.message}
               />
             )}
           </div>
           <div className={fieldsContainer}>
             <Input
-              inputType='text'
+              inputFieldType='text'
               label='Name'
               {...register("name", {
                 required: { value: true, message: "Name is required" },
               })}
-              inputErrorMessage={errors.name?.message}
+              errorMessage={errors.name?.message}
             />
 
             {edit ? (
@@ -166,7 +183,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   forForm
                   textPosition='left'
                   label='Position'
-                  options={playerPositions}
+                  options={playerPositionOptions}
                   handleChange={(option) =>
                     setValue("position", String(option?.value) ?? undefined)
                   }
@@ -183,7 +200,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Team'
                   isDisabled
-                  options={teamsOptions && teamsOptions}
+                  options={teamsOptions}
                   handleChange={(option) =>
                     setValue("team", Number(option?.value) ?? undefined)
                   }
@@ -200,7 +217,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   forForm
                   textPosition='left'
                   label='Position'
-                  options={playerPositions}
+                  options={playerPositionOptions}
                   handleChange={(option) =>
                     setValue("position", String(option?.value) ?? undefined)
                   }
@@ -229,7 +246,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
             <div className={playerInfoStyles}>
               <div className={inputWrapper}>
                 <Input
-                  inputType='number'
+                  inputFieldType='number'
                   label='Height (cm)'
                   {...register("height", {
                     required: { value: true, message: "Height is required" },
@@ -238,12 +255,12 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                       message: "Greater than or equal to 180",
                     },
                   })}
-                  inputErrorMessage={errors.height?.message}
+                  errorMessage={errors.height?.message}
                 />
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputType='number'
+                  inputFieldType='number'
                   label='Weight (kg)'
                   {...register("weight", {
                     required: { value: true, message: "Weight is required" },
@@ -252,12 +269,12 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                       message: "Greater than or equal to 70",
                     },
                   })}
-                  inputErrorMessage={errors.weight?.message}
+                  errorMessage={errors.weight?.message}
                 />
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputType='date'
+                  inputFieldType='date'
                   label='Birthday'
                   {...register("birthday", {
                     required: { value: true, message: "Birthday is required" },
@@ -280,12 +297,12 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                       return true;
                     },
                   })}
-                  inputErrorMessage={errors.birthday?.message}
+                  errorMessage={errors.birthday?.message}
                 />
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputType='number'
+                  inputFieldType='number'
                   label='Number'
                   {...register("number", {
                     required: { value: true, message: "Number is required" },
@@ -298,7 +315,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                       message: "Less than or equal to 99",
                     },
                   })}
-                  inputErrorMessage={errors.number?.message}
+                  errorMessage={errors.number?.message}
                 />
               </div>
             </div>

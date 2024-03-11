@@ -1,19 +1,17 @@
-import IconsPeoples from "../../ui/icons/IconsPeoples";
-import IconPerson from "../../ui/icons/IconPerson";
 import { FC } from "react";
-import ISvgIconProps from "../../ui/icons/ISvgIconProps";
-interface ILink {
+import { IconPeoples, IconPerson } from "../ui/icons";
+import ISvgIconProps from "../ui/icons/SvgIconProps";
+
+export const links: ReadonlyArray<{
   id: number;
   label: string;
   icon: FC<ISvgIconProps>;
   link: string;
-}
-
-export const links: ReadonlyArray<ILink> = [
+}> = [
   {
     id: 1,
     label: "Teams",
-    icon: IconsPeoples,
+    icon: IconPeoples,
     link: "teams",
   },
   {

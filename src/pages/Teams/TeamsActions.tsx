@@ -1,26 +1,25 @@
 import { FC, useEffect, useState } from "react";
-import Input from "../../ui/Input/Input";
-import IconSearch from "../../ui/icons/IconSearch";
-import Button from "../../ui/Button/Button";
-import styles from "./Teams.module.css";
 import { NavLink } from "react-router-dom";
-import IconDelete from "../../ui/icons/IconDelete";
+import { Input, Button } from "../../components/ui";
+import { IconSearch, IconDelete } from "../../components/ui/icons";
+import styles from "./Teams.module.css";
+import TeamActionsProps from "./TeamActionsProps";
 
-interface ITeamActions {
-  filter: (search: string) => void;
-  resetAction: () => void;
-  inSearch: boolean;
-}
-
-const TeamsActions: FC<ITeamActions> = ({ filter, resetAction, inSearch }) => {
+const TeamsActions: FC<TeamActionsProps> = ({
+  filter,
+  resetAction,
+  inSearch,
+}) => {
   const { actionsContainer, actionWrapper } = styles;
   const [search, setSearch] = useState("");
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       filter(search);
     }, 400);
     return () => clearTimeout(timeoutId);
   }, [search, filter]);
+
   return (
     <div className={actionsContainer}>
       <div className={actionWrapper}>
@@ -35,10 +34,10 @@ const TeamsActions: FC<ITeamActions> = ({ filter, resetAction, inSearch }) => {
           }
           setValue={setSearch}
           value={search}
-          inputType='text'
+          inputFieldType='text'
           placeholder='Search by name...'
           background='white'
-          needMessage={false}
+          haveMessage={false}
         >
           {inSearch ? <IconDelete /> : <IconSearch />}
         </Input>

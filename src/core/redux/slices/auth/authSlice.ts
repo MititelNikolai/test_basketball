@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { registerUser, userLogin, userUpdate } from "./authActions";
 import { RootState } from "../../store";
-import { IAuthSlice, IUser } from "./auth.types";
+import { IAuthSlice, IUser } from "./auth.interfaces";
 
 const storedUserData = localStorage.getItem("userData");
 
@@ -72,9 +72,10 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(userUpdate.fulfilled, (state) => {
+    builder.addCase(userUpdate.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      console.log(action.payload);
     });
     builder.addCase(userUpdate.rejected, (state, action) => {
       state.loading = false;
@@ -90,4 +91,14 @@ export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 
 export const selectUserToken = (state: RootState) => state.auth.userInfo.token;
+export const selectAuthStatus = createSelector(
+  (state: RootState) => state.auth.success,
+  (state: RootState) => state.auth.loading,
+  (state: RootState) => state.auth.error,
+  (success, loading, error) => ({
+    success,
+    loading,
+    error,
+  })
+);
 export default authSlice.reducer;

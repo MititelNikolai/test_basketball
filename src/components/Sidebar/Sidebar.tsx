@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { links } from "./SidebarLinks";
 import { NavLink, useLocation } from "react-router-dom";
-import IconInput from "../../ui/icons/IconInput";
 import { useDispatch } from "react-redux";
 import { logout } from "../../core/redux/slices/auth/authSlice";
+import { links } from "./SidebarLinks";
+import { IconInput } from "../ui/icons";
 import styles from "./Sidebar.module.css";
+
 const Sidebar: FC = () => {
   const { sideBarContainer, linkContainer, linkWrapper, linkText } = styles;
   const dispatch = useDispatch();

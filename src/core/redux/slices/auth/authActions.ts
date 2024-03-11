@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ILoginData, IRegisterData, IUpdateUserData } from "./auth.types";
-import { backendUrl } from "../../apiData";
+import { ILoginData, IRegisterData, IUpdateUserData } from "./auth.interfaces";
 import { RootState } from "../../store";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ userName, login, password }: IRegisterData, { rejectWithValue }) => {

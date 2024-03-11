@@ -55,7 +55,15 @@
 .playerMultiSelect__option:last-child {
   border-radius: 0 0 0.25rem 0.25rem;
 }
-
+.playerMultiSelect__menu-notice--no-options {
+  cursor: pointer !important;
+  padding: 0.25rem 0 0.25rem 0.875rem;
+  font-size: 15px;
+  background-color: var(--color-white);
+  border: 0.25px solid var(--color-grey-lightest-v1);
+  border-radius: 0.25rem;
+  transition: all 0.3s linear;
+}
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/
 
 @media screen and (max-width: 1024px) {

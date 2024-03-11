@@ -1,18 +1,16 @@
 import { FC } from "react";
-import styles from "./TeamForm.module.css";
-import Input from "../../../ui/Input/Input";
-import Button from "../../../ui/Button/Button";
-import ImageUpload from "../../../components/ImageUpload/ImageUpload";
-import Notification from "../../../ui/Notification/Notification";
 import { useNavigate } from "react-router-dom";
+import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { selectTeam } from "../../../core/redux/slices/team/teamSlice";
+import { Input, Button, Notification } from "../../../components/ui";
+import { ImageUpload } from "../../../components";
 import {
   TeamFormProps,
   ITeamFormInputs,
   InitialDefaults,
-} from "./ITeamFormInputs";
-import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { selectTeam } from "../../../core/redux/slices/team/teamSlice";
+} from "./TeamForm.interfaces";
+import styles from "./TeamForm.module.css";
 
 const TeamForm: FC<TeamFormProps> = ({
   onSubmit,
@@ -26,8 +24,8 @@ const TeamForm: FC<TeamFormProps> = ({
     buttonsContainer,
     imageUploader,
   } = styles;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const team = useSelector(selectTeam);
 
   const initialTeam: InitialDefaults = {
@@ -45,6 +43,7 @@ const TeamForm: FC<TeamFormProps> = ({
     clearErrors,
     formState: { errors },
   } = useForm<ITeamFormInputs>({ defaultValues: initialTeam });
+
   const submitHandler: SubmitHandler<ITeamFormInputs> = (
     data: ITeamFormInputs
   ) => {
@@ -52,7 +51,7 @@ const TeamForm: FC<TeamFormProps> = ({
   };
 
   const submitError: SubmitErrorHandler<ITeamFormInputs> = (data) => {
-    console.log("Errors", data);
+    /*   console.log("Errors", data); */
   };
   return (
     <>
@@ -78,7 +77,7 @@ const TeamForm: FC<TeamFormProps> = ({
                 required: { value: true, message: "Image is required" },
               })}
               setValueForTeam={setValue}
-              needMessage
+              haveMessage
               errorMessage={errors.file_img?.message}
               clearError={() => clearErrors("file_img")}
             />
@@ -86,31 +85,31 @@ const TeamForm: FC<TeamFormProps> = ({
         </div>
         <div className={fieldsContainer}>
           <Input
-            inputType='text'
+            inputFieldType='text'
             label='Name'
             {...register("name", {
               required: { value: true, message: "Name is required" },
             })}
-            inputErrorMessage={errors.name?.message}
+            errorMessage={errors.name?.message}
           />
           <Input
-            inputType='text'
+            inputFieldType='text'
             label='Division'
             {...register("division", {
               required: { value: true, message: "Division is required" },
             })}
-            inputErrorMessage={errors.division?.message}
+            errorMessage={errors.division?.message}
           />
           <Input
-            inputType='text'
+            inputFieldType='text'
             label='Conference'
             {...register("conference", {
               required: { value: true, message: "Conference is required" },
             })}
-            inputErrorMessage={errors.conference?.message}
+            errorMessage={errors.conference?.message}
           />
           <Input
-            inputType='number'
+            inputFieldType='number'
             label='Year of foundation'
             {...register("foundationYear", {
               required: {
@@ -126,7 +125,7 @@ const TeamForm: FC<TeamFormProps> = ({
                 message: `Foundation Year cannot be in the future`,
               },
             })}
-            inputErrorMessage={errors.foundationYear?.message}
+            errorMessage={errors.foundationYear?.message}
           />
           <div className={buttonsContainer}>
             <Button

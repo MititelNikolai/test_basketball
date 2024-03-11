@@ -1,9 +1,9 @@
-import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "./core/redux/slices/auth/authSlice";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Dashboard from "./layouts/Dashboard/Dashboard";
-import PrivateRouter from "./Routes/PrivateRouter";
+import DashboardLayout from "./layouts/Dashboard/DashboardLayout";
 import Teams from "./pages/Teams/Teams";
 import Players from "./pages/Players/Players";
 import EditProfile from "./pages/EditProfile/EditProfile";
@@ -16,15 +16,23 @@ import PlayersActionsLayout from "./layouts/Players/PlayersActionsLayout";
 import AddPlayer from "./pages/AddPlayer/AddPlayer";
 import SinglePlayer from "./pages/SinglePlayers/SinglePlayer";
 import EditPlayer from "./pages/EditPlayer/EditPlayer";
+import "./App.css";
 
 function App() {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='' element={<Navigate to='/teams' replace />} />
-        <Route path='/' element={<PrivateRouter component={Dashboard} />}>
+        <Route
+          path='/'
+          element={
+            isAuthenticated ? <DashboardLayout /> : <Navigate to='/login' />
+          }
+        >
           <Route path='teams' element={<Teams />}>
             <Route element={<TeamsActionsLayout />}>
               <Route path='add-team' element={<AddTeam />} />

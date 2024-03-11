@@ -1,29 +1,27 @@
 import { FC } from "react";
-import { RegisterFormInput, RegisterFormProps } from "./RegisterForm.types";
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
-import Input from "../../../ui/Input/Input";
-import CheckBox from "../../../ui/CheckBox/CheckBox";
-import Button from "../../../ui/Button/Button";
-import CustomLink from "../../../ui/CustomLink/CustomLink";
-import Notification from "../../../ui/Notification/Notification";
+import {
+  Input,
+  CheckBox,
+  Button,
+  CustomLink,
+  Notification,
+} from "../../../components/ui";
+import {
+  IRegisterFormInput,
+  IRegisterFormProps,
+} from "./RegisterForm.interfaces";
 import styles from "./RegisterForm.module.css";
-const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
+
+const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
   const { registerFormStyles, registerFormHeader } = styles;
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegisterFormInput>();
-
-  const submitHandler: SubmitHandler<RegisterFormInput> = (data) => {
-    const { confirmPassword, agreement, ...formData } = data;
-    onSubmit(formData);
-  };
-
-  const submitError: SubmitErrorHandler<RegisterFormInput> = (data) => {
-    /* console.log("Errors", data); */
-  };
+  } = useForm<IRegisterFormInput>();
 
   const password = watch("password", "");
 
@@ -35,7 +33,16 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
   const minLengthForPassword = 8;
 
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]+$/;
+
+  const submitHandler: SubmitHandler<IRegisterFormInput> = (data) => {
+    const { confirmPassword, agreement, ...formData } = data;
+    onSubmit(formData);
+  };
+
+  const submitError: SubmitErrorHandler<IRegisterFormInput> = (data) => {
+    /* console.log("Errors", data); */
+  };
 
   return (
     <>
@@ -46,15 +53,15 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
         className={registerFormStyles}
       >
         <Input
-          inputType='text'
+          inputFieldType='text'
           label='Name'
           {...register("userName", {
             required: { value: true, message: "Name is required" },
           })}
-          inputErrorMessage={errors.userName?.message}
+          errorMessage={errors.userName?.message}
         ></Input>
         <Input
-          inputType='text'
+          inputFieldType='text'
           label='Login'
           {...register("login", {
             required: { value: true, message: "Login is required" },
@@ -71,10 +78,10 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
               message: "Login must only contain alphanumeric characters",
             },
           })}
-          inputErrorMessage={errors.login?.message}
+          errorMessage={errors.login?.message}
         ></Input>
         <Input
-          inputType='password'
+          inputFieldType='password'
           label='Password'
           {...register("password", {
             required: { value: true, message: "Password is required" },
@@ -88,16 +95,16 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
                 "Password must contain a combination of uppercase and lowercase letters, numbers, and special characters",
             },
           })}
-          inputErrorMessage={errors.password?.message}
+          errorMessage={errors.password?.message}
         ></Input>
         <Input
-          inputType='password'
+          inputFieldType='password'
           label='Enter your password again'
           {...register("confirmPassword", {
             required: { value: true, message: "Password is required" },
             validate: (value) => value === password || "Passwords do not match",
           })}
-          inputErrorMessage={errors.confirmPassword?.message}
+          errorMessage={errors.confirmPassword?.message}
         ></Input>
         <CheckBox
           text='I accept the agreement'

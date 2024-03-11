@@ -1,26 +1,22 @@
 import { FC, useEffect } from "react";
-import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import { Outlet, useLocation, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
-  resetSuccess,
+  resetTeamSuccess,
   selectTeam,
+  selectTeamStatus,
 } from "../../core/redux/slices/team/teamSlice";
-import {
-  AllTeamActions,
-  deleteTeam,
-  getTeam,
-} from "../../core/redux/slices/team/teamActions";
-import { RootState } from "../../core/redux/store";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { deleteTeam, getTeam } from "../../core/redux/slices/team/teamActions";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { Breadcrumbs } from "../../components";
 
 const TeamsActionsLayout: FC = () => {
   const location = useLocation();
   const { teamId } = useParams();
   const team = useSelector(selectTeam);
-  const { loading, success } = useSelector((state: RootState) => state.team);
-  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
-    useDispatch();
+  const { loading, success } = useSelector(selectTeamStatus);
+  const dispatchTeam = useTypedDispatch();
+
   useEffect(() => {
     if (team?.id !== Number(teamId)) {
       location.pathname !== `/teams` &&
@@ -28,6 +24,7 @@ const TeamsActionsLayout: FC = () => {
         dispatchTeam(getTeam(Number(teamId)));
     }
   }, [dispatchTeam, teamId, team?.id, location.pathname]);
+
   return (
     <div>
       {!loading && (
@@ -37,7 +34,7 @@ const TeamsActionsLayout: FC = () => {
             id={Number(teamId)}
             deleteAction={teamId && deleteTeam(Number(teamId))}
             success={success}
-            successAction={resetSuccess()}
+            successAction={resetTeamSuccess()}
             pathname={
               location.pathname !== `/teams/add-team`
                 ? `/teams/${team?.name}`

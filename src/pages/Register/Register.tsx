@@ -1,36 +1,38 @@
 import { FC, useEffect } from "react";
-import AuthorizationLayout from "../../layouts/authorization/AuthorizationLayout";
-import SingUp from "../../assets/img/singUp.png";
-import RegisterForm from "./components/RegisterForm";
-import {
-  AllAuthActions,
-  registerUser,
-} from "../../core/redux/slices/auth/authActions";
-import { IRegisterData } from "../../core/redux/slices/auth/auth.types";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../core/redux/store";
-import { ThunkDispatch } from "@reduxjs/toolkit";
-import { resetError } from "../../core/redux/slices/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  resetError,
+  resetSuccess,
+  selectAuthStatus,
+  selectIsAuthenticated,
+} from "../../core/redux/slices/auth/authSlice";
+import { registerUser } from "../../core/redux/slices/auth/authActions";
+import { IRegisterData } from "../../core/redux/slices/auth/auth.interfaces";
+import SingUp from "../../assets/img/singUp.png";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import AuthorizationLayout from "../../layouts/Authorization/AuthorizationLayout";
+import RegisterForm from "./components/RegisterForm";
 
 const Register: FC = () => {
-  const { loading, success, isAuthenticated, error } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { loading, success, error } = useSelector(selectAuthStatus);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
-  const dispatchUser: ThunkDispatch<RootState, void, AllAuthActions> =
-    useDispatch();
+  const dispatchUser = useTypedDispatch();
   const dispatch = useDispatch();
+
+  const handleSubmit = (data: IRegisterData) =>
+    dispatchUser(registerUser(data));
+
   useEffect(() => {
     if (success) navigate("/login");
     if (isAuthenticated) navigate("/");
     return () => {
       dispatch(resetError());
+      dispatch(resetSuccess());
     };
   }, [navigate, isAuthenticated, success, dispatch]);
 
-  const handleSubmit = (data: IRegisterData) =>
-    dispatchUser(registerUser(data));
   return (
     <>
       <AuthorizationLayout image={SingUp}>

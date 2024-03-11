@@ -19,6 +19,7 @@
 .teamInfoImageContainer > img {
   width: 210px;
   object-fit: cover;
+  overflow: hidden;
 }
 .teamInfoDescriptionContainer {
   padding: 4.06rem 0;

@@ -1,13 +1,8 @@
 import { FC } from "react";
 import ReactPaginate from "react-paginate";
+import { IconChevronRight, IconChevronLeft } from "../ui/icons";
+import PaginationProps from "./PaginationProps";
 import styles from "./Pagination.module.css";
-import IconChevronRight from "../../ui/icons/IconChevronRight";
-import IconChevronLeft from "../../ui/icons/IconChevronLeft";
-interface PaginationProps {
-  handlePageClick: (event: { selected: number }) => void;
-  pageCount?: number | null;
-  currentPage?: number;
-}
 
 const Pagination: FC<PaginationProps> = ({
   handlePageClick,

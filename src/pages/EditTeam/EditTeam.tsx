@@ -1,38 +1,28 @@
 import { FC, useEffect } from "react";
-import TeamForm from "../AddTeam/components/TeamForm";
-import styles from "./EditTeam.module.css";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearCurrentTeam,
-  resetSuccess,
+  resetCurrentTeam,
+  resetTeamSuccess,
+  selectTeamStatus,
 } from "../../core/redux/slices/team/teamSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import { RootState } from "../../core/redux/store";
-import { IUpdateTeamData } from "../../core/redux/slices/team/team.types";
-import uploadImageToServer from "../../api/imageRequests/uploadImageToServer";
-import { ITeamFormInputs } from "../AddTeam/components/ITeamFormInputs";
-import {
-  AllTeamActions,
-  updateTeam,
-} from "../../core/redux/slices/team/teamActions";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { updateTeam } from "../../core/redux/slices/team/teamActions";
+import { IUpdateTeamData } from "../../core/redux/slices/team/team.interfaces";
+import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
+import uploadImageToServer from "../../core/api/uploadImageToServer";
+import { ITeamFormInputs } from "../AddTeam/components/TeamForm.interfaces";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import TeamForm from "../AddTeam/components/TeamForm";
+import styles from "./EditTeam.module.css";
 
 const EditTeam: FC = () => {
-  const { editTeamContainer } = styles;
   const { teamId } = useParams();
-  const { loading, success } = useSelector((state: RootState) => state.team);
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { loading, success, error } = useSelector(selectTeamStatus);
+
+  const userInfo = useSelector(selectCurrentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
-    useDispatch();
-  useEffect(() => {
-    if (success) {
-      dispatch(resetSuccess());
-      dispatch(clearCurrentTeam());
-      navigate(`/teams/${teamId}`);
-    }
-  }, [navigate, dispatch, success, teamId]);
+  const dispatchTeam = useTypedDispatch();
 
   const handleSubmit = async (formData: ITeamFormInputs) => {
     const { name, division, conference } = formData;
@@ -48,13 +38,21 @@ const EditTeam: FC = () => {
     };
     dispatchTeam(updateTeam(dataToServer));
   };
+  useEffect(() => {
+    if (success) {
+      dispatch(resetTeamSuccess());
+      dispatch(resetCurrentTeam());
+      navigate(`/teams/${teamId}`);
+    }
+  }, [navigate, dispatch, success, teamId]);
 
   return (
     <>
       {teamId && (
-        <div className={editTeamContainer}>
+        <div className={styles.editTeamContainer}>
           <TeamForm
             loading={loading}
+            error={error}
             edit
             onSubmit={(data) => {
               handleSubmit(data);

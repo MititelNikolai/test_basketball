@@ -1,10 +1,7 @@
 import { FC } from "react";
+import EmptyCardMessageProps from "./EmptyCardMessageProps";
 import styles from "./EmptyCardMessage.module.css";
-interface EmptyCardMessageProps {
-  imageLink: string;
-  title: string;
-  subTitle?: string;
-}
+
 const EmptyCardMessage: FC<EmptyCardMessageProps> = ({
   imageLink,
   title,

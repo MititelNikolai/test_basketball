@@ -1,9 +1,9 @@
 import { FC } from "react";
-import styles from "./Card.module.css";
-import { ICardProps } from "./ICardProps";
-import { backendUrl } from "../../core/redux/apiData";
 import { Link } from "react-router-dom";
-const TeamCard: FC<ICardProps> = ({
+import CardProps from "./CardProps";
+import styles from "./Card.module.css";
+
+const Card: FC<CardProps> = ({
   id,
   name,
   type,
@@ -24,6 +24,7 @@ const TeamCard: FC<ICardProps> = ({
     teamYear,
     playerNumber,
   } = styles;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
     <Link to={`${id}`} className={teamCardContainer}>
       <div
@@ -52,4 +53,4 @@ const TeamCard: FC<ICardProps> = ({
   );
 };
 
-export default TeamCard;
+export default Card;

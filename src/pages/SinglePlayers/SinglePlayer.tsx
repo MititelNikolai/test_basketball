@@ -1,8 +1,8 @@
 import { FC } from "react";
-import styles from "./SinglePlayer.module.css";
 import { useSelector } from "react-redux";
 import { selectPlayer } from "../../core/redux/slices/player/playerSlice";
-import PlayerInfo from "../../components/PlayerInfo/PlayerInfo";
+import { PlayerInfo } from "../../components";
+import styles from "./SinglePlayer.module.css";
 
 const SinglePlayer: FC = () => {
   const { singlePlayerContainer } = styles;
