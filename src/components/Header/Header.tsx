@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { NavLink, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
 import { IconProfile, IconBurgerMenu } from "../ui/icons";
 import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
 import { MobileSidebar } from "../index";
@@ -8,47 +10,32 @@ import HeaderProps from "./HeaderProps";
 import styles from "./Header.module.css";
 
 const Header: FC<HeaderProps> = ({ menuToggle, menuState }) => {
-  const {
-    headerContainer,
-    userContainer,
-    userName,
-    userAvatar,
-    headerMobileMenu,
-    logoWrapper,
-    headerLogo,
-    leftMenu,
-  } = styles;
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  let userData: IUser | null = null;
-  try {
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      userData = JSON.parse(storedUserData);
-    }
-  } catch (error) {
+  const userData: IUser | null = useSelector(selectCurrentUser);
+  if (!userData.token) {
     localStorage.removeItem("userData");
     <Navigate to='/login' />;
   }
 
   return (
     <>
-      <header className={headerContainer}>
-        <div onClick={menuToggle} className={headerMobileMenu}>
+      <header className={styles.headerContainer}>
+        <div onClick={menuToggle} className={styles.headerMobileMenu}>
           {menuState ? <IconBurgerMenu /> : <IconBurgerMenu opacity='1' />}
         </div>
-        <div className={logoWrapper}>
+        <div className={styles.logoWrapper}>
           <NavLink to='/'>
-            <img className={headerLogo} src={logo} alt='Logo' />
+            <img className={styles.headerLogo} src={logo} alt='Logo' />
           </NavLink>
         </div>
 
-        <div className={userContainer}>
+        <div className={styles.userContainer}>
           <NavLink to='/edit-profile'>
-            <p className={userName}>{userData?.name}</p>
+            <p className={styles.userName}>{userData?.name}</p>
 
             {userData?.avatarUrl ? (
               <img
-                className={userAvatar}
+                className={styles.userAvatar}
                 src={`${backendUrl}${userData?.avatarUrl}` || ""}
                 alt='Avatar'
               />
@@ -58,7 +45,7 @@ const Header: FC<HeaderProps> = ({ menuToggle, menuState }) => {
           </NavLink>
         </div>
       </header>
-      <div className={leftMenu}>
+      <div className={styles.leftMenu}>
         {menuState ? <MobileSidebar handleClick={menuToggle} /> : <></>}
       </div>
     </>

@@ -35,6 +35,11 @@ const authSlice = createSlice({
     resetSuccess: (state) => {
       state.success = false;
     },
+    updateProfile: (state, action) => {
+      state.userInfo.name = action.payload.userName;
+      state.userInfo.avatarUrl = action.payload.avatarUrl;
+      localStorage.setItem("userData", JSON.stringify(state.userInfo));
+    },
   },
   extraReducers(builder) {
     //Register
@@ -84,7 +89,8 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetError, resetSuccess } = authSlice.actions;
+export const { logout, resetError, resetSuccess, updateProfile } =
+  authSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.auth.userInfo;
 export const selectIsAuthenticated = (state: RootState) =>

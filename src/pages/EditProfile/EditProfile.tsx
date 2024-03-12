@@ -6,6 +6,7 @@ import { userUpdate } from "../../core/redux/slices/auth/authActions";
 import {
   resetSuccess,
   selectAuthStatus,
+  updateProfile,
 } from "../../core/redux/slices/auth/authSlice";
 import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
 import uploadImageToServer from "../../core/api/uploadImageToServer";
@@ -61,6 +62,7 @@ const EditProfile: FC = () => {
         avatarUrl,
     };
     dispatchUser(userUpdate(dataToServer));
+    dispatch(updateProfile(dataToServer));
   };
 
   const submitError: SubmitErrorHandler<EditUser> = (data) => {
