@@ -1,4 +1,4 @@
-export interface ITeamFormInputs {
+export interface TeamFormInputs {
   name: string;
   foundationYear: string;
   division: string;
@@ -7,22 +7,22 @@ export interface ITeamFormInputs {
   imageUrl?: string;
 }
 export interface InitialDefaults {
-  name: string | undefined;
-  foundationYear: string | undefined;
-  division: string | undefined;
-  conference: string | undefined;
-  file_img?: File | undefined;
-  imageUrl?: string | undefined;
+  name?: string;
+  foundationYear?: string;
+  division?: string;
+  conference?: string;
+  file_img?: File;
+  imageUrl?: string;
 }
 
 export interface TeamFormProps {
   loading?: boolean;
-  onSubmit: (data: ITeamFormInputs) => void;
+  onSubmit: (data: TeamFormInputs) => void;
   edit?: boolean;
   error?: string;
 }
 
-export interface IAddTeamDataToServer {
+export interface AddTeamDataToServer {
   name: string;
   foundationYear: string;
   division: string;

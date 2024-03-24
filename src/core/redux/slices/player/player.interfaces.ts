@@ -2,20 +2,20 @@ export interface InitialState {
   loading: boolean;
   error: any | null;
   success: boolean;
-  playerDataFromServer: IDataFromServer;
-  currentPlayer?: ISinglePlayerData;
+  playerDataFromServer: DataFromServer;
+  currentPlayer?: SinglePlayerData;
   positionsPlayers?: Array<string>;
   addedPlayerSuccess?: number;
 }
 
-export interface IDataFromServer {
-  data: Array<IPlayerData>;
+export interface DataFromServer {
+  data: Array<PlayerData>;
   count: number | null;
   page: number | null;
   size: number | null;
 }
 
-export interface IPlayerDataToServer {
+export interface PlayerDataToServer {
   id?: number;
   name: string;
   number: number;
@@ -27,7 +27,7 @@ export interface IPlayerDataToServer {
   avatarUrl: string;
 }
 
-export interface IPlayerData {
+export interface PlayerData {
   name: string;
   number: number;
   position: string;
@@ -39,7 +39,7 @@ export interface IPlayerData {
   id: number;
 }
 
-export interface ISinglePlayerData {
+export interface SinglePlayerData {
   name: string;
   number: number;
   position: string;
@@ -52,7 +52,7 @@ export interface ISinglePlayerData {
   id: number;
 }
 
-export interface IGetPlayersParameters {
+export interface GetPlayersParameters {
   name?: string;
   teamIds?: Array<number>;
   page?: number;

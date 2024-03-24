@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
-interface InputProps {
-  inputFieldType: string;
+export interface InputProps {
+  type: string;
   label?: string;
   name?: string;
   errorMessage?: string;
@@ -9,10 +9,8 @@ interface InputProps {
   placeholder?: string;
   disabled?: boolean;
   handleClick?: () => void;
-  background?: "white" | null;
+  background?: "white";
   haveMessage?: boolean;
   setValue?: Dispatch<SetStateAction<string>>;
   value?: string;
 }
-
-export default InputProps;

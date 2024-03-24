@@ -5,7 +5,7 @@ export interface SelectOptions {
   label: string;
 }
 
-interface ItemsSelectorProps {
+export interface ItemsSelectorProps {
   options?: Array<SelectOptions>;
   handleChange: (option: SingleValue<SelectOptions>) => void;
   textPosition?: "center" | "left";
@@ -17,5 +17,3 @@ interface ItemsSelectorProps {
   selectErrorMessage?: string;
   isDisabled?: boolean;
 }
-
-export default ItemsSelectorProps;

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import Select from "react-select";
-import ItemsSelectorProps from "./ItemsSelectorProps";
+import { ItemsSelectorProps } from "./ItemsSelectorProps";
 import "./ItemsSelector.css";
 
 const ItemSelector: React.ForwardRefRenderFunction<

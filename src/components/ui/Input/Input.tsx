@@ -1,11 +1,11 @@
 import { forwardRef, useState } from "react";
 import styles from "./Input.module.css";
-import InputProps from "./InputProps";
+import { InputProps } from "./InputProps";
 import { IconCloseEye, IconOpenEye } from "../icons";
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
   {
-    inputFieldType,
+    type,
     label,
     errorMessage,
     children,
@@ -30,10 +30,10 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           value={value}
           name={name}
           onChange={(e) => setValue && setValue(e.target.value)}
-          type={showPassword ? "text" : inputFieldType}
-          min={inputFieldType === "number" ? 0 : undefined}
+          type={showPassword ? "text" : type}
+          min={type === "number" ? 0 : undefined}
           className={
-            children || inputFieldType === "password"
+            children || type === "password"
               ? `${styles.inputStyles} ${styles.withIcon}`
               : styles.inputStyles
           }
@@ -46,7 +46,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           {...props}
         />
 
-        {inputFieldType === "password" ? (
+        {type === "password" ? (
           <button
             type='button'
             className={styles.inputIcon}

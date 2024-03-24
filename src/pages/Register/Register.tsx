@@ -8,21 +8,22 @@ import {
   selectIsAuthenticated,
 } from "../../core/redux/slices/auth/authSlice";
 import { registerUser } from "../../core/redux/slices/auth/authActions";
-import { IRegisterData } from "../../core/redux/slices/auth/auth.interfaces";
+import { RegisterData } from "../../core/redux/slices/auth/auth.interfaces";
 import SingUp from "../../assets/img/singUp.png";
 import { useTypedDispatch } from "../../hooks/useTypedDispatch";
-import AuthorizationLayout from "../../layouts/Authorization/AuthorizationLayout";
+import AuthLayout from "../../layouts/Auth/AuthLayout";
 import RegisterForm from "./components/RegisterForm";
 
 const Register: FC = () => {
+  const navigate = useNavigate();
+
   const { loading, success, error } = useSelector(selectAuthStatus);
   const isAuthenticated = useSelector(selectIsAuthenticated);
-  const navigate = useNavigate();
+
   const dispatchUser = useTypedDispatch();
   const dispatch = useDispatch();
 
-  const handleSubmit = (data: IRegisterData) =>
-    dispatchUser(registerUser(data));
+  const handleSubmit = (data: RegisterData) => dispatchUser(registerUser(data));
 
   useEffect(() => {
     if (success) navigate("/login");
@@ -35,13 +36,13 @@ const Register: FC = () => {
 
   return (
     <>
-      <AuthorizationLayout image={SingUp}>
+      <AuthLayout image={SingUp}>
         <RegisterForm
           onSubmit={(data) => handleSubmit(data)}
           loading={loading}
           error={error}
         />
-      </AuthorizationLayout>
+      </AuthLayout>
     </>
   );
 };

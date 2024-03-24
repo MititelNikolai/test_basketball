@@ -106,6 +106,15 @@
     font-size: 0.9375rem;
     color: var(--color-grey-dark);
   }
+  .custom-selector__dropdown-indicator {
+    padding-left: 0;
+  }
+  .custom-selector__clear-indicator {
+    padding-right: 0.2rem;
+  }
+  .custom-selector__indicator {
+    padding: 0 0.2rem;
+  }
 }
 /*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
 

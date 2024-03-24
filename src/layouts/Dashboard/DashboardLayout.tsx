@@ -5,13 +5,15 @@ import styles from "./DashboardLayout.module.css";
 
 const DashboardLayout: FC = () => {
   const { flexContainer, innerContainer, sidebarWrapper } = styles;
-  const [activeMenu, setActiveMenu] = useState(false);
 
-  const menuToggler = () => setActiveMenu((prev) => !prev);
+  const [activeMenu, setActiveMenu] = useState(false);
 
   return (
     <>
-      <Header menuToggle={menuToggler} menuState={activeMenu} />
+      <Header
+        menuToggle={() => setActiveMenu((prev) => !prev)}
+        menuState={activeMenu}
+      />
       <div className={flexContainer}>
         <div className={sidebarWrapper}>
           <Sidebar />

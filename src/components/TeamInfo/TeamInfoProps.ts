@@ -1,4 +1,4 @@
-interface TeamInfoProps {
+export interface TeamInfoProps {
   id: number;
   name: string;
   foundationYear: number;
@@ -6,5 +6,3 @@ interface TeamInfoProps {
   conference: string;
   imageUrl: string;
 }
-
-export default TeamInfoProps;

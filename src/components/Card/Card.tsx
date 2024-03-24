@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import CardProps from "./CardProps";
+import { CardProps } from "./CardProps";
 import styles from "./Card.module.css";
 
 const Card: FC<CardProps> = ({
@@ -24,7 +24,7 @@ const Card: FC<CardProps> = ({
     teamYear,
     playerNumber,
   } = styles;
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   return (
     <Link to={`${id}`} className={teamCardContainer}>
       <div
@@ -34,7 +34,9 @@ const Card: FC<CardProps> = ({
       >
         <img
           className={type === "team" ? cardImg : `${cardImg} ${cardImgPlayer}`}
-          src={`${backendUrl}${type === "team" ? imageUrl : avatarUrl}`}
+          src={`${process.env.REACT_APP_BACKEND_URL}${
+            type === "team" ? imageUrl : avatarUrl
+          }`}
           alt='Card Logo'
         />
       </div>

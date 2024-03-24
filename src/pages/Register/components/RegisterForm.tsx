@@ -8,12 +8,12 @@ import {
   Notification,
 } from "../../../components/ui";
 import {
-  IRegisterFormInput,
-  IRegisterFormProps,
+  RegisterFormInput,
+  RegisterFormProps,
 } from "./RegisterForm.interfaces";
 import styles from "./RegisterForm.module.css";
 
-const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
+const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, loading, error }) => {
   const { registerFormStyles, registerFormHeader } = styles;
 
   const {
@@ -21,7 +21,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IRegisterFormInput>();
+  } = useForm<RegisterFormInput>();
 
   const password = watch("password", "");
 
@@ -35,12 +35,12 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]+$/;
 
-  const submitHandler: SubmitHandler<IRegisterFormInput> = (data) => {
+  const submitHandler: SubmitHandler<RegisterFormInput> = (data) => {
     const { confirmPassword, agreement, ...formData } = data;
     onSubmit(formData);
   };
 
-  const submitError: SubmitErrorHandler<IRegisterFormInput> = (data) => {
+  const submitError: SubmitErrorHandler<RegisterFormInput> = (data) => {
     /* console.log("Errors", data); */
   };
 
@@ -53,7 +53,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
         className={registerFormStyles}
       >
         <Input
-          inputFieldType='text'
+          type='text'
           label='Name'
           {...register("userName", {
             required: { value: true, message: "Name is required" },
@@ -61,7 +61,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
           errorMessage={errors.userName?.message}
         ></Input>
         <Input
-          inputFieldType='text'
+          type='text'
           label='Login'
           {...register("login", {
             required: { value: true, message: "Login is required" },
@@ -81,7 +81,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
           errorMessage={errors.login?.message}
         ></Input>
         <Input
-          inputFieldType='password'
+          type='password'
           label='Password'
           {...register("password", {
             required: { value: true, message: "Password is required" },
@@ -98,7 +98,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({ onSubmit, loading, error }) => {
           errorMessage={errors.password?.message}
         ></Input>
         <Input
-          inputFieldType='password'
+          type='password'
           label='Enter your password again'
           {...register("confirmPassword", {
             required: { value: true, message: "Password is required" },

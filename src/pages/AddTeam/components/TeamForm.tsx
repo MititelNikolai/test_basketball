@@ -7,7 +7,7 @@ import { Input, Button, Notification } from "../../../components/ui";
 import { ImageUpload } from "../../../components";
 import {
   TeamFormProps,
-  ITeamFormInputs,
+  TeamFormInputs,
   InitialDefaults,
 } from "./TeamForm.interfaces";
 import styles from "./TeamForm.module.css";
@@ -42,17 +42,18 @@ const TeamForm: FC<TeamFormProps> = ({
     setValue,
     clearErrors,
     formState: { errors },
-  } = useForm<ITeamFormInputs>({ defaultValues: initialTeam });
+  } = useForm<TeamFormInputs>({ defaultValues: initialTeam });
 
-  const submitHandler: SubmitHandler<ITeamFormInputs> = (
-    data: ITeamFormInputs
+  const submitHandler: SubmitHandler<TeamFormInputs> = (
+    data: TeamFormInputs
   ) => {
     onSubmit(data);
   };
 
-  const submitError: SubmitErrorHandler<ITeamFormInputs> = (data) => {
-    /*   console.log("Errors", data); */
+  const submitError: SubmitErrorHandler<TeamFormInputs> = (data) => {
+    /* console.log("Errors", data); */
   };
+
   return (
     <>
       {error && <Notification message={error} positionCenter />}
@@ -62,30 +63,19 @@ const TeamForm: FC<TeamFormProps> = ({
         onSubmit={handleSubmit(submitHandler, submitError)}
       >
         <div className={imageUploader}>
-          {edit ? (
-            <ImageUpload
-              edit
-              imageUrl={initialTeam.imageUrl}
-              {...register("imageUrl", {
-                required: { value: true, message: "Image is required" },
-              })}
-              setValueForTeam={setValue}
-            />
-          ) : (
-            <ImageUpload
-              {...register("file_img", {
-                required: { value: true, message: "Image is required" },
-              })}
-              setValueForTeam={setValue}
-              haveMessage
-              errorMessage={errors.file_img?.message}
-              clearError={() => clearErrors("file_img")}
-            />
-          )}
+          <ImageUpload
+            imageUrl={initialTeam.imageUrl}
+            {...register("file_img", {
+              required: { value: !edit, message: "Image is required" },
+            })}
+            setValueForTeam={setValue}
+            errorMessage={errors.file_img?.message}
+            clearError={() => clearErrors("file_img")}
+          />
         </div>
         <div className={fieldsContainer}>
           <Input
-            inputFieldType='text'
+            type='text'
             label='Name'
             {...register("name", {
               required: { value: true, message: "Name is required" },
@@ -93,7 +83,7 @@ const TeamForm: FC<TeamFormProps> = ({
             errorMessage={errors.name?.message}
           />
           <Input
-            inputFieldType='text'
+            type='text'
             label='Division'
             {...register("division", {
               required: { value: true, message: "Division is required" },
@@ -101,7 +91,7 @@ const TeamForm: FC<TeamFormProps> = ({
             errorMessage={errors.division?.message}
           />
           <Input
-            inputFieldType='text'
+            type='text'
             label='Conference'
             {...register("conference", {
               required: { value: true, message: "Conference is required" },
@@ -109,7 +99,7 @@ const TeamForm: FC<TeamFormProps> = ({
             errorMessage={errors.conference?.message}
           />
           <Input
-            inputFieldType='number'
+            type='number'
             label='Year of foundation'
             {...register("foundationYear", {
               required: {

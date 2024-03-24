@@ -2,10 +2,10 @@ import { FC } from "react";
 import { NavLink, Navigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../core/redux/slices/auth/authSlice";
-import { IUser } from "../../core/redux/slices/auth/auth.interfaces";
+import { User } from "../../core/redux/slices/auth/auth.interfaces";
 import { links } from "../Sidebar/SidebarLinks";
 import { IconProfile, IconInput } from "../ui/icons";
-import MobileSidebarProps from "./IMobileSidebarProps";
+import { MobileSidebarProps } from "./MobileSidebarProps";
 import styles from "./MobileSidebar.module.css";
 
 const MobileSidebar: FC<MobileSidebarProps> = ({ handleClick }) => {
@@ -21,10 +21,12 @@ const MobileSidebar: FC<MobileSidebarProps> = ({ handleClick }) => {
     linkContainer,
     linkText,
   } = styles;
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const dispatch = useDispatch();
   const location = useLocation();
-  let userData: IUser | null = null;
+
+  let userData: User | null = null;
+
   try {
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
@@ -47,7 +49,10 @@ const MobileSidebar: FC<MobileSidebarProps> = ({ handleClick }) => {
           {userData?.avatarUrl ? (
             <img
               className={userAvatar}
-              src={`${backendUrl}${userData?.avatarUrl}` || ""}
+              src={
+                `${process.env.REACT_APP_BACKEND_URL}${userData?.avatarUrl}` ||
+                ""
+              }
               alt='Avatar'
             />
           ) : (
@@ -58,8 +63,9 @@ const MobileSidebar: FC<MobileSidebarProps> = ({ handleClick }) => {
         <div className={linksContainer}>
           <div className={linkWrapper}>
             {links.map((link) => {
-              const active =
-                location.pathname === `/${link.link}` ? "#E4163A" : undefined;
+              const active = location.pathname.includes(`/${link.link}`)
+                ? "#E4163A"
+                : undefined;
               return (
                 <NavLink
                   onClick={handleClick}

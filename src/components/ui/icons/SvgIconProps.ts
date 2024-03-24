@@ -1,4 +1,4 @@
-interface SvgIconProps {
+export interface SvgIconProps {
   width?: number | string;
   height?: number | string;
   viewBox?: string;
@@ -6,5 +6,3 @@ interface SvgIconProps {
   opacity?: string;
   className?: string;
 }
-
-export default SvgIconProps;

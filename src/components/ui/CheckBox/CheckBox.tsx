@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import CheckBoxProps from "./CheckBoxProps";
-import styles from "./CheckBox.module.css";
+import { CheckBoxProps } from "./CheckBoxProps";
 import { IconCheck } from "../icons";
+import styles from "./CheckBox.module.css";
 
 const CheckBox: React.ForwardRefRenderFunction<
   HTMLInputElement,

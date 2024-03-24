@@ -1,5 +1,5 @@
 import { FC } from "react";
-import EmptyCardMessageProps from "./EmptyCardMessageProps";
+import { EmptyCardMessageProps } from "./EmptyCardMessageProps";
 import styles from "./EmptyCardMessage.module.css";
 
 const EmptyCardMessage: FC<EmptyCardMessageProps> = ({
@@ -8,6 +8,7 @@ const EmptyCardMessage: FC<EmptyCardMessageProps> = ({
   subTitle,
 }) => {
   const { cardsEmpty, cardsEmptyTitle, cardsEmptySubTitle } = styles;
+
   return (
     <section className={cardsEmpty}>
       <img src={imageLink} alt='Empty Card' />

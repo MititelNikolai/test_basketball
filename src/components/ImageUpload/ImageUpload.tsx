@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState } from "react";
 import { IconAddImage } from "../ui/icons";
-import ImageUploadProps from "./ImageUploadProps";
+import { ImageUploadProps } from "./ImageUploadProps";
 import styles from "./ImageUpload.module.css";
 
 const ImageUpload: React.ForwardRefRenderFunction<
@@ -11,9 +11,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
     setValueForTeam,
     setValueForPlayer,
     setValueForUser,
-    edit,
     imageUrl,
-    haveMessage,
     errorMessage,
     clearError,
   },
@@ -21,11 +19,13 @@ const ImageUpload: React.ForwardRefRenderFunction<
 ) => {
   const { uploadImageContainer, uploadImage, uploadImageInput, warningStyles } =
     styles;
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [previewImage, setPreviewImage] = useState<string | null | undefined>(
-    edit ? `${backendUrl}${imageUrl}` : null
+    imageUrl ? `${process.env.REACT_APP_BACKEND_URL}${imageUrl}` : null
   );
+
   let fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleImageClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -34,6 +34,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
       setValueForTeam && setValueForTeam("file_img", file);
       setValueForPlayer && setValueForPlayer("file_img", file);
@@ -46,6 +47,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
       reader.readAsDataURL(file);
     }
   };
+
   return (
     <>
       <div className={uploadImageContainer}>
@@ -65,7 +67,7 @@ const ImageUpload: React.ForwardRefRenderFunction<
         >
           <IconAddImage height={74} width={75} />
         </div>
-        {haveMessage && <p className={warningStyles}>{errorMessage}</p>}
+        {errorMessage && <p className={warningStyles}>{errorMessage}</p>}
       </div>
     </>
   );

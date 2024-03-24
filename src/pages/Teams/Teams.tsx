@@ -7,6 +7,7 @@ import {
   getNumberOfTeams,
   selectTeams,
   selectTeamStatus,
+  resetTeamError,
 } from "../../core/redux/slices/team/teamSlice";
 import emptyTeams from "../../assets/img/EmptyTeams.png";
 import { useTypedDispatch } from "../../hooks/useTypedDispatch";
@@ -18,12 +19,15 @@ import styles from "./Teams.module.css";
 
 const Teams: FC = () => {
   const { teamsContainer, cardsContainer, teamNavigation } = styles;
+  const location = useLocation();
 
   const dispatchTeam = useTypedDispatch();
   const dispatch = useDispatch();
+
   const teams = useSelector(selectTeams);
   const countTeams = useSelector(getNumberOfTeams);
   const { addedTeamSuccess } = useSelector(selectTeamStatus);
+
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +45,6 @@ const Teams: FC = () => {
     setCurrentPage(event.selected + 1);
   };
 
-  const location = useLocation();
   const handleFilter = (search: string) => {
     setSearchName(search);
   };
@@ -59,6 +62,10 @@ const Teams: FC = () => {
     if (searchName) {
       dispatchTeam(getTeams({ name: searchName, pageSize: itemsPerPage || 6 }));
     }
+
+    return () => {
+      dispatch(resetTeamError());
+    };
   }, [
     dispatchTeam,
     dispatch,
@@ -89,13 +96,17 @@ const Teams: FC = () => {
                 })}
               </section>
               <div className={teamNavigation}>
-                <Pagination
-                  currentPage={currentPage}
-                  handlePageClick={(e) => {
-                    handlePageClick(e);
-                  }}
-                  pageCount={pageCount}
-                />
+                {pageCount && pageCount > 1 ? (
+                  <Pagination
+                    currentPage={currentPage}
+                    handlePageClick={(e) => {
+                      handlePageClick(e);
+                    }}
+                    pageCount={pageCount}
+                  />
+                ) : (
+                  <div></div>
+                )}
                 <ItemsSelector
                   placeholder={String(options[0].label)}
                   options={options}

@@ -8,10 +8,10 @@ import { Input, Button } from "../../components/ui";
 import { IconDelete, IconSearch } from "../../components/ui/icons";
 import PlayerMultiSelect from "./components/PlayerMultiSelect/PlayerMultiSelect";
 import { SelectOptions } from "./components/PlayerMultiSelect/PlayerMultiSelect.interfaces";
-import { ITeamActions } from "./Players.interfaces";
+import { PlayersActionsProps } from "./Players.interfaces";
 import styles from "./Players.module.css";
 
-const PlayersActions: FC<ITeamActions> = ({
+const PlayersActions: FC<PlayersActionsProps> = ({
   filterName,
   filterTeams,
   resetAction,
@@ -19,19 +19,23 @@ const PlayersActions: FC<ITeamActions> = ({
   searchTeam,
 }) => {
   const { actionsContainer, actionWrapper } = styles;
-  const dispatchTeams = useTypedDispatch();
-  const [search, setSearch] = useState("");
 
+  const [search, setSearch] = useState("");
   const [filterOptions, setFilterOptions] = useState<
     Array<SelectOptions> | undefined
   >();
+
   const teams = useSelector(selectTeams);
+
+  const dispatchTeams = useTypedDispatch();
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       filterName(search);
     }, 400);
     return () => clearTimeout(timeoutId);
   }, [search, filterName]);
+
   useEffect(() => {
     dispatchTeams(getTeams({}));
   }, [dispatchTeams]);
@@ -62,7 +66,7 @@ const PlayersActions: FC<ITeamActions> = ({
           }
           setValue={setSearch}
           value={search}
-          inputFieldType='text'
+          type='text'
           placeholder='Search...'
           background='white'
           haveMessage={false}

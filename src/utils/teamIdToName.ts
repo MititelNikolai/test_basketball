@@ -1,12 +1,12 @@
-import { IPlayerData } from "../core/redux/slices/player/player.interfaces";
-import { ITeamData } from "../core/redux/slices/team/team.interfaces";
+import { PlayerData } from "../core/redux/slices/player/player.interfaces";
+import { TeamData } from "../core/redux/slices/team/team.interfaces";
 
 export const transformPlayersData = (
-  playersData: Array<IPlayerData>,
-  teamsData: Array<ITeamData>
+  playersData: Array<PlayerData>,
+  teamsData: Array<TeamData>
 ) => {
-  const teamsMap: Record<number, ITeamData> = teamsData.reduce(
-    (map: Record<number, ITeamData>, team) => {
+  const teamsMap: Record<number, TeamData> = teamsData.reduce(
+    (map: Record<number, TeamData>, team) => {
       map[team.id] = team;
       return map;
     },

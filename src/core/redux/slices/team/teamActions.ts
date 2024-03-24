@@ -1,38 +1,34 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
-import { IAddTeamData, IGetTeamsParameters } from "./team.interfaces";
 import { baseRequest } from "../../../api/baseRequest";
+import { errorHandler } from "../../../api/utils/errorHandler";
+import { AddTeamData, GetTeamsParameters } from "./team.interfaces";
 
 export const addTeam = createAsyncThunk(
   "team/addTeam",
-  async (formData: IAddTeamData, { rejectWithValue, getState }) => {
-    const result = await baseRequest(
-      {
-        method: "post",
-        url: `/api/Team/Add`,
-        data: formData,
-      },
-      getState as () => RootState
-    );
+  async (formData: AddTeamData, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "post",
+      url: `/api/Team/Add`,
+      data: formData,
+    });
+
     if (result.error) {
-      return rejectWithValue("Such a team already exists");
+      return rejectWithValue(errorHandler(result.errorCode, "team"));
     }
     return result;
   }
 );
 export const updateTeam = createAsyncThunk(
   "team/updateTeam",
-  async (formData: IAddTeamData, { rejectWithValue, getState }) => {
-    const result = await baseRequest(
-      {
-        method: "put",
-        url: `/api/Team/Update`,
-        data: formData,
-      },
-      getState as () => RootState
-    );
+  async (formData: AddTeamData, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "put",
+      url: `/api/Team/Update`,
+      data: formData,
+    });
+
     if (result.error) {
-      return rejectWithValue("Such a team already exists");
+      return rejectWithValue(errorHandler(result.errorCode, "team"));
     }
     return result;
   }
@@ -40,19 +36,17 @@ export const updateTeam = createAsyncThunk(
 export const getTeams = createAsyncThunk(
   "team/getTeams",
   async (
-    { name, page, pageSize }: IGetTeamsParameters = {},
-    { rejectWithValue, getState }
+    { name, page, pageSize }: GetTeamsParameters = {},
+    { rejectWithValue }
   ) => {
-    const result = await baseRequest(
-      {
-        method: "get",
-        url: `/api/Team/GetTeams`,
-        params: { name, page, pageSize },
-      },
-      getState as () => RootState
-    );
+    const result = await baseRequest({
+      method: "get",
+      url: `/api/Team/GetTeams`,
+      params: { name, page, pageSize },
+    });
+
     if (result.error) {
-      return rejectWithValue(result.error.errorMessage);
+      return rejectWithValue(errorHandler(result.errorCode));
     }
     return result;
   }
@@ -60,32 +54,28 @@ export const getTeams = createAsyncThunk(
 
 export const getTeam = createAsyncThunk(
   "team/getTeam",
-  async (id: number, { rejectWithValue, getState }) => {
-    const result = await baseRequest(
-      {
-        method: "get",
-        url: `/api/Team/Get`,
-        params: { id },
-      },
-      getState as () => RootState
-    );
+  async (id: number, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "get",
+      url: `/api/Team/Get`,
+      params: { id },
+    });
+
     if (result.error) {
-      return rejectWithValue(result.error.errorMessage);
+      return rejectWithValue(errorHandler(result.errorCode));
     }
     return result;
   }
 );
 export const deleteTeam = createAsyncThunk(
   "team/deleteTeam",
-  async (id: number, { rejectWithValue, getState }) => {
-    const result = await baseRequest(
-      {
-        method: "delete",
-        url: `/api/Team/Delete`,
-        params: { id },
-      },
-      getState as () => RootState
-    );
+  async (id: number, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "delete",
+      url: `/api/Team/Delete`,
+      params: { id },
+    });
+
     if (result.error) {
       return rejectWithValue("Team has players");
     }

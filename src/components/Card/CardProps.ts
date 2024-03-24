@@ -1,4 +1,4 @@
-interface CardProps {
+export interface CardProps {
   //General
   id: number;
   name: string;
@@ -11,5 +11,3 @@ interface CardProps {
   team?: string;
   avatarUrl?: string;
 }
-
-export default CardProps;

@@ -1,12 +1,12 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { registerUser, userLogin, userUpdate } from "./authActions";
 import { RootState } from "../../store";
-import { IAuthSlice, IUser } from "./auth.interfaces";
+import { registerUser, userLogin, userUpdate } from "./authActions";
+import { AuthSlice, User } from "./auth.interfaces";
 
 const storedUserData = localStorage.getItem("userData");
 
-const data: IUser | null = storedUserData ? JSON.parse(storedUserData) : null;
-const initialState: IAuthSlice = {
+const data: User | null = storedUserData ? JSON.parse(storedUserData) : null;
+const initialState: AuthSlice = {
   loading: false,
   userInfo: {
     name: data ? data?.name : null,
@@ -31,6 +31,9 @@ const authSlice = createSlice({
     },
     resetError: (state) => {
       state.error = null;
+    },
+    setProfileError: (state, action) => {
+      state.error = action.payload;
     },
     resetSuccess: (state) => {
       state.success = false;
@@ -80,7 +83,6 @@ const authSlice = createSlice({
     builder.addCase(userUpdate.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      console.log(action.payload);
     });
     builder.addCase(userUpdate.rejected, (state, action) => {
       state.loading = false;
@@ -89,14 +91,11 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, resetError, resetSuccess, updateProfile } =
-  authSlice.actions;
-
 export const selectCurrentUser = (state: RootState) => state.auth.userInfo;
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
-
 export const selectUserToken = (state: RootState) => state.auth.userInfo.token;
+
 export const selectAuthStatus = createSelector(
   (state: RootState) => state.auth.success,
   (state: RootState) => state.auth.loading,
@@ -107,4 +106,13 @@ export const selectAuthStatus = createSelector(
     error,
   })
 );
+
+export const {
+  logout,
+  resetError,
+  resetSuccess,
+  updateProfile,
+  setProfileError,
+} = authSlice.actions;
+
 export default authSlice.reducer;

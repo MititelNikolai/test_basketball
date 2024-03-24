@@ -14,11 +14,11 @@ import { TeamInfo } from "../../components";
 import styles from "./SingleTeam.module.css";
 
 const SingleTeam: FC = () => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const { teamId } = useParams();
+
   const team = useSelector(selectTeam);
   const players = useSelector(selectPlayers);
   const { error } = useSelector(selectTeamStatus);
-  const { teamId } = useParams();
 
   const dispatchPlayers = useTypedDispatch();
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ const SingleTeam: FC = () => {
                             <div className={styles.playerInfo}>
                               <img
                                 className={styles.playerAvatar}
-                                src={`${backendUrl}${player.avatarUrl}`}
+                                src={`${process.env.REACT_APP_BACKEND_URL}${player.avatarUrl}`}
                                 alt='Player Avatar'
                               />
                               <div className={styles.playerDescription}>

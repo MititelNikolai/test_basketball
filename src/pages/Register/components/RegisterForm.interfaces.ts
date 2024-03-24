@@ -1,4 +1,4 @@
-export interface IRegisterFormInput {
+export interface RegisterFormInput {
   userName: string;
   login: string;
   password: string;
@@ -6,8 +6,8 @@ export interface IRegisterFormInput {
   agreement?: boolean;
 }
 
-export interface IRegisterFormProps {
+export interface RegisterFormProps {
   loading: boolean;
-  onSubmit: (data: IRegisterFormInput) => void;
+  onSubmit: (data: RegisterFormInput) => void;
   error?: string;
 }

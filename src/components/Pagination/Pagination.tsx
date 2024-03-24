@@ -1,7 +1,7 @@
 import { FC } from "react";
 import ReactPaginate from "react-paginate";
 import { IconChevronRight, IconChevronLeft } from "../ui/icons";
-import PaginationProps from "./PaginationProps";
+import { PaginationProps } from "./PaginationProps";
 import styles from "./Pagination.module.css";
 
 const Pagination: FC<PaginationProps> = ({

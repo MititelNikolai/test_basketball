@@ -29,7 +29,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
       <form className={loginFormStyles} onSubmit={handleSubmit(submitHandler)}>
         <Input
           label='Login'
-          inputFieldType='text'
+          type='text'
           errorMessage={errors.login?.message}
           {...register("login", {
             required: { value: true, message: "Login is required" },
@@ -37,7 +37,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, loading, error }) => {
         ></Input>
         <Input
           label='Password'
-          inputFieldType='password'
+          type='password'
           errorMessage={errors.password?.message}
           {...register("password", {
             required: { value: true, message: "Password is required" },

@@ -57,6 +57,7 @@
 .descriptionValue {
   font-family: var(--font-avenir-medium);
   font-size: 1.125rem;
+  max-height: 1.125rem;
 }
 
 /*======================= MEDIA QUERIES (MEDIUM DEVICES) =======================*/

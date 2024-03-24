@@ -7,6 +7,7 @@ import { AllAuthActions } from "../core/redux/slices/auth/authActions";
 
 export const useTypedDispatch = () => {
   const dispatch = useDispatch();
+
   return dispatch as ThunkDispatch<
     RootState,
     void,

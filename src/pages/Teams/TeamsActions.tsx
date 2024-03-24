@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Input, Button } from "../../components/ui";
 import { IconSearch, IconDelete } from "../../components/ui/icons";
+import { TeamActionsProps } from "./TeamActionsProps";
 import styles from "./Teams.module.css";
-import TeamActionsProps from "./TeamActionsProps";
 
 const TeamsActions: FC<TeamActionsProps> = ({
   filter,
@@ -11,6 +11,7 @@ const TeamsActions: FC<TeamActionsProps> = ({
   inSearch,
 }) => {
   const { actionsContainer, actionWrapper } = styles;
+
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const TeamsActions: FC<TeamActionsProps> = ({
           }
           setValue={setSearch}
           value={search}
-          inputFieldType='text'
+          type='text'
           placeholder='Search by name...'
           background='white'
           haveMessage={false}

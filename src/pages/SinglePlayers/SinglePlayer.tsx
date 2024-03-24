@@ -8,6 +8,7 @@ const SinglePlayer: FC = () => {
   const { singlePlayerContainer } = styles;
 
   const player = useSelector(selectPlayer);
+
   return (
     <>
       {player && (

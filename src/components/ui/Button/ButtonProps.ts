@@ -1,4 +1,4 @@
-interface ButtonProps {
+export interface ButtonProps {
   text: string;
   handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "submit" | "reset" | "button";
@@ -6,4 +6,3 @@ interface ButtonProps {
   variant: "primary" | "secondary";
   textWithPlus?: boolean;
 }
-export default ButtonProps;

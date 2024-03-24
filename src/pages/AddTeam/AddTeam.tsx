@@ -11,44 +11,55 @@ import {
   resetCurrentTeam,
   resetAddedTeamSuccess,
   selectTeamStatus,
+  setTeamError,
+  resetTeamError,
 } from "../../core/redux/slices/team/teamSlice";
-import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
-import { IAddTeamData } from "../../core/redux/slices/team/team.interfaces";
+import { AddTeamData } from "../../core/redux/slices/team/team.interfaces";
 import uploadImageToServer from "../../core/api/uploadImageToServer";
+import { useImageCompression } from "../../hooks/useImageCompression";
 import TeamForm from "./components/TeamForm";
-import { ITeamFormInputs } from "./components/TeamForm.interfaces";
+import { TeamFormInputs } from "./components/TeamForm.interfaces";
 import styles from "./AddTeam.module.css";
 
 const AddTeam: FC = () => {
   const { addTeamContainer } = styles;
+  const navigate = useNavigate();
+  const compress = useImageCompression(210, 210);
 
   const { loading, addedTeamSuccess, error } = useSelector(selectTeamStatus);
 
-  const userInfo = useSelector(selectCurrentUser);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const dispatchTeam: ThunkDispatch<RootState, void, AllTeamActions> =
     useDispatch();
+
   dispatch(resetCurrentTeam());
+
   useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(resetTeamError());
+      }, 3100);
+    }
     if (addedTeamSuccess) {
       navigate(`/teams/${addedTeamSuccess}`);
       dispatch(resetAddedTeamSuccess());
     }
-  }, [navigate, dispatch, addedTeamSuccess]);
+  }, [navigate, dispatch, addedTeamSuccess, error]);
 
-  const handleSubmit = async (formData: ITeamFormInputs) => {
+  const handleSubmit = async (formData: TeamFormInputs) => {
     const { name, division, conference } = formData;
-    const dataToServer: IAddTeamData = {
+    const dataToServer: AddTeamData = {
       name: name.trim(),
       foundationYear: parseInt(formData.foundationYear),
       division: division.trim(),
       conference: conference.trim(),
       imageUrl:
         formData.file_img &&
-        (await uploadImageToServer(formData.file_img, userInfo.token)),
+        (await uploadImageToServer(await compress(formData.file_img))),
     };
-    dispatchTeam(addTeam(dataToServer));
+    dataToServer.imageUrl
+      ? dispatchTeam(addTeam(dataToServer))
+      : dispatch(setTeamError("Failed to upload Image"));
   };
 
   return (

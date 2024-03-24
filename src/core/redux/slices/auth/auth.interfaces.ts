@@ -1,28 +1,28 @@
-export interface IUser {
+export interface User {
   name: string | null;
   avatarUrl: string | null;
   token: string | null;
 }
-export interface IAuthSlice {
+export interface AuthSlice {
   loading: boolean;
-  userInfo: IUser;
+  userInfo: User;
   isAuthenticated: boolean;
   error: any | null;
   success: boolean;
 }
 
-export interface IRegisterData {
+export interface RegisterData {
   userName: string;
   login: string;
   password: string;
 }
 
-export interface ILoginData {
+export interface LoginData {
   login: string;
   password: string;
 }
 
-export interface IUpdateUserData {
+export interface UpdateUserData {
   userName?: string;
   avatarUrl?: string;
 }

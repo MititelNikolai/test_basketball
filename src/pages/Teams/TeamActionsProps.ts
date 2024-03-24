@@ -1,7 +1,5 @@
-interface TeamActionsProps {
+export interface TeamActionsProps {
   filter: (search: string) => void;
   resetAction: () => void;
   inSearch: boolean;
 }
-
-export default TeamActionsProps;

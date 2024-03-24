@@ -13,8 +13,10 @@ import { Breadcrumbs } from "../../components";
 const TeamsActionsLayout: FC = () => {
   const location = useLocation();
   const { teamId } = useParams();
+
   const team = useSelector(selectTeam);
   const { loading, success } = useSelector(selectTeamStatus);
+
   const dispatchTeam = useTypedDispatch();
 
   useEffect(() => {

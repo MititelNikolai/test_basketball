@@ -1,17 +1,15 @@
 import { FC } from "react";
-import AuthorizationLayoutProps from "./AuthorizationLayoutProps";
-import styles from "./AuthorizationLayout.module.css";
+import { AuthLayoutProps } from "./AuthLayoutProps";
+import styles from "./AuthLayout.module.css";
 
-const AuthorizationLayout: FC<AuthorizationLayoutProps> = ({
-  image,
-  children,
-}) => {
+const AuthLayout: FC<AuthLayoutProps> = ({ image, children }) => {
   const {
     authLayoutContainer,
     authLayoutLeft,
     authLayoutLeftForm,
     authLayoutRight,
   } = styles;
+
   return (
     <div className={authLayoutContainer}>
       <div className={authLayoutLeft}>
@@ -24,4 +22,4 @@ const AuthorizationLayout: FC<AuthorizationLayoutProps> = ({
   );
 };
 
-export default AuthorizationLayout;
+export default AuthLayout;

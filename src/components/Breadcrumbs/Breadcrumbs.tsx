@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { dashIntoSpace } from "../../utils/stringFunctions";
 import { IconCreate, IconDelete } from "../ui/icons";
-import BreadcrumbsProps from "./BreadcrumbsProps";
+import { BreadcrumbsProps } from "./BreadcrumbsProps";
 import styles from "./Breadcrumbs.module.css";
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({
@@ -15,17 +15,6 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   success,
   needBorder,
 }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  useEffect(() => {
-    if (success) {
-      const match = location.pathname.match(/^\/([^/]+)/);
-      const currentUrl = match ? match[0] : "/";
-      successAction && dispatch(successAction);
-      navigate(currentUrl);
-    }
-  }, [navigate, dispatch, success, location.pathname, successAction]);
   const {
     breadcrumbsContainer,
     breadcrumbsBorder,
@@ -35,7 +24,21 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
     deleteButton,
   } = styles;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const pathnames = pathname.split("/").filter((x) => x);
+
+  useEffect(() => {
+    if (success) {
+      const match = location.pathname.match(/^\/([^/]+)/);
+      const currentUrl = match ? match[0] : "/";
+      successAction && dispatch(successAction);
+      navigate(currentUrl);
+    }
+  }, [navigate, dispatch, success, location.pathname, successAction]);
+
   return (
     <div
       className={
@@ -48,13 +51,13 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
         {pathnames.map((linkName, index) => {
           const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
           const isLast = index === pathnames.length - 1;
-          const DisplayedName = dashIntoSpace(linkName);
+          const displayedName = dashIntoSpace(linkName);
           return (
             <span className={breadcrumbsStyle} key={linkName}>
               {isLast ? (
-                DisplayedName
+                displayedName
               ) : (
-                <Link to={routeTo}>{DisplayedName}</Link>
+                <Link to={routeTo}>{displayedName}</Link>
               )}
               <span className={separateStyle}>{!isLast && "/"}</span>
             </span>

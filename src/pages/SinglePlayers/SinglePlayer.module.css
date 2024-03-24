@@ -4,9 +4,3 @@
   border-radius: 0 0 0.625rem 0.625rem;
   overflow: hidden;
 }
-
-@media screen and (max-width: 1230px) {
-  .singlePlayerContainer {
-    height: 46.8125rem;
-  }
-}

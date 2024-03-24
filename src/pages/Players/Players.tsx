@@ -19,30 +19,32 @@ import { SelectOptions } from "./components/PlayerMultiSelect/PlayerMultiSelect.
 import styles from "./Players.module.css";
 
 const Players: FC = () => {
+  const { playersContainer, cardsContainer, playersNavigation } = styles;
   const location = useLocation();
-  const dispatchPlayers = useTypedDispatch();
-  const dispatch = useDispatch();
+
   const players = useSelector(selectPlayers);
   const teams = useSelector(selectTeams);
+  const countPlayers = useSelector(getNumberOfPlayers);
 
   const [playersOnDisplay, setPlayersOnDisplay] = useState<
     Array<DisplayData> | undefined
   >(undefined);
-
-  const countPlayers = useSelector(getNumberOfPlayers);
   const [searchName, setSearchName] = useState<string | undefined>(undefined);
   const [searchTeam, setSearchTeam] = useState<Array<SelectOptions>>([]);
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(6);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const dispatchPlayers = useTypedDispatch();
+  const dispatch = useDispatch();
+
+  const pageCount =
+    countPlayers && itemsPerPage && Math.ceil(countPlayers / itemsPerPage);
 
   const options = [
     { value: 6, label: "6" },
     { value: 12, label: "12" },
     { value: 24, label: "24" },
   ];
-
-  const pageCount =
-    countPlayers && itemsPerPage && Math.ceil(countPlayers / itemsPerPage);
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1);
@@ -107,7 +109,6 @@ const Players: FC = () => {
   useEffect(() => {
     setPlayersOnDisplay(transformPlayersData(players, teams));
   }, [players, teams]);
-  const { playersContainer, cardsContainer, playersNavigation } = styles;
 
   return (
     <>
@@ -138,13 +139,17 @@ const Players: FC = () => {
                 })}
               </section>
               <div className={playersNavigation}>
-                <Pagination
-                  currentPage={currentPage}
-                  handlePageClick={(e) => {
-                    handlePageClick(e);
-                  }}
-                  pageCount={pageCount}
-                />
+                {pageCount && pageCount > 1 ? (
+                  <Pagination
+                    currentPage={currentPage}
+                    handlePageClick={(e) => {
+                      handlePageClick(e);
+                    }}
+                    pageCount={pageCount}
+                  />
+                ) : (
+                  <div></div>
+                )}
                 <ItemsSelector
                   placeholder={String(options[0].label)}
                   options={options}

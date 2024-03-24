@@ -18,11 +18,11 @@ import {
 } from "../../../utils/stringFunctions";
 import { useTypedDispatch } from "../../../hooks/useTypedDispatch";
 import {
-  IPlayerFormInputs,
-  IPlayerFormProps,
+  PlayerFormInputs,
+  PlayerFormProps,
   InitialDefaults,
-  ITeamsOptions,
-  IPositionsOptions,
+  TeamsOptions,
+  PositionsOptions,
 } from "./PlayerForm.interfaces";
 import {
   Notification,
@@ -33,26 +33,12 @@ import {
 import { ImageUpload } from "../../../components";
 import styles from "./PlayerForm.module.css";
 
-const PlayerForm: FC<IPlayerFormProps> = ({
+const PlayerForm: FC<PlayerFormProps> = ({
   onSubmit,
   edit = false,
   loading,
   error,
 }) => {
-  const teamCount = useSelector(getNumberOfTeams);
-  const [playerCurrentTeam, setPlayerCurrentTeam] = useState<
-    number | undefined
-  >(undefined);
-  const [teamsOptions, setTeamsOptions] = useState<
-    Array<ITeamsOptions> | undefined
-  >(undefined);
-  const [playerPositionOptions, setPlayerPositionOptions] = useState<
-    Array<IPositionsOptions> | undefined
-  >(undefined);
-  const [playerCurrentPosition, setPlayerCurrentPosition] = useState<
-    number | undefined
-  >(undefined);
-
   const {
     playerFormContainer,
     fieldsContainer,
@@ -62,6 +48,19 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     imageUploader,
   } = styles;
 
+  const [playerCurrentTeam, setPlayerCurrentTeam] = useState<
+    number | undefined
+  >(undefined);
+  const [teamsOptions, setTeamsOptions] = useState<
+    Array<TeamsOptions> | undefined
+  >(undefined);
+  const [playerPositionOptions, setPlayerPositionOptions] = useState<
+    Array<PositionsOptions> | undefined
+  >(undefined);
+  const [playerCurrentPosition, setPlayerCurrentPosition] = useState<
+    number | undefined
+  >(undefined);
+
   const dispatchTeam = useTypedDispatch();
   const dispatchPositions = useTypedDispatch();
   const navigate = useNavigate();
@@ -69,6 +68,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
   const teams = useSelector(selectTeams);
   const positions = useSelector(selectPositions);
   const player = useSelector(selectPlayer);
+  const teamCount = useSelector(getNumberOfTeams);
 
   const initialPlayer: InitialDefaults = {
     name: player && player.name,
@@ -86,14 +86,17 @@ const PlayerForm: FC<IPlayerFormProps> = ({
     register,
     handleSubmit,
     setValue,
+    clearErrors,
     formState: { errors },
-  } = useForm<IPlayerFormInputs>({ defaultValues: initialPlayer });
-  const submitHandler: SubmitHandler<IPlayerFormInputs> = (
-    data: IPlayerFormInputs
+  } = useForm<PlayerFormInputs>({ defaultValues: initialPlayer });
+
+  const submitHandler: SubmitHandler<PlayerFormInputs> = (
+    data: PlayerFormInputs
   ) => {
     onSubmit(data);
   };
-  const submitError: SubmitErrorHandler<IPlayerFormInputs> = (data) => {
+
+  const submitError: SubmitErrorHandler<PlayerFormInputs> = (data) => {
     /*  console.log("Errors", data); */
   };
 
@@ -102,13 +105,13 @@ const PlayerForm: FC<IPlayerFormProps> = ({
       dispatchPositions(getPositions());
     }
     if (positions && positions.length !== 0) {
-      const options: Array<IPositionsOptions> = positions.map(
+      const options: Array<PositionsOptions> = positions.map(
         (position: string) => ({
           label: addSpaceBeforeUppercase(position),
           value: position,
         })
       );
-      const index = options.findIndex((obj: IPositionsOptions) => {
+      const index = options.findIndex((obj: PositionsOptions) => {
         return obj.value === player?.position;
       });
       setPlayerCurrentPosition(index);
@@ -122,11 +125,11 @@ const PlayerForm: FC<IPlayerFormProps> = ({
         dispatchTeam(getTeams({}));
       }
       if (teams.length !== 0) {
-        const options: Array<ITeamsOptions> = teams?.map((team) => ({
+        const options: Array<TeamsOptions> = teams?.map((team) => ({
           value: team.id,
           label: team.name,
         }));
-        const index = options.findIndex((obj: ITeamsOptions) => {
+        const index = options.findIndex((obj: TeamsOptions) => {
           return obj.value === player?.team;
         });
 
@@ -146,29 +149,19 @@ const PlayerForm: FC<IPlayerFormProps> = ({
           onSubmit={handleSubmit(submitHandler, submitError)}
         >
           <div className={imageUploader}>
-            {edit ? (
-              <ImageUpload
-                edit
-                imageUrl={initialPlayer.avatarUrl}
-                {...register("avatarUrl", {
-                  required: { value: true, message: "Image is required" },
-                })}
-                setValueForPlayer={setValue}
-              />
-            ) : (
-              <ImageUpload
-                {...register("file_img", {
-                  required: { value: true, message: "Image is required" },
-                })}
-                setValueForPlayer={setValue}
-                haveMessage
-                errorMessage={errors.file_img?.message}
-              />
-            )}
+            <ImageUpload
+              imageUrl={initialPlayer.avatarUrl}
+              {...register("file_img", {
+                required: { value: !edit, message: "Image is required" },
+              })}
+              setValueForPlayer={setValue}
+              errorMessage={errors.file_img?.message}
+              clearError={() => clearErrors("file_img")}
+            />
           </div>
           <div className={fieldsContainer}>
             <Input
-              inputFieldType='text'
+              type='text'
               label='Name'
               {...register("name", {
                 required: { value: true, message: "Name is required" },
@@ -184,9 +177,10 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Position'
                   options={playerPositionOptions}
-                  handleChange={(option) =>
-                    setValue("position", String(option?.value) ?? undefined)
-                  }
+                  handleChange={(option) => {
+                    setValue("position", String(option?.value) ?? undefined);
+                    clearErrors("position");
+                  }}
                   selectErrorMessage={errors.position?.message}
                   isClearable
                   {...register("position", {
@@ -218,9 +212,13 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Position'
                   options={playerPositionOptions}
-                  handleChange={(option) =>
-                    setValue("position", String(option?.value) ?? undefined)
-                  }
+                  handleChange={(option) => {
+                    setValue(
+                      "position",
+                      option?.value !== undefined ? String(option?.value) : ""
+                    );
+                    clearErrors("position");
+                  }}
                   selectErrorMessage={errors.position?.message}
                   isClearable
                   {...register("position", {
@@ -232,11 +230,11 @@ const PlayerForm: FC<IPlayerFormProps> = ({
                   textPosition='left'
                   label='Team'
                   options={teamsOptions}
-                  handleChange={(option) =>
-                    setValue("team", Number(option?.value) ?? undefined)
-                  }
+                  handleChange={(option) => {
+                    setValue("team", Number(option?.value) ?? undefined);
+                    clearErrors("team");
+                  }}
                   selectErrorMessage={errors.team?.message}
-                  isClearable
                   {...register("team", {
                     required: { value: true, message: "Team is required" },
                   })}
@@ -246,7 +244,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
             <div className={playerInfoStyles}>
               <div className={inputWrapper}>
                 <Input
-                  inputFieldType='number'
+                  type='number'
                   label='Height (cm)'
                   {...register("height", {
                     required: { value: true, message: "Height is required" },
@@ -260,7 +258,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputFieldType='number'
+                  type='number'
                   label='Weight (kg)'
                   {...register("weight", {
                     required: { value: true, message: "Weight is required" },
@@ -274,7 +272,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputFieldType='date'
+                  type='date'
                   label='Birthday'
                   {...register("birthday", {
                     required: { value: true, message: "Birthday is required" },
@@ -302,7 +300,7 @@ const PlayerForm: FC<IPlayerFormProps> = ({
               </div>
               <div className={inputWrapper}>
                 <Input
-                  inputFieldType='number'
+                  type='number'
                   label='Number'
                   {...register("number", {
                     required: { value: true, message: "Number is required" },

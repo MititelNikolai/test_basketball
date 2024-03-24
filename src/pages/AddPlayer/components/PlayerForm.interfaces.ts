@@ -1,4 +1,4 @@
-export interface IPlayerFormInputs {
+export interface PlayerFormInputs {
   name: string;
   number: number;
   position: string;
@@ -9,30 +9,30 @@ export interface IPlayerFormInputs {
   file_img?: File;
   avatarUrl?: string;
 }
-export interface IPlayerFormProps {
+export interface PlayerFormProps {
   edit?: boolean;
-  onSubmit: (data: IPlayerFormInputs) => void;
+  onSubmit: (data: PlayerFormInputs) => void;
   loading?: boolean;
   error?: string;
 }
 
 export interface InitialDefaults {
-  name: string | undefined;
-  number: number | undefined;
-  position: string | undefined;
-  team: number | undefined;
-  birthday: string | undefined;
-  height: number | undefined;
-  weight: number | undefined;
-  file_img?: File | undefined;
-  avatarUrl?: string | undefined;
+  name?: string;
+  number?: number;
+  position?: string;
+  team?: number;
+  birthday?: string;
+  height?: number;
+  weight?: number;
+  file_img?: File;
+  avatarUrl?: string;
 }
 
-export interface ITeamsOptions {
+export interface TeamsOptions {
   value: number;
   label: string;
 }
-export interface IPositionsOptions {
+export interface PositionsOptions {
   value: string;
   label: string;
 }

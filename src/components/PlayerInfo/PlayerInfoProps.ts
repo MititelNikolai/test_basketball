@@ -1,4 +1,4 @@
-interface PlayerInfoProps {
+export interface PlayerInfoProps {
   name: string;
   number: number;
   position: string;
@@ -10,5 +10,3 @@ interface PlayerInfoProps {
   avatarUrl: string;
   id: number;
 }
-
-export default PlayerInfoProps;

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import TeamInfoProps from "./TeamInfoProps";
+import { TeamInfoProps } from "./TeamInfoProps";
 import styles from "./TeamInfo.module.css";
 
 const TeamInfo: FC<TeamInfoProps> = ({
@@ -9,11 +9,13 @@ const TeamInfo: FC<TeamInfoProps> = ({
   division,
   imageUrl,
 }) => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
     <div className={styles.teamInfoContainer}>
       <div className={styles.teamInfoImageContainer}>
-        <img src={`${backendUrl}${imageUrl}`} alt='Team Logo' />
+        <img
+          src={`${process.env.REACT_APP_BACKEND_URL}${imageUrl}`}
+          alt='Team Logo'
+        />
       </div>
       <div className={styles.teamInfoDescriptionContainer}>
         <p className={styles.teamInfoName}>{name}</p>

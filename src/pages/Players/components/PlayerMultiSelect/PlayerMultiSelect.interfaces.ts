@@ -5,7 +5,7 @@ export interface SelectOptions {
   label?: string;
 }
 
-export interface IPlayerMultiSelect {
+export interface PlayerMultiSelectProps {
   options?: Array<SelectOptions>;
   handleChange: (option: MultiValue<SelectOptions>) => void;
   selectedValues?: Array<SelectOptions>;

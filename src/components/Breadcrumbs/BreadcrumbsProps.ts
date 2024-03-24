@@ -1,4 +1,4 @@
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   pathname: string;
   actions?: boolean;
   id?: number;
@@ -8,5 +8,3 @@ interface BreadcrumbsProps {
   success?: boolean;
   needBorder?: boolean;
 }
-
-export default BreadcrumbsProps;

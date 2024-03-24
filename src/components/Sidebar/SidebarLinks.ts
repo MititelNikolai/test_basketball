@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { IconPeoples, IconPerson } from "../ui/icons";
-import ISvgIconProps from "../ui/icons/SvgIconProps";
+import { SvgIconProps } from "../ui/icons/SvgIconProps";
 
 export const links: ReadonlyArray<{
   id: number;
   label: string;
-  icon: FC<ISvgIconProps>;
+  icon: FC<SvgIconProps>;
   link: string;
 }> = [
   {

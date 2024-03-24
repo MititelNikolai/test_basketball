@@ -1,5 +1,5 @@
 import { FC } from "react";
-import SvgIconProps from "./SvgIconProps";
+import { SvgIconProps } from "./SvgIconProps";
 
 const IconChevronLeft: FC<SvgIconProps> = ({
   width = "6",

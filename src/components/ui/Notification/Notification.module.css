@@ -40,8 +40,13 @@
 
 /*======================= MEDIA QUERIES (SMALL DEVICES) =======================*/
 
-/* @media screen and (max-width: 375px) {
+@media screen and (max-width: 375px) {
   .notificationStyle {
-    width: auto;
+    width: 90%;
+    margin: 0 auto;
+    top: 2.25rem;
+    right: 0;
+    left: 0;
+    text-align: center;
   }
-} */
+}

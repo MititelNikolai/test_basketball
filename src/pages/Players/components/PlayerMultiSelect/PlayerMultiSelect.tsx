@@ -1,9 +1,9 @@
 import { FC } from "react";
 import Select from "react-select";
+import { PlayerMultiSelectProps } from "./PlayerMultiSelect.interfaces";
 import "./PlayerMultiSelect.css";
-import { IPlayerMultiSelect } from "./PlayerMultiSelect.interfaces";
 
-const PlayerMultiSelect: FC<IPlayerMultiSelect> = ({
+const PlayerMultiSelect: FC<PlayerMultiSelectProps> = ({
   options,
   selectedValues,
   handleChange,

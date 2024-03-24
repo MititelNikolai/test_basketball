@@ -16,8 +16,10 @@ import { Breadcrumbs } from "../../components";
 const PlayersActionsLayout: FC = () => {
   const location = useLocation();
   const { playerId } = useParams();
+
   const player = useSelector(selectPlayer);
   const { loading, success } = useSelector(selectPlayerStatus);
+
   const dispatchPlayers = useTypedDispatch();
 
   useEffect(() => {

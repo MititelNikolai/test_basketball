@@ -1,83 +1,55 @@
-import axios, { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ILoginData, IRegisterData, IUpdateUserData } from "./auth.interfaces";
-import { RootState } from "../../store";
+import { baseRequest } from "../../../api/baseRequest";
+import { errorHandler } from "../../../api/utils/errorHandler";
+import { LoginData, RegisterData, UpdateUserData } from "./auth.interfaces";
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async ({ userName, login, password }: IRegisterData, { rejectWithValue }) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.post(
-        `${backendUrl}/api/Auth/SignUp`,
-        { userName, login, password },
-        config
-      );
-      return response.data;
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.status === 409) {
-        return rejectWithValue("This user already exists");
-      }
-      return rejectWithValue("Registration failed");
+  async (userData: RegisterData, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "post",
+      url: `/api/Auth/SignUp`,
+      data: userData,
+    });
+
+    if (result.error) {
+      return rejectWithValue(errorHandler(result.errorCode, "user"));
     }
+    return result;
   }
 );
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ login, password }: ILoginData, { rejectWithValue }) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        `${backendUrl}/api/Auth/SignIn`,
-        { login, password },
-        config
-      );
-      localStorage.setItem("userToken", data.token);
-      return data;
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError;
+  async (userData: LoginData, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "post",
+      url: `/api/Auth/SignIn`,
+      data: userData,
+    });
 
-      if (axiosError.response && axiosError.response.status === 401) {
-        return rejectWithValue(
-          "User with the specified username / password was not found."
-        );
-      }
+    if (result.error) {
+      return rejectWithValue(errorHandler(result.errorCode, "login"));
     }
+    localStorage.setItem("userToken", result.token);
+    return result;
   }
 );
 
 export const userUpdate = createAsyncThunk(
   "auth/update",
-  async (formData: IUpdateUserData, { rejectWithValue, getState }) => {
-    const { auth } = getState() as RootState;
-    const token = auth.userInfo.token;
-    try {
-      const response = await axios.post(
-        `${backendUrl}/api/Auth/Change`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  async (formData: UpdateUserData, { rejectWithValue }) => {
+    const result = await baseRequest({
+      method: "post",
+      url: `/api/Auth/Change`,
+      data: formData,
+    });
 
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
+    if (result.error) {
+      return rejectWithValue(errorHandler(result.errorCode));
     }
+
+    return result;
   }
 );
 export default registerUser;

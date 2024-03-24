@@ -1,7 +1,5 @@
-interface PaginationProps {
+export interface PaginationProps {
   handlePageClick: (event: { selected: number }) => void;
-  pageCount?: number | null;
+  pageCount?: number;
   currentPage?: number;
 }
-
-export default PaginationProps;

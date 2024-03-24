@@ -2,17 +2,17 @@ export interface InitialState {
   loading: boolean;
   error: any | null;
   success: boolean;
-  teamDataFromServer: IDataFromServer;
-  currentTeam?: ITeamData;
+  teamDataFromServer: DataFromServer;
+  currentTeam?: TeamData;
   addedTeamSuccess?: number;
 }
-export interface IDataFromServer {
-  data: Array<ITeamData>;
+export interface DataFromServer {
+  data: Array<TeamData>;
   count: number | null;
   page: number | null;
   size: number | null;
 }
-export interface ITeamData {
+export interface TeamData {
   id: number;
   name: string;
   foundationYear: number;
@@ -20,14 +20,14 @@ export interface ITeamData {
   conference: string;
   imageUrl: string;
 }
-export interface IAddTeamData {
+export interface AddTeamData {
   name: string;
   foundationYear: number;
   division: string;
   conference: string;
   imageUrl: string;
 }
-export interface IUpdateTeamData {
+export interface UpdateTeamData {
   id: number;
   name: string;
   foundationYear: number;
@@ -35,7 +35,7 @@ export interface IUpdateTeamData {
   conference: string;
   imageUrl: string;
 }
-export interface IGetTeamsParameters {
+export interface GetTeamsParameters {
   name?: string;
   page?: number;
   pageSize?: number;

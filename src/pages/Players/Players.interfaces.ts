@@ -11,7 +11,7 @@ export interface DisplayData {
   avatarUrl: string;
   id: number;
 }
-export interface ITeamActions {
+export interface PlayersActionsProps {
   filterName: (search: string) => void;
   filterTeams: (selected: Array<SelectOptions>) => void;
   resetAction: () => void;

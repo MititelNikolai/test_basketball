@@ -1,5 +1,5 @@
 import { FC } from "react";
-import SvgIconProps from "./SvgIconProps";
+import { SvgIconProps } from "./SvgIconProps";
 
 const IconAddImage: FC<SvgIconProps> = ({
   width = "24",

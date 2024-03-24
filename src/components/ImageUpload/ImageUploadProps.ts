@@ -1,19 +1,14 @@
 import { UseFormSetValue } from "react-hook-form";
-import { ITeamFormInputs } from "../../pages/AddTeam/components/TeamForm.interfaces";
-import { IPlayerFormInputs } from "../../pages/AddPlayer/components/PlayerForm.interfaces";
-import IEditUser from "../../pages/EditProfile/EditUser.interfaces";
+import { TeamFormInputs } from "../../pages/AddTeam/components/TeamForm.interfaces";
+import { PlayerFormInputs } from "../../pages/AddPlayer/components/PlayerForm.interfaces";
+import { EditUser } from "../../pages/EditProfile/EditUser.interfaces";
 
-interface ImageUploadProps {
+export interface ImageUploadProps {
   onFileChange?: (file: File) => void;
-  setValueForTeam?: UseFormSetValue<ITeamFormInputs>;
-  setValueForPlayer?: UseFormSetValue<IPlayerFormInputs>;
-  setValueForUser?: UseFormSetValue<IEditUser>;
+  setValueForTeam?: UseFormSetValue<TeamFormInputs>;
+  setValueForPlayer?: UseFormSetValue<PlayerFormInputs>;
+  setValueForUser?: UseFormSetValue<EditUser>;
   clearError?: () => void;
-  forwardedRef?: React.RefObject<HTMLInputElement>;
-  edit?: boolean;
   imageUrl?: string | undefined;
-  haveMessage?: boolean;
   errorMessage?: string;
 }
-
-export default ImageUploadProps;

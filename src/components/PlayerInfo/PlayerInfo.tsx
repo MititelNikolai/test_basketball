@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { calculateAge } from "../../utils/calculateAge";
 import { addSpaceBeforeUppercase } from "../../utils/stringFunctions";
-import PlayerInfoProps from "./PlayerInfoProps";
+import { PlayerInfoProps } from "./PlayerInfoProps";
 import styles from "./PlayerInfo.module.css";
 
 const PlayerInfo: FC<PlayerInfoProps> = ({
@@ -14,11 +14,13 @@ const PlayerInfo: FC<PlayerInfoProps> = ({
   weight,
   avatarUrl,
 }) => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   return (
     <div className={styles.playerInfoContainer}>
       <div className={styles.playerInfoImageContainer}>
-        <img src={`${backendUrl}${avatarUrl}`} alt='Team Logo' />
+        <img
+          src={`${process.env.REACT_APP_BACKEND_URL}${avatarUrl}`}
+          alt='Team Logo'
+        />
       </div>
       <div className={styles.playerInfoDescriptionContainer}>
         <p className={styles.playerInfoName}>

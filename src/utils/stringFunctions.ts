@@ -10,12 +10,12 @@ export const dashIntoSpace = (inputString: string) => {
 export const createSlug = (inputString: string) => {
   const stringWithoutUpperCase = inputString.toLowerCase();
   const stringWithSpaces = stringWithoutUpperCase.replace(/ /g, "-");
+
   return stringWithSpaces;
 };
 
-export const addSpaceBeforeUppercase = (text: string) => {
-  return text.replace(/([a-z])([A-Z])/g, "$1 $2");
-};
+export const addSpaceBeforeUppercase = (text: string) =>
+  text.replace(/([a-z])([A-Z])/g, "$1 $2");
 
 export const jsonDateToString = (jsonString: string) => {
   const dateObject = new Date(jsonString);

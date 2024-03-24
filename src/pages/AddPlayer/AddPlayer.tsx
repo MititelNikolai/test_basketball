@@ -6,30 +6,35 @@ import {
   resetAddedPlayerSuccess,
   resetPlayerSuccess,
   selectPlayerStatus,
+  resetPlayersError,
+  setPlayersError,
 } from "../../core/redux/slices/player/playerSlice";
-import { selectCurrentUser } from "../../core/redux/slices/auth/authSlice";
-import { IPlayerDataToServer } from "../../core/redux/slices/player/player.interfaces";
+import { PlayerDataToServer } from "../../core/redux/slices/player/player.interfaces";
 import { playerAdd } from "../../core/redux/slices/player/playerAction";
 import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { useImageCompression } from "../../hooks/useImageCompression";
 import uploadImageToServer from "../../core/api/uploadImageToServer";
 import PlayerForm from "./components/PlayerForm";
-import { IPlayerFormInputs } from "./components/PlayerForm.interfaces";
+import { PlayerFormInputs } from "./components/PlayerForm.interfaces";
 import styles from "./AddPlayer.module.css";
 
 const AddPlayer: FC = () => {
   const { addPlayerContainer } = styles;
 
+  const navigate = useNavigate();
+  const compress = useImageCompression(531, 531);
+
   const { loading, success, addedPlayerSuccess, error } =
     useSelector(selectPlayerStatus);
-  const userInfo = useSelector(selectCurrentUser);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const dispatchPlayers = useTypedDispatch();
+
   dispatch(resetCurrentPlayer());
 
-  const handleSubmit = async (formData: IPlayerFormInputs) => {
+  const handleSubmit = async (formData: PlayerFormInputs) => {
     const { name, number, position, team, birthday } = formData;
-    const dataToServer: IPlayerDataToServer = {
+    const dataToServer: PlayerDataToServer = {
       name: name.trim(),
       number: Number(number),
       position,
@@ -39,12 +44,20 @@ const AddPlayer: FC = () => {
       weight: Number(formData.weight),
       avatarUrl:
         formData.file_img &&
-        (await uploadImageToServer(formData.file_img, userInfo.token)),
+        (await uploadImageToServer(await compress(formData.file_img))),
     };
-    dispatchPlayers(playerAdd(dataToServer));
+
+    dataToServer.avatarUrl
+      ? dispatchPlayers(playerAdd(dataToServer))
+      : dispatch(setPlayersError("Failed to upload Image"));
   };
 
   useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(resetPlayersError());
+      }, 3100);
+    }
     if (addedPlayerSuccess) {
       dispatch(resetPlayerSuccess());
       navigate(`/players/${addedPlayerSuccess}`);
@@ -52,7 +65,7 @@ const AddPlayer: FC = () => {
     return () => {
       dispatch(resetAddedPlayerSuccess());
     };
-  }, [navigate, dispatch, success, addedPlayerSuccess]);
+  }, [navigate, dispatch, success, addedPlayerSuccess, error]);
 
   return (
     <section className={addPlayerContainer}>

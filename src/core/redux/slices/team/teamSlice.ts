@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../store";
 import {
   addTeam,
   deleteTeam,
@@ -7,7 +8,6 @@ import {
   updateTeam,
 } from "./teamActions";
 import { InitialState } from "./team.interfaces";
-import { RootState } from "../../store";
 
 const initialState: InitialState = {
   loading: false,
@@ -27,6 +27,9 @@ const teamSlice = createSlice({
   reducers: {
     resetTeamSuccess: (state) => {
       state.success = false;
+    },
+    setTeamError: (state, action) => {
+      state.error = action.payload;
     },
     resetTeamError: (state) => {
       state.error = null;
@@ -113,15 +116,18 @@ const teamSlice = createSlice({
     });
   },
 });
-export const selectTeams = (state: RootState) =>
-  state.team.teamDataFromServer.data;
+
 export const getNumberOfTeams = (state: RootState) =>
   state.team.teamDataFromServer.count;
 export const getPageTeams = (state: RootState) =>
   state.team.teamDataFromServer.page;
 export const getSizeTeams = (state: RootState) =>
   state.team.teamDataFromServer.size;
+
+export const selectTeams = (state: RootState) =>
+  state.team.teamDataFromServer.data;
 export const selectTeam = (state: RootState) => state.team.currentTeam;
+
 export const selectTeamStatus = createSelector(
   (state: RootState) => state.team.success,
   (state: RootState) => state.team.loading,
@@ -140,5 +146,7 @@ export const {
   resetTeamItems,
   resetAddedTeamSuccess,
   resetTeamError,
+  setTeamError,
 } = teamSlice.actions;
+
 export default teamSlice.reducer;

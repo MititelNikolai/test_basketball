@@ -7,38 +7,43 @@ import {
   selectAuthStatus,
   selectIsAuthenticated,
 } from "../../core/redux/slices/auth/authSlice";
+import { LoginData } from "../../core/redux/slices/auth/auth.interfaces";
 import SingIn from "../../assets/img/singIn.png";
 import { useTypedDispatch } from "../../hooks/useTypedDispatch";
-import AuthorizationLayout from "../../layouts/Authorization/AuthorizationLayout";
+import AuthLayout from "../../layouts/Auth/AuthLayout";
 import LoginForm from "./components/LoginForm";
-import { ILoginData } from "../../core/redux/slices/auth/auth.interfaces";
 
-const Authorization: FC = () => {
+const Login: FC = () => {
+  const navigate = useNavigate();
+
   const { loading, error } = useSelector(selectAuthStatus);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+
   const dispatchLogin = useTypedDispatch();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const handleSubmit = (data: LoginData) => {
+    dispatchLogin(userLogin(data));
+  };
+
   useEffect(() => {
     if (isAuthenticated) navigate("/");
     return () => {
       dispatch(resetError());
     };
   }, [navigate, isAuthenticated, dispatch]);
-  const handleSubmit = (data: ILoginData) => {
-    dispatchLogin(userLogin(data));
-  };
+
   return (
     <>
-      <AuthorizationLayout image={SingIn}>
+      <AuthLayout image={SingIn}>
         <LoginForm
           onSubmit={(data) => handleSubmit(data)}
           loading={loading}
           error={error}
         />
-      </AuthorizationLayout>
+      </AuthLayout>
     </>
   );
 };
 
-export default Authorization;
+export default Login;
